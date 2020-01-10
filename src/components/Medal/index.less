@@ -1,0 +1,27 @@
+@box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.109803921568627);
+@border-radius: 4px;
+
+.level{
+  .level-card{
+    width: 220px;
+    margin-bottom: 24px;
+    box-shadow: @box-shadow;
+    border-radius: @border-radius;
+    .radio-group{
+      width: 101%;
+      position: absolute;
+      bottom: 0;
+      .radio-button{
+        width: 50%;
+        text-align: center;
+      }
+    }
+  }
+  .plus{
+    width: 220px;
+    height: 135px;
+    font-size: 50px;
+    margin-bottom: 24px;
+    box-shadow: @box-shadow;
+  }
+}

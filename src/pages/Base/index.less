@@ -1,0 +1,32 @@
+@box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.109803921568627);
+@border-radius: 4px;
+
+.base-card{
+  height: 86vh;
+  .top{
+    position: relative;
+    width: 100%;
+    height: 65%;
+    display: flex;
+    justify-content: space-between;
+    .card {
+      box-shadow: @box-shadow;
+      border-radius: @border-radius;
+      &:first-child{
+        width: 30%;
+      }
+      &:last-child{
+        width: 68%;
+      }
+    }
+  }
+  
+  .bottom {
+    box-shadow: @box-shadow;
+    border-radius: @border-radius;
+    .row{
+      margin-bottom: 20px;
+    }
+  }
+}
+
