@@ -110,18 +110,18 @@ class State {
   getLeftTree = async (pathname, id) => {
     const result = await reqLeftTree();
     if (result.code === 0) {
-      /*** 待开发 ***/ 
+      /*** 待开发 ***/
       // 左侧树选中项
       this.defaultSelectedKeys = [id];
       // 左侧导航默认展开
-      if(id && id !== "null") {
-        let defaultOpenKeys = filterSubValue(getProperty([result.data].concat([]), "id"), "id", id).parent;      
+      if (id && id !== "null") {
+        let defaultOpenKeys = filterSubValue(getProperty([result.data].concat([]), "id"), "id", id).parent;
         defaultOpenKeys[0] = "home";
         this.defaultOpenKeys = defaultOpenKeys;
       }
 
 
-      
+
       this.leftTree = getProperty([result.data], "title");
       if (id && id !== "null") {
         // 页面展示标题

@@ -22,18 +22,16 @@ export const filterSubValues = (list, reg, regText, label, value) => {
   return values
 }
 
-let itemValue;
+let result = null;
 export const filterSubValue = (list, key, value) => {  
-  /**
-   * value 不为空时输出 json 数组
-   * */ 
-  list.forEach(item => {
-    if(item[key] === value) {
-      itemValue = item;
-    }
-    if(item.childrens && item.childrens?.length) {
-      filterSubValue(item.childrens, key, value);
-    }
-  });
-  return itemValue
+  if (list.find(o => o[key] === value)) {
+    result = list.find(o => o[key] === value);
+    return result
+  }else {
+    list.forEach(o => {
+      if (o.hasOwnProperty('childrens') && o.childrens) {
+        filterSubValue(o.childrens, key, value)
+      }
+    })
+  }
 }
