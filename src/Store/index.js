@@ -2,7 +2,6 @@
 import { observable, action } from 'mobx';
 import headerMenuList from '../config/haderMenuConfig';
 import { message } from 'antd';
-import { filterSubValues } from '../utils/filterSubValues';
 import { getProperty } from '../utils/getProperty';
 import {
   reqLeftTree,
@@ -33,6 +32,10 @@ import {
   reqDeleteStorageControl,
   reqStorageControlInfoByName,
   reqNasVolumeListByStorageControl,
+  reqStorageByStorageName,
+  reqStoragePoolByStorageName,
+  reqStorageLunByStorageName,
+  reqStoragePortByStorageName,
   reqManageServerList,
   reqNASStorageControlList,
   reqNetWorkUnitList,
@@ -48,6 +51,7 @@ import {
 
 
   reqSwitchList,
+  reqZoneRefList
 } from "../api";
 
 class State {
@@ -570,10 +574,55 @@ class State {
       this.nasDeviceList = result.data;
 
     } else {
-      message.error("获取存储控制器页面NAS卷列表失败！失败信息：" + result.message)
+      message.error("获取NAS存储控制器页面NAS卷列表失败！失败信息：" + result.message)
     }
   }
 
+  /**********          存储控制器SAN         **********/
+  // SAN 展示存储设备信息
+  @observable sanDeviceList = [];
+  @action.bound
+  getStorageByStorageName = async storageName => {
+    let result = await reqStorageByStorageName(storageName);
+    if (result.code === 0) {      
+      this.sanDeviceList = result.data;
+    } else {
+      message.error("获取SAN存储控制器页面基本信息失败！失败信息：" + result.message)
+    }
+  }
+  // 展示存储设备下存储池列表
+  @observable sanDevicePoolList = [];
+  @action.bound
+  getStoragePoolByStorageName = async storageName => {
+    let result = await reqStoragePoolByStorageName(storageName);
+    if (result.code === 0) {      
+      this.sanDevicePoolList = result.data;
+    } else {
+      message.error("获取SAN存储设备下存储池列表失败！失败信息：" + result.message)
+    }
+  }
+  // 展示存储设备下LUN列表
+  @observable sanDeviceLunList = [];
+  @action.bound
+  getStorageLunByStorageName = async storageName => {
+    let result = await reqStorageLunByStorageName(storageName);
+    if (result.code === 0) {      
+      this.sanDeviceLunList = result.data;
+    } else {
+      message.error("获取SAN存储设备下LUN列表失败！失败信息：" + result.message)
+    }
+  }
+  // 展示存储设备下端口列表
+  @observable sanDevicePortList = [];
+  @action.bound
+  getStoragePortByStorageName = async storageName => {
+    let result = await reqStoragePortByStorageName(storageName);
+    if (result.code === 0) {      
+      this.sanDevicePortList = result.data;
+    } else {
+      message.error("获取SAN存储设备下端口列表失败！失败信息：" + result.message)
+    }
+  }
 
   /**********          交换机         **********/
   // 获取设备类型信息
@@ -694,6 +743,19 @@ class State {
       message.error("获取端口关联列表失败！失败信息：" + result.message)
     }
   }
+  // 获取zone列表
+  @observable zoneRefList = [];
+  @action.bound
+  getZoneRefList = async (fabricName, pageNumber = 1, pageSize = 100) => {
+    let result = await reqZoneRefList(fabricName, pageNumber, pageSize);
+    if (result.code === 0) {
+      this.zoneRefList = result.data;
+    } else {
+      message.error("获取端口关联列表失败！失败信息：" + result.message)
+    }
+  }
+  
+
 }
 
 

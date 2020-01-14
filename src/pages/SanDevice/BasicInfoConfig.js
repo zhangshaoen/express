@@ -17,22 +17,29 @@ export const BasicInfoList =  [
   },
   {
     label: "存储类型",
-    key: "",
+    key: "type",
   },{
     label: "设备型号",
-    key: "",
+    key: "model",
   },
   {
     label: "数据中心",
-    key: ""
+    key: "dataCenter"
   },
   {
     label: "设备位置",
-    key: "",
+    key: "position",
   },
   {
     label: "存储状态",
-    key: ""
+    key: "status",
+    render: text => {
+      if(text === "Y") {
+        return "正常服务"
+      }else if(text === "N"){
+        return "维护状态"
+      }
+    }
   },
   {
     label: "镜像存储名称",

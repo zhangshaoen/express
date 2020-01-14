@@ -72,10 +72,19 @@ export const reqUpdateStorageControl = storageControl => ajax(`${BASE}/view/upda
 export const reqDeleteStorageControl = storageUnit => ajax(`${BASE}/view/deleteStorageControl`, storageUnit, "DELETE");
 
 
-// 存储控制器页面基本信息查询
+// NAS 存储控制器页面基本信息查询
 export const reqStorageControlInfoByName = storageControlName => ajax(`${BASE}/view/getStorageControlInfoByName`, {storageControlName});
 // 存储控制器页面NAS卷列表查询
 export const reqNasVolumeListByStorageControl = storageControlName => ajax(`${BASE}/view/getNasVolumeListByStorageControl`, {storageControlName});
+
+// SAN 展示存储设备信息
+export const reqStorageByStorageName = storageName => ajax(`${BASE}/view/getStorageByStorageName`, {storageName});
+// 展示存储设备下存储池列表
+export const reqStoragePoolByStorageName = storageName => ajax(`${BASE}/view/getStoragePoolByStorageName`, {storageName});
+// 展示存储设备下LUN列表
+export const reqStorageLunByStorageName = storageName => ajax(`${BASE}/view/getStorageLunByStorageName`, {storageName});
+// 展示存储设备下端口列表
+export const reqStoragePortByStorageName = storageName => ajax(`${BASE}/view/getStoragePortByStorageName`, {storageName});
 
 
 // 获取设备类型信息
@@ -106,3 +115,5 @@ export const reqPortRefList = (fabricName, pageNumber, pageSize) => ajax(`${BASE
 
 // 物理交换机列表
 export const reqSwitchList = (fabricName, pageNumber, pageSize) => ajax(`${BASE}/view/switch/getSwitchList?fabricName=${fabricName}&pageNumber=${pageNumber}&pageSize=${pageSize}`, {}, "POST");
+// 获取zone列表
+export const reqZoneRefList = (fabricName, pageNumber, pageSize) => ajax(`${BASE}/view/switch/getZoneRefList?fabricName=${fabricName}&pageNumber=${pageNumber}&pageSize=${pageSize}`, {}, "POST");

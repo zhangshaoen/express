@@ -6,8 +6,9 @@ import ProgressInfo from "../../components/ProgressInfo";
 import { BasicInfoList, CapacityList, MBPSList, IOPSList } from "./BasicInfoConfig";
 import { storagePool, lun, portGrout, port } from "./columns";
 import "../../assets/less/index.less";
-import state from '../../Store';
+// import state from '../../Store';
 import {getQueryVariable} from '../../utils/getQueryVariable';
+import state from "../../Store/index";
 
 
 class SanDevice extends Component {
@@ -37,9 +38,15 @@ class SanDevice extends Component {
   UNSAFE_componentWillMount() {
     const {id} = getQueryVariable(this, "id");
     if(id) {
-      // 根据 ID 存储控制器页面基本信息查询
-      state.getNasStorageControlInfoByName(id);
-      
+      // 根据 ID SAN 展示存储设备信息
+      state.getStorageByStorageName(id);
+      // 展示存储设备下存储池列表
+      state.getStoragePoolByStorageName(id);
+      // 展示存储设备下LUN列表
+      state.getStorageLunByStorageName(id);
+      // 展示存储设备下端口列表
+      state.getStoragePortByStorageName(id);
+
     }else {
       message.warning('当前页面没有获取正确参数，请点击左侧导航重新获取！');
     }
@@ -54,7 +61,7 @@ class SanDevice extends Component {
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
           style={{ marginBottom: "24px" }} >
-          <BasicInfo infos={BasicInfoList} />
+          <BasicInfo infos={BasicInfoList} dataSource={state.sanDeviceList} />
           <ProgressInfo
             title="容量"
             titColor="blue"
@@ -82,7 +89,7 @@ class SanDevice extends Component {
           <Table
             scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
             columns={storagePool}
-            dataSource={[]} />
+            dataSource={state.sanDevicePoolList} />
         </Card>
         <Card
           title="LUN信息"
@@ -109,7 +116,7 @@ class SanDevice extends Component {
           <Table
             scroll={{ y: "76vh", x: 1500 }} bordered size="middle"
             columns={lun}
-            dataSource={[]} />
+            dataSource={state.sanDeviceLunList} />
         </Card>
         <Card
           title="端口分组信息"
@@ -141,7 +148,7 @@ class SanDevice extends Component {
           <Table
             scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
             columns={port}
-            dataSource={[]} />
+            dataSource={state.sanDevicePortList} />
         </Card>
         <Modal
           title="端口分组信息"

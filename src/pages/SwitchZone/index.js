@@ -89,29 +89,29 @@ class SwitchZone extends Component {
     return [
       {
         title: "zone名称",
-        dataIndex: "",
+        dataIndex: "name",
         width: 150,
         fixed: 'left',
       },
       {
         title: "zone类型",
-        dataIndex: "manufacturer"
+        dataIndex: "type"
       },
       {
         title: "所属网络",
-        dataIndex: "dataCenter"
+        dataIndex: ""
       },
       {
         title: "所属zoneset",
-        dataIndex: "deploymentLocation"
+        dataIndex: ""
       },
       {
-        title: "所属vf",
-        dataIndex: ""
+        title: "所属vs",
+        dataIndex: "vsan"
       },
       {
         title: "所属Fabric",
-        dataIndex: ""
+        dataIndex: "fabric"
       },
       {
         title: "交换机名称",
@@ -123,11 +123,11 @@ class SwitchZone extends Component {
       },
       {
         title: "端口 Target wwn",
-        dataIndex: ""
+        dataIndex: "wwn"
       },
       {
         title: "fcid",
-        dataIndex: ""
+        dataIndex: "fcId"
       },
       {
         title: "系统名称",
@@ -148,7 +148,9 @@ class SwitchZone extends Component {
     const { id } = getQueryVariable(this, "id");
     let name = id.split("||")[1];
     if (name) {
+      state.getFabric(name);
 
+      state.getZoneRefList(name);
 
     } else {
       message.warning('当前页面没有获取正确参数，请点击左侧导航重新获取！');
@@ -163,7 +165,7 @@ class SwitchZone extends Component {
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
           style={{ marginBottom: "24px" }} >
-          <BasicInfo infos={BasicInfoList} dataSource={state.unitBasicInfo} />
+          <BasicInfo infos={BasicInfoList} dataSource={{"zoneNums": state.zoneRefList.content?.length, ...state.fabricInfo}} />
         </Card>
         <Card
           title={state.menuItem.title}
@@ -174,7 +176,7 @@ class SwitchZone extends Component {
             rowKey={record => record.storageUnitId}
             scroll={{ y: "76vh", x: 1700 }} pagination={false} bordered size="middle"
             columns={this.initColumns()}
-            dataSource={state.unitList} />
+            dataSource={state.zoneRefList.content} />
         </Card>
       </Card>
     )

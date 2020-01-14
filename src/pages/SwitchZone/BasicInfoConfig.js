@@ -1,14 +1,14 @@
 export const BasicInfoList =  [
   {
     label: "zoneset数量",
-    key: "name",
+    key: "zoneNums",
   },
   {
     label: "所属Fabric",
-    key: "资源类型"
+    key: "fabricName"
   },
   {
     label: "设备厂商",
-    key: "设备厂商"
+    key: "manufacturer"
   },
 ];

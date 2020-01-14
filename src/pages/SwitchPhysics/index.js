@@ -62,7 +62,7 @@ class SwitchPhysics extends Component {
     const { id } = getQueryVariable(this, "id");
     let name = id.split("||")[1];
     if (name) {
-
+      state.getFabric(name);
       // 物理交换机列表
       state.getSwitchList(name);
 
@@ -79,7 +79,7 @@ class SwitchPhysics extends Component {
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
           style={{ marginBottom: "24px" }} >
-          <BasicInfo infos={BasicInfoList} dataSource={{}} />
+          <BasicInfo infos={BasicInfoList} dataSource={{"switchNums": state.deviceSwitchList.content?.length, ...state.fabricInfo}} />
         </Card>
         <Card
           title={state.menuItem.title}
