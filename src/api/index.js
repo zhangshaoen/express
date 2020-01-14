@@ -88,9 +88,10 @@ export const reqUpdateNetWorkUnit = netWorkUnit => ajax(`${BASE}/view/switch/upd
 export const reqAddNetWorkUnit = netWorkUnit => ajax(`${BASE}/view/switch/addNetWorkUnit`, {netWorkUnit}, "POST");
 
 
-// 获取网络单元
+// 获取网络单元信息
 export const reqNetWorkUnit = netWorkUnitId => ajax(`${BASE}/view/switch/getNetWorkUnit`, {netWorkUnitId});
-// 
+// 获取VSAN列表
+export const reqVsanList = netWorkUnitId => ajax(`${BASE}/view/switch/getVsanList`, {netWorkUnitId});
 
 
 // 获取FABRIC

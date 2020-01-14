@@ -22,14 +22,14 @@ export default class Medal extends Component {
 
   initMetaTitle = item => {
     if(item?.editingKey) {
-      return <Input value={item.simplifiedName} onChange={e => this.inputChange(item, e.target.value)} />
+      return <Input value={item[this.props.name]} onChange={e => this.inputChange(item, e.target.value)} />
     }else {
-      return item.simplifiedName
+      return item[this.props.name]
     }
   }
 
   inputChange = (item, value) => {
-    item.simplifiedName = value;
+    item[this.props.name] = value;
     this.forceUpdate();
   }
 
@@ -51,7 +51,7 @@ export default class Medal extends Component {
       <Row className="level">
         {
           dataSource.map((item, index) => {
-            let src = this.imgSrc(item.simplifiedName);
+            let src = this.imgSrc(item[this.props.name]);
             return  <Col span={6} key={index}>
               <Card className="level-card"
                 actions={[
@@ -60,7 +60,7 @@ export default class Medal extends Component {
                 ]}
               >
                 <Meta
-                  avatar={<img src={src} alt={item.simplifiedName} width="34" />}
+                  avatar={<img src={src} alt={item[this.props.name]} width="34" />}
                   title={this.initMetaTitle(item)}
                 />
               </Card>

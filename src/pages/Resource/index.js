@@ -174,7 +174,7 @@ class Resource extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    const { id } = getQueryVariable(this, "id");
+    const { pathname, id } = getQueryVariable(this, "id");
     if (id) {
       // 存储级别页面（特定存储资源池下特定级别）存储级别基本信息查询
       state.getStorageLevelInfoById(id);
@@ -183,6 +183,7 @@ class Resource extends Component {
 
       // 获取所有管理机列表
       state.getManageServerList();
+      
       // 存储级别页面所有未被单元添加且有效的NAS控制器名称列表
       state.getNASStorageControlList();
       // 获取网络单元列表

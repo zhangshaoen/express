@@ -5,7 +5,7 @@ export const BasicInfoList =  [
   },
   {
     label: "资源类型",
-    key: "deviceCategoryId"
+    key: "deviceCategoryName"
   },
   {
     label: "设备厂商",
@@ -15,10 +15,7 @@ export const BasicInfoList =  [
     label: "数据中心",
     key: "dataCenterName"
   },
-  {
-    label: "设备位置",
-    key: "position",
-  },
+  // { label: "设备位置", key: "position", },
   {
     label: "服务状态",
     key: "status",

@@ -90,10 +90,7 @@ class SwitchPage extends Component {
         title: "所属数据中心",
         dataIndex: "dataCenterName"
       },
-      {
-        title: "部署楼宇",
-        dataIndex: "deploymentLocation"
-      },
+      // { title: "部署楼宇", dataIndex: "position" },
       {
         title: "管理机",
         dataIndex: "manageServiceName",
@@ -150,7 +147,7 @@ class SwitchPage extends Component {
             <Col span={24}>
               <Table
                 rowKey={record => record.id}
-                scroll={{ y: "76vh", x: 1700 }} pagination={false} bordered size="middle"
+                scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
                 columns={this.initColumns()}
                 dataSource={state.switchPageList} />
             </Col>

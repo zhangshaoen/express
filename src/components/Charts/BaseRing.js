@@ -43,7 +43,7 @@ export default class BaseRing extends Component {
       series: [{
         name: options.totalsTit,
         type: 'pie',
-        radius: ['70%', '80%'],
+        radius: ['60%', '70%'],
         center: ['50%', '45%'],
         hoverAnimation: false,
         color: options.color,

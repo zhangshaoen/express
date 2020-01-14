@@ -40,6 +40,7 @@ import {
   reqUpdateNetWorkUnit,
   reqAddNetWorkUnit,
   reqNetWorkUnit,
+  reqVsanList,
 
   reqFabric,
   reqPortRefList,
@@ -371,7 +372,7 @@ class State {
   @action.bound
   getStorageLevelNameByStorageResourcePool = async id => {
     const result = await reqStorageLevelNameByStorageResourcePool(id);
-    if (result.code === 0) {
+    if (result.code === 0) {      
       this.resourcePoolInfo = result.data;
     } else {
       message.error("获取存储资源池页面存储设备级别命名查询数据失败！失败信息：" + result.message)
@@ -561,11 +562,10 @@ class State {
   // NAS存储控制器页面基本信息
   @observable nasDeviceInfo = {};
   @action.bound
-  getNasStorageControlInfoByName = async storageControlName => {
+  getStorageControlInfoByName = async storageControlName => {
     const result = await reqStorageControlInfoByName(storageControlName);
-    if (result.code === 0) {
+    if (result.code === 0) {      
       this.nasDeviceInfo = result.data;
-
     } else {
       message.error("获取存储控制器页面基本信息失败！失败信息：" + result.message)
     }
@@ -597,7 +597,7 @@ class State {
       message.error("获取设备类型信息失败！失败信息：" + result.message)
     }
   }
-  // 获取网络单元列表
+  // 获取网络单元信息
   @observable switchPageList = [];
   @action.bound
   getNetWorkUnitList = async deviceCategoryId => {
@@ -649,7 +649,18 @@ class State {
       message.error("获取设备类型信息失败！失败信息：" + result.message)
     }
   }
-  // 
+  // 获取VSAN列表
+  @observable switchUnitList = [];
+  @action.bound
+  getVsanList = async netWorkUnitId => {
+    const result = await reqVsanList(netWorkUnitId);
+    if (result.code === 0) {
+      this.switchUnitList = result.data;
+
+    } else {
+      message.error("获取VSAN列表失败！失败信息：" + result.message)
+    }
+  }
 
 
 

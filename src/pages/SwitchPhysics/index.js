@@ -89,7 +89,7 @@ class SwitchPhysics extends Component {
             rowKey={record => record.storageUnitId}
             scroll={{ y: "76vh", x: 1700 }} pagination={false} bordered size="middle"
             columns={this.initColumns()}
-            dataSource={state.deviceSwitchList} />
+            dataSource={state.deviceSwitchList.content} />
         </Card>
       </Card>
     )

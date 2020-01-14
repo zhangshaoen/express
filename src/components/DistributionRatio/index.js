@@ -5,8 +5,11 @@ import "./index.less"
 
 export default class DistributionRatio extends Component {
   render() {
+    let { title, titColor, dataSource} = this.props;
 
-    const { title, titColor, dataSource} = this.props;
+    if(String(dataSource).indexOf(".") !== -1){
+      dataSource = dataSource * 100
+    }
 
     return (
       <div className="distribution-ratio">

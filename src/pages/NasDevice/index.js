@@ -59,10 +59,11 @@ class NasDevice extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    const {id} = getQueryVariable(this, "id");
-    if(id) {
+    let {id} = getQueryVariable(this, "id");
+    if(id) { 
+      if(/[^\u4e00-\u9fa5]/.test(id)) id = encodeURI(id);
       // 根据 ID 存储控制器页面基本信息查询
-      state.getNasStorageControlInfoByName(id);
+      state.getStorageControlInfoByName(id);
       // 根据 ID 存储控制器页面NAS卷列表查询
       state.getNasVolumeListByStorageControl(id);
     }else {

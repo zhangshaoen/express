@@ -63,7 +63,7 @@ class ResourcePool extends Component {
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
           bodyStyle={{ paddingBottom: "0" }}>
-            <Medal dataSource={state.resourcePoolInfo}/>
+            <Medal name="name" dataSource={state.resourcePoolInfo}/>
         </Card>
         <Card
           title={state.menuItem.title}

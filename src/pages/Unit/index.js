@@ -86,7 +86,7 @@ class Unit extends Component {
       },
       {
         title: "部署楼宇",
-        dataIndex: "deploymentLocation"
+        dataIndex: "position"
       },
       {
         title: "管理机",

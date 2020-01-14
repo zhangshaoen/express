@@ -14,10 +14,14 @@ class SwitchUnit extends Component {
   initColumns = () => {
     return [
       {
-        title: "所属Fabric",
-        dataIndex: "",
+        title: "VS名称",
+        dataIndex: "vsanName",
         width: 150,
         fixed: 'left',
+      },
+      {
+        title: "所属Fabric",
+        dataIndex: "",
       },
       {
         title: "厂商",
@@ -25,23 +29,19 @@ class SwitchUnit extends Component {
       },
       {
         title: "所属数据中心",
-        dataIndex: "dataCenter"
+        dataIndex: "dataCenterName"
       },
       {
         title: "部署楼宇",
-        dataIndex: "deploymentLocation"
-      },
-      {
-        title: "VF名称",
-        dataIndex: ""
+        dataIndex: "position"
       },
       {
         title: "端口数量",
-        dataIndex: ""
+        dataIndex: "portNum"
       },
       {
         title: "端口分配率",
-        dataIndex: ""
+        dataIndex: "portAllocatedRatio"
       },
       {
         title: "状态置换",
@@ -64,6 +64,8 @@ class SwitchUnit extends Component {
     if(id) {
       // 获取网络单元信息
       state.getNetWorkUnit(id);
+      // 获取VSAN列表
+      state.getVsanList(id);
 
 
     }else {
