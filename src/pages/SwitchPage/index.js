@@ -73,18 +73,18 @@ class SwitchPage extends Component {
         width: 200,
         fixed: 'left',
       },
-      {
-        title: "设备名称",
-        dataIndex: "fabricNames",
-        render: (text, record) => {
-          record.fabricList?.map((fabric, index) => {
-            return <span key={index}>{fabric.fabricName}</span>
-          })
-        }
-      },
+      // {
+      //   title: "设备名称",
+      //   dataIndex: "fabricNames",
+      //   render: (text, record) => {
+      //     record.fabricList?.map((fabric, index) => {
+      //       return <span key={index}>{fabric.fabricName}</span>
+      //     })
+      //   }
+      // },
       {
         title: "厂商",
-        dataIndex: "firm"
+        dataIndex: "manufacturer"
       },
       {
         title: "所属数据中心",

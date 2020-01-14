@@ -21,7 +21,7 @@ class SwitchUnit extends Component {
       },
       {
         title: "厂商",
-        dataIndex: "firm"
+        dataIndex: "manufacturer"
       },
       {
         title: "所属数据中心",

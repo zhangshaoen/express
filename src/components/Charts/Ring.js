@@ -47,7 +47,7 @@ export default class Ring extends Component {
         itemGap: 30,
         formatter: function(name) {
           // let blank = 10 - name.length;
-          return `${name}   ${objData[name].value}   ${((objData[name].value/totals) * 100).toFixed(2)}%`
+          return `${name}   ${objData[name].value}   ${((objData[name].value/totals) * 100).toFixed(0)}%`
         },
         data: legendData
       },

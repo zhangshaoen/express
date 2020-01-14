@@ -14,7 +14,7 @@ import NasStorageDevice from '../NasStorageDevice';
 import FiberSwitchManagement from "../FiberSwitchManagement";
 import StorageManagement from "../StorageManagement";
 
-import "./index.less";
+import "../../assets/less/index.less";
 
 
 @observer

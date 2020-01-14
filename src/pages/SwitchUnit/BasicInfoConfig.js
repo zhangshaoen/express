@@ -9,7 +9,7 @@ export const BasicInfoList =  [
   },
   {
     label: "设备厂商",
-    key: "firm"
+    key: "manufacturer"
   },
   {
     label: "数据中心",

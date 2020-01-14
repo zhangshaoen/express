@@ -95,7 +95,7 @@ class SwitchZone extends Component {
       },
       {
         title: "zone类型",
-        dataIndex: "firm"
+        dataIndex: "manufacturer"
       },
       {
         title: "所属网络",

@@ -5,7 +5,7 @@ import { Card,  Table, message } from 'antd';
 import BasicInfo from "../../components/BasicInfo";
 import ProgressInfo from "../../components/ProgressInfo";
 import { BasicInfoList, CapacityList, MBPSList, IOPSList } from "./BasicInfoConfig";
-import "./index.less";
+import "../../assets/less/index.less";
 import state from '../../Store';
 import {getQueryVariable} from '../../utils/getQueryVariable';
 

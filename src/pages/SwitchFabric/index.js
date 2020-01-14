@@ -74,7 +74,7 @@ class SwitchFabric extends Component {
       },
       {
         title: "端口Index",
-        dataIndex: "firm"
+        dataIndex: "manufacturer"
       },
       {
         title: "端口号",

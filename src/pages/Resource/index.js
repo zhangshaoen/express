@@ -51,6 +51,11 @@ class Resource extends Component {
     this.setState({ visible: false, });
   };
 
+  updateUnit = record => {
+    record.edit = false;
+    state.updateStorageUnit(record)
+  }
+
   initColumns = path => {
     let columns = [
       {
@@ -59,10 +64,7 @@ class Resource extends Component {
         width: 200,
         fixed: 'left',
       },
-      {
-        title: "设备名称",
-        dataIndex: "storageEquipmentNames"
-      },
+      // { title: "设备名称", dataIndex: "storageEquipmentNames" },
       {
         title: "所属数据中心",
         dataIndex: "dataCenter"
@@ -118,11 +120,11 @@ class Resource extends Component {
       },
       {
         title: "状态置换",
-        dataIndex: "useState",
-        render: (text, record) => {
+        dataIndex: "status",
+        render: (text, record, index) => {
           let disabled = !record.edit;
           return (
-            <Radio.Group defaultValue={text} disabled={disabled} buttonStyle="solid" size="small">
+            <Radio.Group defaultValue={text} disabled={disabled} onChange={e => state.storageUnitRadioGroupChange(index, e.target.value)} buttonStyle="solid" size="small">
               <Radio.Button value="Y" >正常服务</Radio.Button>
               <Radio.Button value="N" >维护状态</Radio.Button>
             </Radio.Group>
@@ -139,7 +141,7 @@ class Resource extends Component {
             <span>
               <Button
                 type="primary" size="small" style={{ marginRight: "5px" }}
-                onClick={() => state.updateStorageUnit(record)}>
+                onClick={() => this.updateUnit(record)}>
                 保存
               </Button>
               <Popconfirm title="是否确认删除当前单元？" onConfirm={(record) => state.deleteStorageUnit(record)}>
@@ -164,7 +166,7 @@ class Resource extends Component {
       columns.splice(7, 0, {
         title: "是否可做心跳盘",
         dataIndex: "isHeart",
-        render: (text, record) => <span>{`${text === "Y" ? "是" : text === "N" ? "否" : null}`}</span>,
+        render: (text, record) => <span>{`${text === "Y" ? "是" : text === "N" ? "否" : ""}`}</span>,
       })
     }
 

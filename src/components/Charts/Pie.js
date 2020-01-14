@@ -25,9 +25,9 @@ export default class Pie extends Component {
         subtext: totals,
 				color: '#555',
         textStyle: {
-          fontSize: 20,
+          // fontSize: 20,
           align: 'center',
-          lineHeight: 20,
+          // lineHeight: 20,
         },
         subtextStyle: {
           fontSize: 20,
@@ -46,8 +46,11 @@ export default class Pie extends Component {
 				formatter: function(name) {					
 					// let blank = 10 - name.length;
 					if(objData[name]) {
-						return `${name} 
-						${objData[name].value}`
+						return `
+						
+		${name}
+
+		${objData[name].value}`
 					}
         },
 			},
@@ -55,7 +58,7 @@ export default class Pie extends Component {
 				{
 					name: '访问来源',
 					type: 'pie',
-					center: ['75%', '40%'],
+					center: ['70%', '40%'],
 					avoidLabelOverlap: false,
 					hoverAnimation: false,
 					color: options.color,

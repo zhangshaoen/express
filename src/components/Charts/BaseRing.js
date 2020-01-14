@@ -29,7 +29,7 @@ export default class BaseRing extends Component {
         y: '35%',
       },
       legend: {
-        bottom: "bottom",
+        bottom: "0",
         textStyle: {
           color: '#666'
         },
@@ -50,7 +50,7 @@ export default class BaseRing extends Component {
         label: {
           normal: {
             show: true,
-            fontSize: 20,
+            // fontSize: 20,
             formatter: function (params) {
               let percent = ((params.value / totals) * 100).toFixed(0);
               if(params.value) {

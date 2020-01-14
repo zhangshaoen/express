@@ -9,7 +9,7 @@ export const BasicInfoList =  [
   },
   {
     label: "厂商",
-    key: "firm",
+    key: "manufacturer",
   },
   {
     label: "管理IP",

@@ -3,8 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { Card, Table, message } from 'antd';
 import Medal from '../../components/Medal';
-import "./index.less";
+import "../../assets/less/index.less";
 import {getQueryVariable} from '../../utils/getQueryVariable';
+import {typeJudgment} from "../../utils/typeJudgment"
 import state from '../../Store';
 
 @observer
@@ -27,17 +28,17 @@ class ResourcePool extends Component {
       {
         title: "当前容量分配比例",
         dataIndex: "currentAllocatedCapacityRatio",
-        render: (text, record) => <span>{`${text * 100}%`}</span>
+        render: (text, record) => <span>{<span>{typeJudgment(text) === "number" ? `${(text * 100)}%` : 0}</span>}</span>
       },
       {
         title: "当前MBPS分配比例",
         dataIndex: "currentAllocatedMBPSRatio",
-        render: (text, record) => <span>{`${text * 100}%`}</span>
+        render: (text, record) => <span>{<span>{typeJudgment(text) === "number" ? `${(text * 100)}%` : 0}</span>}</span>
       },
       {
         title: "当前IOPS分配比例",
         dataIndex: "currentAllocatedIOPSRatio",
-        render: (text, record) => <span>{`${text * 100}%`}</span>
+        render: (text, record) => <span>{<span>{typeJudgment(text) === "number" ? `${(text * 100)}%` : 0}</span>}</span>
       }
     ];
   }

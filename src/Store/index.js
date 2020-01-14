@@ -2,7 +2,7 @@
 import { observable, action } from 'mobx';
 import headerMenuList from '../config/haderMenuConfig';
 import { message } from 'antd';
-import { filterSubValues, filterSubValue } from '../utils/filterSubValues';
+import { filterSubValues } from '../utils/filterSubValues';
 import { getProperty } from '../utils/getProperty';
 import {
   reqLeftTree,
@@ -115,9 +115,11 @@ class State {
       this.defaultSelectedKeys = [id];
       // 左侧导航默认展开
       if (id && id !== "null") {
-        let defaultOpenKeys = filterSubValue(getProperty([result.data].concat([]), "id"), "id", id).parent;
-        defaultOpenKeys[0] = "home";
-        this.defaultOpenKeys = defaultOpenKeys;
+        // let defaultOpenKeys = filterSubValue(getProperty([result.data].concat([]), "id"), "id", id);
+        // console.log(defaultOpenKeys);
+        
+        // defaultOpenKeys[0] = "home";
+        // this.defaultOpenKeys = defaultOpenKeys;
       }
 
 
@@ -125,12 +127,12 @@ class State {
       this.leftTree = getProperty([result.data], "title");
       if (id && id !== "null") {
         // 页面展示标题
-        this.menuItem = filterSubValue([result.data], "id", id);
-        /** 点击刷新面包屑 **/
-        let breadcrumbList = this.menuItem.parent
-        if (breadcrumbList) {
-          this.breadcrumbList = ["存储资源池", ...breadcrumbList];
-        }
+        // this.menuItem = filterSubValue([result.data], "id", id);
+        // /** 点击刷新面包屑 **/
+        // let breadcrumbList = this.menuItem.parent
+        // if (breadcrumbList) {
+        //   this.breadcrumbList = ["存储资源池", ...breadcrumbList];
+        // }
 
         switch (pathname) {
           case "/home/base":
@@ -260,7 +262,7 @@ class State {
   }
   // 根据 ID 获取当前数据中心所有资源池信息
   @observable resourcePoolOptions = [];
-  @observable resourcePoolValue;
+  @observable resourcePoolValue = null;
   @action.bound
   getResourcePoolOptions = id => {
     let resourcePool = [];
@@ -445,12 +447,18 @@ class State {
       message.error(`存储级别页面（特定存储资源池下特定级别）存储单元新增失败！失败信息：` + result.message);
     }
   }
+  // 存储级别页面 存储单元 状态置换
+  @action.bound
+  storageUnitRadioGroupChange = (index, value) => {
+    let resourceList = this.resourceList.concat([]);
+    resourceList[index].status = value;
+    this.resourceList = resourceList;
+  }
   //存储级别页面（特定存储资源池下特定级别）存储单元编辑
   @action.bound
   updateStorageUnit = async storageUnit => {
     const result = await reqUpdateStorageUnit(storageUnit);
     if (result.code === 0) {
-
       message.success(`存储级别页面（特定存储资源池下特定级别）存储单元编辑成功！`);
     } else {
       message.error(`存储级别页面（特定存储资源池下特定级别）存储单元编辑失败！失败信息：` + result.message);

@@ -1,7 +1,7 @@
 export const BasicInfoList =  [
   {
     label: "资源池名称",
-    key: "simplifiedName",
+    key: "name",
   },
   {
     label: "所属数据中心",

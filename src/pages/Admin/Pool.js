@@ -20,7 +20,7 @@ import SwitchFabric from '../SwitchFabric';
 import SwitchZone from '../SwitchZone';
 import SwitchPhysics from '../SwitchPhysics';
 
-import "./index.less";
+import "../../assets/less/index.less";
 
 const { Sider, Content } = Layout;
 

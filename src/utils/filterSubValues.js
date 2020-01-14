@@ -22,16 +22,15 @@ export const filterSubValues = (list, reg, regText, label, value) => {
   return values
 }
 
-let result = null;
-export const filterSubValue = (list, key, value) => {  
-  if (list.find(o => o[key] === value)) {
-    result = list.find(o => o[key] === value);
-    return result
-  }else {
-    list.forEach(o => {
-      if (o.hasOwnProperty('childrens') && o.childrens) {
-        filterSubValue(o.childrens, key, value)
-      }
-    })
-  }
-}
+
+// export const filterSubValue = (list, key, value, result) => {  
+//   if (list.find(o => o[key] === value)) {
+//     result = list.find(o => o[key] === value);
+//     return
+//   }
+//   list.forEach(o => {
+//     if (o.hasOwnProperty('childrens') && o.childrens) {
+//       filterSubValue(o.childrens, key, value)
+//     }
+//   })
+// }

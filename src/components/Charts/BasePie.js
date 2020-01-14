@@ -47,9 +47,11 @@ export default class Pie extends Component {
 				formatter: function(name) {					
 					if(JSON.stringify(objData) !== "{}" && objData[name].value) {
           // let blank = 10 - name.length;
-						return `${objData[name].value}
+						return `
 					
-${name}`					
+${name}
+
+${objData[name].value}`					
 					}else {
 						return
 					}

@@ -78,7 +78,7 @@ class Unit extends Component {
       },
       {
         title: "厂商",
-        dataIndex: "firm"
+        dataIndex: "manufacturer"
       },
       {
         title: "所属数据中心",
@@ -90,7 +90,7 @@ class Unit extends Component {
       },
       {
         title: "管理机",
-        dataIndex: "manageServiceId"
+        dataIndex: "manageServerName"
       },
       {
         title: "服务状态",
@@ -125,7 +125,7 @@ class Unit extends Component {
       columns.splice(5, 0, {
         title: "是否可做心跳盘",
         dataIndex: "isHeart",
-        render: (text, record) => <span>{`${text === "Y" ? "是" : text === "N" ? "否" : null }`}</span>,
+        render: (text, record) => <span>{`${text === "Y" ? "是" : text === "N" ? "否" : "" }`}</span>,
       })
     }
 
