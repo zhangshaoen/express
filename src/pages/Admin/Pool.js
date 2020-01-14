@@ -5,7 +5,7 @@ import state from "../../Store";
 import urlBase from '../../config/urlBase';
 import { Layout } from 'antd';
 import LeftNav from '../../components/LeftNav';
-import PageContainer from "../../components/PageContainer"
+import ScrollToTop from "../../components/ScrollToTop"
 import Home from '../Home';
 import Base from '../Base';
 import Storage from '../Storage';
@@ -39,7 +39,7 @@ class Pool extends Component {
           <LeftNav />
         </Sider>
         <Content className="content" id="content">
-          <PageContainer>
+          <ScrollToTop>
             <Switch>
               <Route path={`${urlBase}/home` } exact component={Home} key={this.props.location.search} />
               <Route path={`${urlBase}/home/base` } component={Base} key={this.props.location.search} />
@@ -59,7 +59,7 @@ class Pool extends Component {
               <Route path={`${urlBase}/home/switchZone`} component={SwitchZone} key={this.props.location.search} />
               <Route path={`${urlBase}/home/switchPhysics`} component={SwitchPhysics} key={this.props.location.search} />
             </Switch>
-          </PageContainer>
+          </ScrollToTop>
         </Content>
       </Layout>
     );

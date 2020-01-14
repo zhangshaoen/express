@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import React, { Component } from "./react";
+import { withRouter } from "./react-router-dom";
 
 // react-router切换页面后跳转到页面顶部
 class ScrollToTop extends Component {
