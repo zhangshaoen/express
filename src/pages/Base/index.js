@@ -19,7 +19,7 @@ const { Option } = Select;
 class Base extends Component {
 
   // 资源池下拉框
-  resourcePool = value => {
+  resourcePool = value => {    
     state.getDevNumOrDevCapByPool(value);
     state.getDistributionRatioTrendByPool(value, state.linkDate);
   }
@@ -29,8 +29,8 @@ class Base extends Component {
     if (id) {
       // 根据 ID 获取当前数据中心 - 设备总览 和 各存储设备分配占比
       state.getBaseRingOrAvaCap(id);
-      // 获取当前数据中心所有资源池
-      state.getResourcePoolOptions(id);
+      // 根据 ID 获取数据中心下资源池列表
+      state.getStoragePoolListByDataCenter(id);
       // 获取当前数据中心资源池分配比例趋势图
       state.getDistributionRatioTrendByPool(id, state.linkDate);
 
@@ -91,7 +91,7 @@ class Base extends Component {
           <Col span={24}>
             <Card className="card" style={{ height: "auto" }}>
               <Row className="row" type="flex" justify="end">
-                <Col span={6}>
+                <Col span={5}>
                   <Select
                     value={state.resourcePoolValue}
                     onChange={value => { this.resourcePool(value) }}
@@ -99,7 +99,7 @@ class Base extends Component {
                   >
                     {
                       state.resourcePoolOptions.map((item, index) => {
-                        return <Option key={index} value={item.key}>{item.value}</Option>
+                        return <Option key={item.id} value={item.id}>{item.name}</Option>
                       })
                     }
                   </Select>

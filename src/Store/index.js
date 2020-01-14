@@ -13,6 +13,7 @@ import {
   reqNumByDeviceType,
   reqDeviceNumByPool,
   reqDeviceCapacityByPool,
+  reqStoragePoolListByDataCenter,
   reqDistributionRatioTrendByPool,
   reqStorageListByDeviceCategory,
   reqStorageLevelInfoByStorageResourcePool,
@@ -135,13 +136,6 @@ class State {
         //   this.breadcrumbList = ["存储资源池", ...breadcrumbList];
         // }
 
-        switch (pathname) {
-          case "/home/base":
-            // 获取当前数据中心所有资源池
-            this.getResourcePoolOptions(id);
-            break;
-          default:
-        }
       } else if (id === "null") {
         this.breadcrumbList = ["存储资源池", "建行数据中心"];
         this.defaultSelectedKeys = ["home"];
@@ -261,25 +255,22 @@ class State {
       message.error('获取获取当前数据中心设备总览数据失败！失败信息：' + resultAvaCap.message)
     }
   }
-  // 根据 ID 获取当前数据中心所有资源池信息
+  // 根据 ID 获取数据中心下资源池列表
   @observable resourcePoolOptions = [];
   @observable resourcePoolValue = null;
   @action.bound
-  getResourcePoolOptions = id => {
-    let resourcePool = [];
-    this.leftTree.forEach(tree => {
-      tree.childrens.forEach(children => {
-        if (children.id === id) {
-          resourcePool = children.childrens;
-        }
-      });
-    })
-    this.resourcePoolOptions = filterSubValues(resourcePool, "POOL", "key", "id", "title");
-    if (this.resourcePoolOptions?.length) {
-      this.resourcePoolValue = this.resourcePoolOptions[0].key;
-      this.getDevNumOrDevCapByPool(this.resourcePoolValue);
+  getStoragePoolListByDataCenter = async dataCenterId => {
+    let result = await reqStoragePoolListByDataCenter(dataCenterId);
+    if(result.code === 0) {
+      this.resourcePoolValue = result.data[0].id;
+      this.resourcePoolOptions = result.data;
+      state.getDevNumOrDevCapByPool(result.data[0].id);
+      state.getDistributionRatioTrendByPool(result.data[0].id, this.linkDate);
+    }else {
+      message.error("获取数据中心下资源池列表");
     }
   }
+
   // 根据资源池 ID 获取当前数据中心各资源池设备数量占比
   @observable deviceNumByPool = [];
   // 根据资源池 ID 获取当前数据中心各资源池设备容量占比
@@ -288,7 +279,7 @@ class State {
   getDevNumOrDevCapByPool = async id => {
     this.resourcePoolValue = id;
     const resultDevNum = await reqDeviceNumByPool(id);
-    if (resultDevNum.code === 0) {
+    if (resultDevNum.code === 0) {      
       this.deviceNumByPool = resultDevNum.data.storageLevels.map(item => {
         return { value: item.resourceTotal, name: item.name }
       })

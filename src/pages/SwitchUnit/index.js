@@ -21,7 +21,7 @@ class SwitchUnit extends Component {
       },
       {
         title: "所属Fabric",
-        dataIndex: "",
+        dataIndex: "fabricName",
       },
       {
         title: "厂商",

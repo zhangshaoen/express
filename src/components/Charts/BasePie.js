@@ -11,7 +11,7 @@ export default class Pie extends Component {
     return resObj;
   }
 	getOption = options => {
-		let dataSource = options.dataSource;
+		let dataSource = options.dataSource;		
 		let objData = {};
 		let totals = 0;
 		let legendData = [];

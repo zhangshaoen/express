@@ -24,6 +24,8 @@ export const reqDistributionRatioTrendByPool = (storagePoolId, date) => ajax(`${
 export const reqDeviceNumByPool = storagePoolId => ajax(`${BASE}/view/getDeviceNumByPool`, {storagePoolId});
 // 数据中心各资源池设备容量占比
 export const reqDeviceCapacityByPool = storagePoolId => ajax(`${BASE}/view/getDeviceCapacityByPool`, {storagePoolId});
+// 获取数据中心下资源池列表
+export const reqStoragePoolListByDataCenter = dataCenterId => ajax(`${BASE}/view/getStoragePoolListByDataCenter`, {dataCenterId});
 
 
 // 存储类型页面存储列表查询
