@@ -76,10 +76,12 @@ export const reqAddStorageControl = storageUnit => ajax(`${BASE}/view/addStorage
 export const reqSanStorage = storage => ajax(`${BASE}/view/saveSanStorage`, storage, "POST");
 // 存储单元页面存储控制器列表项编辑
 export const reqUpdateStorageControl = storageControl => ajax(`${BASE}/view/updateStorageControl`, storageControl, "PUT");
-// 
+// 存储单元页面存储设备列表项编辑
+export const reqUpdateStorageDevice = storage => ajax(`${BASE}/view/updateStorageDevice`, storage, "PUT");
 // 存储单元页面存储控制器列表项删除
-export const reqDeleteStorageControl = storageUnit => ajax(`${BASE}/view/deleteStorageControl`, storageUnit, "DELETE");
-// 
+export const reqDeleteStorageControl = storageControl => ajax(`${BASE}/view/deleteStorageControl`, storageControl, "DELETE");
+// 存储单元页面存储设备列表项删除
+export const reqDeleteStorageDevice = storage => ajax(`${BASE}/view/deleteStorageDevice`, storage, "DELETE");
 
 
 // NAS 存储控制器页面基本信息查询

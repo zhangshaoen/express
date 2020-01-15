@@ -140,6 +140,5 @@ export const port = [
   {
     title: "交换机端口号",
     dataIndex: "交换机端口号",
-    fixed: 'right',
   },
 ]

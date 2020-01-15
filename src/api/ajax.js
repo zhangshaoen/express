@@ -14,7 +14,7 @@ export default function ajax(url, data = {}, method = 'GET') {
     } else if (method === 'PUT') {
       promise = axios.put(url, data)
     } else if (method === 'DELETE') {
-      promise = axios.delete(url, data)
+      promise = axios.delete(url, {data})
     }
 
     // 2. 如果成功了, 调用 resolve(value)

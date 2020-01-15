@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
+import { observer } from 'mobx-react';
 import { Row, Col, Card, Button, Table, Modal, Select, message } from 'antd';
 import BasicInfo from "../../components/BasicInfo";
 import ProgressInfo from "../../components/ProgressInfo";
 import { BasicInfoList, CapacityList, MBPSList, IOPSList } from "./BasicInfoConfig";
 import { storagePool, lun, portGrout, port } from "./columns";
 import "../../assets/less/index.less";
-// import state from '../../Store';
 import {getQueryVariable} from '../../utils/getQueryVariable';
-import state from "../../Store/index";
+import { ChangeToUTF } from '../../utils/UTFTranslate';
+import state from "../../Store";
 
-
+@observer
 class SanDevice extends Component {
 
   state = { visible: false };
@@ -36,8 +37,9 @@ class SanDevice extends Component {
   };
 
   UNSAFE_componentWillMount() {
-    const {id} = getQueryVariable(this, "id");
+    let {id} = getQueryVariable(this, "id");
     if(id) {
+      id = ChangeToUTF(id);
       // 根据 ID SAN 展示存储设备信息
       state.getStorageByStorageName(id);
       // 展示存储设备下存储池列表
@@ -62,24 +64,39 @@ class SanDevice extends Component {
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
           style={{ marginBottom: "24px" }} >
           <BasicInfo infos={BasicInfoList} dataSource={state.sanDeviceList} />
-          <ProgressInfo
+            <ProgressInfo
             title="容量"
             titColor="blue"
             infos={CapacityList}
-            proportion={{ total: "ainitialCapacity", part: "allocatedCapacity" }}
-            dataSource={{ ainitialCapacity: "100T", allocatedCapacity: "30T" }} />
+            proportion={{ total: "initialCapacity", part: "allocatedCapacity" }}
+            dataSource={{ 
+              initialCapacity: state.sanDeviceList.initialCapacity, 
+              allocatedCapacity: state.sanDeviceList.allocatedCapacity,
+              capacityMaxAllocationRatio: state.sanDeviceList.capacityMaxAllocationRatio,
+              capacityAllocationRatio: state.sanDeviceList.capacityAllocationRatio
+            }} />
           <ProgressInfo
             title="MBPS"
             titColor="green"
             infos={MBPSList}
             proportion={{ total: "initialMbps", part: "usedMbps" }}
-            dataSource={{ initialMbps: "100G", usedMbps: "40G" }} />
+            dataSource={{ 
+              initialMbps: state.sanDeviceList.initialMbps, 
+              usedMbps: state.sanDeviceList.usedMbps,
+              mbpsMaxAllocationRatio: state.sanDeviceList.mbpsMaxAllocationRatio,
+              mbpsAllocationRatio: state.sanDeviceList.mbpsAllocationRatio
+            }} />
           <ProgressInfo
             title="IOPS"
             titColor="orange"
             infos={IOPSList}
-            proportion={{ total: "finitialIops", part: "usedIops" }}
-            dataSource={{ finitialIops: 100, usedIops: 20 }} />
+            proportion={{ total: "initialIops", part: "usedIops" }}
+            dataSource={{ 
+              initialIops: state.sanDeviceList.initialIops, 
+              usedIops: state.sanDeviceList.usedIops,
+              iopsMaxAllocationRatio: state.sanDeviceList.iopsMaxAllocationRatio,
+              iopsAllocationRatio: state.sanDeviceList.iopsAllocationRatio
+            }} />
         </Card>
         <Card
           title="存储池信息"
@@ -87,7 +104,7 @@ class SanDevice extends Component {
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
           style={{ marginBottom: "24px" }} >
           <Table
-            scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
+            scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={storagePool}
             dataSource={state.sanDevicePoolList} />
         </Card>
@@ -114,7 +131,7 @@ class SanDevice extends Component {
             </Col>
           </Row>
           <Table
-            scroll={{ y: "76vh", x: 1500 }} bordered size="middle"
+            scroll={{ y: "76vh" }} bordered size="middle"
             columns={lun}
             dataSource={state.sanDeviceLunList} />
         </Card>
@@ -129,7 +146,7 @@ class SanDevice extends Component {
             </Col>
           </Row>
           <Table
-            scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
+            scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={portGrout}
             dataSource={[]} />
         </Card>
@@ -146,7 +163,7 @@ class SanDevice extends Component {
             </Col>
           </Row>
           <Table
-            scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
+            scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={port}
             dataSource={state.sanDevicePortList} />
         </Card>

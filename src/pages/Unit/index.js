@@ -86,7 +86,12 @@ class Unit extends Component {
               state.getStorageControlListByStorageUnit(this.state.addValues.id);
             });
           }else if(/san/.test(this.state.addValues.pathname)) {
-            
+            state.updateStorageDevice(updateValues).then(() => {
+              // 获取SAN存储设备列表
+              state.getSanStorageList(this.state.addValues.id);
+              // 获取未关联的SAN存储设备列表
+              state.getFreeSanStorageList();
+            })
           }
         });
       }
@@ -99,12 +104,20 @@ class Unit extends Component {
   };
 
   deleteStoCon = (flag, record) => {
-    if(flag) {
-      // NAS 删除
-      state.deleteStorageControl(record)
-    }else {
-      // SAN 删除
-      
+    if(flag) { // NAS 删除
+      state.deleteStorageControl(record).then(() => {
+        // 根据 ID 获取存储单元页面存储控制器列表查询
+        state.getStorageControlListByStorageUnit(this.state.addValues.id);
+        // 存储级别页面所有未被单元添加且有效的NAS控制器名称列表
+        state.getNASStorageControlList();
+      });
+    }else { // SAN 删除
+      state.deleteStorageDevice(record).then(() => {
+        // 获取SAN存储设备列表
+        state.getSanStorageList(this.state.addValues.id);
+        // 获取未关联的SAN存储设备列表
+        state.getFreeSanStorageList();
+      })
     }
   }
 
@@ -202,7 +215,12 @@ class Unit extends Component {
     }
   }
 
+  componentWillUnmount() {
+    
+  }
+
   render() {
+    let dataSource = /nas/.test(this.props.location.pathname) ? state.unitList : state.sanUnitList;
     return (
       <Card>
         <Card
@@ -255,10 +273,10 @@ class Unit extends Component {
             </Col>
             <Col span={24}>
               <Table
-                rowKey={record => record.storageUnitId}
+                rowKey={record => record.name || record.storageName }
                 scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
                 columns={this.initColumns(/nas/.test(this.props.location.pathname))}
-                dataSource={state.unitList} />
+                dataSource={ dataSource } />
             </Col>
           </Row>
         </Card>

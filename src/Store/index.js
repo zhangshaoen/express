@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { observable, action } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 import headerMenuList from '../config/haderMenuConfig';
 import { message } from 'antd';
 import { getProperty } from '../utils/getProperty';
@@ -31,7 +31,9 @@ import {
   reqAddStorageControl,
   reqSanStorage,
   reqUpdateStorageControl,
+  reqUpdateStorageDevice,
   reqDeleteStorageControl,
+  reqDeleteStorageDevice,
   reqStorageControlInfoByName,
   reqNasVolumeListByStorageControl,
   reqStorageByStorageName,
@@ -547,11 +549,12 @@ class State {
     }
   }
   // 获取SAN存储设备列表
+  @observable sanUnitList = [];
   @action.bound
   getSanStorageList = async storageUnitId => {
     const result = await reqSanStorageList(storageUnitId);
     if (result.code === 0) {
-      this.unitList = result.data;
+      this.sanUnitList = result.data;
     } else {
       message.error("获取SAN存储设备列表数据失败！失败信息：" + result.message)
     }
@@ -589,14 +592,35 @@ class State {
       message.error("存储单元页面存储控制器列表项编辑失败！失败信息：" + result.message)
     }
   }
+  // 存储单元页面存储设备列表项编辑
+  @action.bound
+  updateStorageDevice = async storage => {
+    const result = await reqUpdateStorageDevice(storage);
+    if (result.code === 0) {
+
+      message.success(`存储单元页面存储设备列表项编辑成功！`);
+    } else {
+      message.error("存储单元页面存储设备列表项编辑失败！失败信息：" + result.message)
+    }
+  }
   // 存储单元页面存储控制器列表项删除
   @action.bound
-  deleteStorageControl = async storageControl => {
-    const result = await reqDeleteStorageControl(storageControl);
+  deleteStorageControl = async storageControl => {  
+    const result = await reqDeleteStorageControl(toJS(storageControl));
     if (result.code === 0) {
       message.success(`存储单元页面存储控制器列表项删除成功！`);
     } else {
       message.error("存储单元页面存储控制器列表项删除失败！失败信息：" + result.message)
+    }
+  }
+  // 存储单元页面存储设备列表项删除
+  @action.bound
+  deleteStorageDevice = async storage => {
+    const result = await reqDeleteStorageDevice(toJS(storage));
+    if (result.code === 0) {
+      message.success(`存储单元页面存储设备列表项删除成功！`);
+    } else {
+      message.error("存储单元页面存储设备列表项删除失败！失败信息：" + result.message)
     }
   }
 
@@ -632,7 +656,7 @@ class State {
   @action.bound
   getStorageByStorageName = async storageName => {
     let result = await reqStorageByStorageName(storageName);
-    if (result.code === 0) {      
+    if (result.code === 0) {   
       this.sanDeviceList = result.data;
     } else {
       message.error("获取SAN存储控制器页面基本信息失败！失败信息：" + result.message)
@@ -654,7 +678,7 @@ class State {
   @action.bound
   getStorageLunByStorageName = async storageName => {
     let result = await reqStorageLunByStorageName(storageName);
-    if (result.code === 0) {      
+    if (result.code === 0) {        
       this.sanDeviceLunList = result.data;
     } else {
       message.error("获取SAN存储设备下LUN列表失败！失败信息：" + result.message)

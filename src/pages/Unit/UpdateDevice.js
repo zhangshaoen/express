@@ -6,12 +6,12 @@ const { Item } = Form;
 
 class UpdateDevice extends Component {
 
-  isHeart = (path, getFieldDecorator) => {
+  isHeart = (path, getFieldDecorator, isHeart) => {
     if(/nas/.test(path)) {
       return (
         <Item label='是否可做心跳盘:'>
         {getFieldDecorator('isHeart', {
-            initialValue: "Y",
+            initialValue: isHeart,
           })(
           <Radio.Group buttonStyle="solid">
             <Radio.Button value="Y">是</Radio.Button>
@@ -50,7 +50,7 @@ class UpdateDevice extends Component {
         <Item label='设备名称:'>
           {getFieldDecorator(deviceName, {
             initialValue: deviceName === "name" ? name : deviceName === "storageName" ?  storageName : "",
-            rules: [{ required: true, message: '请输入设备名称!' }],
+            rules: [{ message: '请输入设备名称!' }],
           })(<Input disabled />)}
         </Item>
         <Item label='服务状态:'>
@@ -66,7 +66,7 @@ class UpdateDevice extends Component {
             )
           }
         </Item>
-        { this.isHeart(path, getFieldDecorator) }
+        { this.isHeart(path, getFieldDecorator, isHeart) }
       </Form>
     )
   }

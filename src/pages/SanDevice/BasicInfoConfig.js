@@ -1,11 +1,11 @@
 export const BasicInfoList =  [
   {
     label: "存储名称",
-    key: "name",
+    key: "storageName",
   },
   {
     label: "序列号",
-    key: "sn"
+    key: "storageSn"
   },
   {
     label: "厂商",
@@ -17,7 +17,7 @@ export const BasicInfoList =  [
   },
   {
     label: "存储类型",
-    key: "type",
+    key: "storageNo",
   },{
     label: "设备型号",
     key: "model",
@@ -41,16 +41,12 @@ export const BasicInfoList =  [
       }
     }
   },
-  {
-    label: "镜像存储名称",
-    key: "",
-  },
 ];
 export const CapacityList =  [
   [
     {
       label: "容量",
-      key: "ainitialCapacity",
+      key: "initialCapacity",
     },
     {
       label: "容量分配比例最大值",
@@ -96,7 +92,7 @@ export const IOPSList =  [
   [
     {
       label: "初始化IOPS",
-      key: "finitialIops",
+      key: "initialIops",
     },
     {
       label: "IOPS分配比例最大值",

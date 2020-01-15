@@ -33,6 +33,7 @@ class Pool extends Component {
   }
 
   render() {
+    let key = this.props.location.search;
     return (
       <Layout className="inner-layout">
         <Sider theme="light" className="sider" width={280}>
@@ -41,23 +42,23 @@ class Pool extends Component {
         <Content className="content" id="content">
           <ScrollToTop>
             <Switch>
-              <Route path={`${urlBase}/home` } exact component={Home} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/base` } component={Base} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/san` } exact component={Storage} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/nas` } exact component={Storage} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/san/resourcePool`} component={ResourcePool} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/nas/resourcePool`} component={ResourcePool} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/san/resource`} component={Resource} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/nas/resource`} component={Resource} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/san/unit`} component={Unit} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/nas/unit`} component={Unit} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/sanDevice`} component={SanDevice} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/nasDevice`} component={NasDevice} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/switchPage`} component={SwitchPage} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/switchUnit`} component={SwitchUnit} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/switchFabric`} component={SwitchFabric} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/switchZone`} component={SwitchZone} key={this.props.location.search} />
-              <Route path={`${urlBase}/home/switchPhysics`} component={SwitchPhysics} key={this.props.location.search} />
+              <Route path={`${urlBase}/home` } exact component={Home} key={key} />
+              <Route path={`${urlBase}/home/base` } component={Base} key={key} />
+              <Route path={`${urlBase}/home/san` } exact component={Storage} key={key} />
+              <Route path={`${urlBase}/home/nas` } exact component={Storage} key={key} />
+              <Route path={`${urlBase}/home/san/resourcePool`} component={ResourcePool} key={key} />
+              <Route path={`${urlBase}/home/nas/resourcePool`} component={ResourcePool} key={key} />
+              <Route path={`${urlBase}/home/san/resource`} component={Resource} key={key} />
+              <Route path={`${urlBase}/home/nas/resource`} component={Resource} key={key} />
+              <Route path={`${urlBase}/home/san/unit`} component={Unit} key={key} />
+              <Route path={`${urlBase}/home/nas/unit`} component={Unit} key={key} />
+              <Route path={`${urlBase}/home/sanDevice`} component={SanDevice} key={key} />
+              <Route path={`${urlBase}/home/nasDevice`} component={NasDevice} key={key} />
+              <Route path={`${urlBase}/home/switchPage`} component={SwitchPage} key={key} />
+              <Route path={`${urlBase}/home/switchUnit`} component={SwitchUnit} key={key} />
+              <Route path={`${urlBase}/home/switchFabric`} component={SwitchFabric} key={key} />
+              <Route path={`${urlBase}/home/switchZone`} component={SwitchZone} key={key} />
+              <Route path={`${urlBase}/home/switchPhysics`} component={SwitchPhysics} key={key} />
             </Switch>
           </ScrollToTop>
         </Content>
