@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { Row, Col, Card, Button, Table, Modal, message, Popconfirm } from 'antd';
 import AddOrUpdate from './AddOrUpdate';
@@ -13,9 +14,11 @@ import {getQueryVariable} from '../../utils/getQueryVariable';
 class SwitchPage extends Component {
 
   state = { 
+    dataCenterId: null,
     visible: false,
     type: null,
     typeText: "",
+    updateData: {}
   };
 
   // 编辑
@@ -31,30 +34,60 @@ class SwitchPage extends Component {
 
 
   showModal = (type, record) => {
-    let typeText;
+    let typeText = null, updateData = {};
     switch(type) {
       case "add":
         typeText = "添加单元";
+        updateData = {};
         break;
       case "update":
-        typeText = "更新单元"
+        typeText = "更新单元";
+        updateData = record;
         break;
       default:  
     }
     this.setState({
       visible: true,
       type,
-      typeText
+      typeText,
+      updateData
     });
   };
 
   handleOk = e => {
     this.form.validateFields(async (err, values) => {
+      this.form.resetFields();
       if (!err) {
         this.setState({
           visible: false,
         }, () => {
-          
+          let dataCenterId = this.state.dataCenterId;
+          if(this.state.type === "add") {
+            let addValues = { dataCenterId, ...values };
+            // 添加网络单元
+            state.addNetWorkUnit(addValues).then(() => {
+              // 获取网络单元列表
+              state.getNetWorkUnitList(dataCenterId);
+              // 获取所有管理机列表
+              state.getManageServerList();
+              // 获取所有未分配的FABRIC
+              state.getIdleFabricList();
+            });
+          }else if(this.state.type === "update") {
+            for(let key in values) {
+              this.state.updateData[key] = values[key];
+            }
+            let updateValues = toJS(this.state.updateData); 
+            state.updateNetWorkUnit(updateValues).then(() => {
+              // 获取网络单元列表
+              state.getNetWorkUnitList(dataCenterId);
+              // 获取所有管理机列表
+              state.getManageServerList();
+              // 获取所有未分配的FABRIC
+              state.getIdleFabricList();
+            });
+          }
+
         });
       }
     })
@@ -65,6 +98,17 @@ class SwitchPage extends Component {
     this.setState({ visible: false, });
   };
 
+  deleteNetWorkUnit = id => {
+    state.switchDeleteNetWorkUnit(id).then(() => {
+      // 获取网络单元列表
+      state.getNetWorkUnitList(this.state.dataCenterId);
+      // 获取所有管理机列表
+      state.getManageServerList();
+      // 获取所有未分配的FABRIC
+      state.getIdleFabricList();
+    })
+  }
+
   initColumns = () => {
     return [
       {
@@ -73,15 +117,6 @@ class SwitchPage extends Component {
         width: 200,
         fixed: 'left',
       },
-      // {
-      //   title: "设备名称",
-      //   dataIndex: "fabricNames",
-      //   render: (text, record) => {
-      //     record.fabricList?.map((fabric, index) => {
-      //       return <span key={index}>{fabric.fabricName}</span>
-      //     })
-      //   }
-      // },
       {
         title: "厂商",
         dataIndex: "manufacturer"
@@ -105,7 +140,7 @@ class SwitchPage extends Component {
             <Button type="primary" size="small" onClick={record => this.showModal("update", record)} style={{marginRight: "10px"}}>
               编辑
             </Button>
-            <Popconfirm title="是否确认删除当前单元？" onConfirm={record => state.switchDeleteNetWorkUnit(record.id)}>
+            <Popconfirm title="是否确认删除当前单元？" onConfirm={record => this.deleteNetWorkUnit(record.id)}>
               <Button type="danger" size="small">删除</Button>
             </Popconfirm>
           </span>
@@ -118,9 +153,15 @@ class SwitchPage extends Component {
     const {id} = getQueryVariable(this, "id");
     if(id) {
       // 获取设备类型信息
-      state.getDeviceCategory(id);
+      state.getDeviceCategory(id).then(() => {
+        this.setState({dataCenterId: id});
+      });
       // 获取网络单元列表
       state.getNetWorkUnitList(id);
+      // 获取所有管理机列表
+      state.getManageServerList();
+      // 获取所有未分配的FABRIC
+      state.getIdleFabricList();
     }else {
       message.warning('当前页面没有获取正确参数，请点击左侧导航重新获取！');
     }
@@ -128,7 +169,7 @@ class SwitchPage extends Component {
 
   render() {
     return (
-      <Card bodyStyle={{height: "85.5vh"}}>
+      <Card bodyStyle={{height: "85.5vh", overflowY: "auto"}}>
         <Card
           title="基本信息"
           className="card"
@@ -161,7 +202,7 @@ class SwitchPage extends Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <AddOrUpdate setForm={form => { this.form = form }} />
+          <AddOrUpdate dataSource={this.state.updateData} setForm={form => { this.form = form }} />
         </Modal>
       </Card>
     )

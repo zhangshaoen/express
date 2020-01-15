@@ -45,6 +45,7 @@ import {
   reqFreeSanStorageList,
   reqAllNetWorkUnitList,
   reqNetWorkUnitList,
+  reqIdleFabricList,
   reqDeviceCategory,
   reqDeleteNetWorkUnit,
   reqUpdateNetWorkUnit,
@@ -716,7 +717,17 @@ class State {
     const result = await reqNetWorkUnitList(deviceCategoryId);
     if (result.code === 0) {
       this.switchPageList = result.data;
-
+    } else {
+      message.error("获取网络单元列表失败！失败信息：" + result.message)
+    }
+  }
+  // 获取所有未分配的FABRIC
+  @observable idleFabricList = [];
+  @action.bound
+  getIdleFabricList = async () => {
+    const result = await reqIdleFabricList();
+    if (result.code === 0) {
+      this.idleFabricList = result.data;
     } else {
       message.error("获取网络单元列表失败！失败信息：" + result.message)
     }

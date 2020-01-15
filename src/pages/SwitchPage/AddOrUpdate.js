@@ -11,10 +11,16 @@ class AddOrUpdate extends Component {
     super(props)
   }
 
-  initOptions = () => {
+  initOptions = (list, type) => {
+    let key = null;
+    if(type === "fabric") {
+      key = "fabricName"
+    }else if(type === "manage") {
+      key = "name"
+    }
     let options = [];
-    state.deviceList.forEach((device, index) => {
-      options.push(<Option value={device.name} key={index}>{device.name}</Option>);
+    list.forEach((device, index) => {
+      options.push(<Option value={device[key]} key={index}>{device[key]}</Option>);
     });
     return options;
   }
@@ -38,19 +44,20 @@ class AddOrUpdate extends Component {
     };
 
     const { getFieldDecorator } = this.props.form;
-
+    let { dataSource } = this.props;
+    let { name, manufacturer, fabricList, manageServiceName } =dataSource;
     return (
       <Form {...formItemLayout}>
         <Item label='单元名称:'>
           {getFieldDecorator('name', {
-            initialValue: null,
+            initialValue: name,
             rules: [{ required: true, message: '请输入单元名称!' }],
           })(<Input />)}
         </Item>
         <Item label='选择厂商:'>
           {
-            getFieldDecorator('firm', {
-              initialValue: "Brocade",
+            getFieldDecorator('manufacturer', {
+              initialValue: manufacturer || "Brocade",
               rules: [{ required: true }]
             })(
               <Radio.Group>
@@ -61,15 +68,17 @@ class AddOrUpdate extends Component {
           }
         </Item>
         <Item label='选择设备:'>
-          {getFieldDecorator('storageEquipmentNames', {
-            initialValue: [],
-          })(<Select mode="multiple"></Select>)}
+          {getFieldDecorator('fabricList', {
+            initialValue: fabricList,
+          })(<Select mode="multiple">
+            {this.initOptions(state.idleFabricList, "fabric")}
+          </Select>)}
         </Item>
         <Item label='选择存储管理机:'>
           {getFieldDecorator('manageServiceName', {
-            initialValue: "",
+            initialValue: manageServiceName,
           })(<Select>
-            {this.initOptions()}
+            {this.initOptions(state.manageServerList, "manage")}
           </Select>)}
         </Item>
       </Form>

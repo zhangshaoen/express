@@ -103,6 +103,8 @@ export const reqStoragePortByStorageName = storageName => ajax(`${BASE}/view/get
 export const reqDeviceCategory = deviceCategoryId => ajax(`${BASE}/view/switch/getDeviceCategory`, {deviceCategoryId});
 // 获取网络单元列表
 export const reqNetWorkUnitList = deviceCategoryId => ajax(`${BASE}/view/switch/getNetWorkUnitList`, {deviceCategoryId});
+// 获取所有未分配的FABRIC
+export const reqIdleFabricList = () => ajax(`${BASE}/view/switch/getIdleFabricList`);
 // 删除网络单元
 export const reqDeleteNetWorkUnit = netWorkUnitId => ajax(`${BASE}/view/switch/deleteNetWorkUnit`, {netWorkUnitId}, "DELETE");
 // 修改网络单元

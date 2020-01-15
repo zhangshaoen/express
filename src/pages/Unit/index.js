@@ -19,7 +19,7 @@ class Unit extends Component {
     addVisible: false,
     updateVisible: false,
     addValues: {},
-    updataData: {}
+    updateData: {}
   };
 
   showModal = (type, item) => {
@@ -27,7 +27,7 @@ class Unit extends Component {
       updateVisible: true,
     }, () => {
       // 编辑
-      this.setState({updataData: item});
+      this.setState({updateData: item});
     }) : this.setState({
       addVisible: true,
     }, () => {
@@ -77,9 +77,9 @@ class Unit extends Component {
         }, () => {
           // let updateValues = { ..., ...values};
           for(let key in values) {
-            this.state.updataData[key] = values[key];
+            this.state.updateData[key] = values[key];
           }
-          let updateValues = toJS(this.state.updataData); 
+          let updateValues = toJS(this.state.updateData); 
           if(/nas/.test(this.state.addValues.pathname)) {
             state.updateStorageControl(updateValues).then(() => {
               // 根据 ID 获取存储单元页面存储控制器列表查询
@@ -300,7 +300,7 @@ class Unit extends Component {
         >
           <UpdateDevice
             path={this.props.location.pathname}
-            dataSource={this.state.updataData}
+            dataSource={this.state.updateData}
             setForm={form => { this.form = form }} />
         </Modal>
       </Card>

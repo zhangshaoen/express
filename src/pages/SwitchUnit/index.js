@@ -16,7 +16,7 @@ class SwitchUnit extends Component {
       {
         title: "VS名称",
         dataIndex: "vsanName",
-        width: 150,
+        width: 100,
         fixed: 'left',
       },
       {
@@ -89,7 +89,7 @@ class SwitchUnit extends Component {
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
             <Table
                 rowKey={record => record.storageUnitId}
-                scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
+                scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
                 columns={this.initColumns()}
                 dataSource={state.switchUnitList} />
         </Card>
