@@ -35,13 +35,13 @@ class SwitchFabric extends Component {
         value: "value",
         onChange: value => console.log(`端口类型selected ${value}`)
       },
-      {
-        placeholder: "关联设备名称",
-        optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`关联设备名称selected ${value}`)
-      }
+      // {
+      //   placeholder: "关联设备名称",
+      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
+      //   code: "code",
+      //   value: "value",
+      //   onChange: value => console.log(`关联设备名称selected ${value}`)
+      // }
     ]
     return dataSource.map((item, index) => {
       return <Select

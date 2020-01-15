@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
-import { Form, Select, Radio, Input } from 'antd';
+import { Form, Select, Radio, Input, InputNumber } from 'antd';
 import state from '../../Store';
 
 const { Item } = Form;
@@ -16,39 +16,35 @@ class AddUnit extends Component {
           </Select>)}
       </Item>
     } else if (/nas/.test(path)) {
-      return <Item label='是否可做心跳盘'>
-        {getFieldDecorator('isHeart', {
-          initialValue: "Y",
-          rules: [{ required: true }]
-        })(
-          <Radio.Group buttonStyle="solid">
-            <Radio.Button value="Y">是</Radio.Button>
-            <Radio.Button value="N">否</Radio.Button>
-          </Radio.Group>
-        )}
-      </Item>
+      return null
     }
   }
 
   initOptions = () => {
     let options = [];    
     state.manageServerList?.forEach((item, index) => {
-      options.push(<Option value={item.sn} key={item.sn}>{item.name}</Option>);
+      options.push(<Option value={item.name} key={item.sn}>{item.name}</Option>);
     });
     return options;
   }
 
-  multipleOptions = () => {
+  multipleOptions = path => {
     let options = [];
-    state.nassTorageControlList?.forEach((item, index) => {
-      options.push(<Option value={item.manageIp} key={index}>{item.manageServerName}</Option>);
-    });
+    if(/nas/.test(path)) {
+      state.nassTorageControlList?.forEach((item, index) => {
+        options.push(<Option value={item.name} key={index}>{item.name}</Option>);
+      });    
+    }else if(/san/.test(path)) {
+      state.freeSanStorageList?.forEach((item, index) => {
+        options.push(<Option value={item.storageName} key={index}>{item.storageName}</Option>);
+      });  
+    }    
     return options;
   }
 
   netWorkUnitOptions = () => {
     let options = [];
-    state.switchPageList?.forEach((item, index) => {
+    state.allNetWorkUnitList?.forEach((item, index) => {
       options.push(<Option value={item.id} key={index}>{item.name}</Option>);
     });
     return options;
@@ -65,10 +61,10 @@ class AddUnit extends Component {
     // 指定Item布局的配置对象
     const formItemLayout = {
       labelCol: {
-        span: 6
+        span: 8
       },
       wrapperCol: {
-        span: 18
+        span: 16
       },
     };
 
@@ -76,7 +72,7 @@ class AddUnit extends Component {
     const { path } = this.props;
 
     return (
-      <Form {...formItemLayout}>
+      <Form {...formItemLayout} >
         <Item label='单元名称:'>
           {getFieldDecorator('name', {
             initialValue: null,
@@ -87,13 +83,13 @@ class AddUnit extends Component {
           {getFieldDecorator('storageEquipmentNames', {
             initialValue: [],
           })(<Select mode="multiple">
-            {this.multipleOptions()}
+            {this.multipleOptions(path)}
           </Select>)}
         </Item>
         { this.initFormItem(path, getFieldDecorator) }
         <Item label='状态:'>
           {
-            getFieldDecorator('useState', {
+            getFieldDecorator('status', {
               initialValue: "Y",
               rules: [{ required: true }]
             })(
@@ -110,6 +106,33 @@ class AddUnit extends Component {
           })(<Select>
             {this.initOptions()}
           </Select>)}
+        </Item>
+        <Item label='容量分配比例最大值:'>
+          {getFieldDecorator('capacityMaxAllocationRatio', {})
+          (<InputNumber
+            style={{width: "100%"}}
+            min={0}
+            formatter={value => `${value}%`}
+            parser={value => value.replace('%', '')}/>
+          )}
+        </Item>
+        <Item label='MBPS分配比例最大值:'>
+          {getFieldDecorator('mbpsMaxAllocationRatio', {})
+          (<InputNumber
+            style={{width: "100%"}}
+            min={0}
+            formatter={value => `${value}%`}
+            parser={value => value.replace('%', '')}/>
+          )}
+        </Item>
+        <Item label='IOPS分配比例最大值:'>
+          {getFieldDecorator('iopsMaxAllocationRatio', {})
+          (<InputNumber
+            style={{width: "100%"}}
+            min={0}
+            formatter={value => `${value}%`}
+            parser={value => value.replace('%', '')}/>
+          )}
         </Item>
       </Form>
     )

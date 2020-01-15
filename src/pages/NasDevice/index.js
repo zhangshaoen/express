@@ -115,7 +115,7 @@ class NasDevice extends Component {
             }} />
         </Card>
         <Card
-          title={state.menuItem?.title}
+          title="存储卷"
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
           style={{ marginBottom: "24px" }} >

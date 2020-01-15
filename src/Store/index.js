@@ -27,7 +27,9 @@ import {
   reqUpdateStorageUnit,
   reqStorageUnitInfoById,
   reqStorageControlListByStorageUnit,
+  reqSanStorageList,
   reqAddStorageControl,
+  reqSanStorage,
   reqUpdateStorageControl,
   reqDeleteStorageControl,
   reqStorageControlInfoByName,
@@ -38,6 +40,8 @@ import {
   reqStoragePortByStorageName,
   reqManageServerList,
   reqNASStorageControlList,
+  reqFreeSanStorageList,
+  reqAllNetWorkUnitList,
   reqNetWorkUnitList,
   reqDeviceCategory,
   reqDeleteNetWorkUnit,
@@ -494,6 +498,29 @@ class State {
       message.error("存储级别页面所有未被单元添加且有效的NAS控制器名称列表数据失败！失败信息：" + result.message)
     }
   }
+  // 获取未关联的SAN存储设备列表
+  @observable freeSanStorageList = [];
+  @action.bound
+  getFreeSanStorageList = async () => {
+    let result = await reqFreeSanStorageList();
+    if (result.code === 0) {
+      this.freeSanStorageList = result.data;
+    } else {
+      message.error("获取未关联的SAN存储设备列表数据失败！失败信息：" + result.message)
+    }
+  }
+  // 获取所有网络单元
+  @observable allNetWorkUnitList = [];
+  @action.bound
+  getAllNetWorkUnitList = async () => {
+    let result = await reqAllNetWorkUnitList();
+    if (result.code === 0) {
+      this.allNetWorkUnitList = result.data;
+    } else {
+      message.error("获取所有网络单元数据失败！失败信息：" + result.message)
+    }
+  }
+
 
 
   /**********          存储单元(资源)          **********/
@@ -511,23 +538,44 @@ class State {
   // 存储单元页面存储控制器列表查询
   @observable unitList = [];
   @action.bound
-  getStorageControlListByStorageUnit = async id => {
-    const result = await reqStorageControlListByStorageUnit(id);
+  getStorageControlListByStorageUnit = async storageUnitId => {
+    const result = await reqStorageControlListByStorageUnit(storageUnitId);
     if (result.code === 0) {
       this.unitList = result.data;
     } else {
       message.error("获取存储单元页面存储控制器列表数据失败！失败信息：" + result.message)
     }
   }
+  // 获取SAN存储设备列表
+  @action.bound
+  getSanStorageList = async storageUnitId => {
+    const result = await reqSanStorageList(storageUnitId);
+    if (result.code === 0) {
+      this.unitList = result.data;
+    } else {
+      message.error("获取SAN存储设备列表数据失败！失败信息：" + result.message)
+    }
+  }
   // 待开发   存储单元页面存储控制器列表项新增
   @action.bound
-  addStorageControl = async (storageControlName, storageUnit) => {
-    const result = await reqAddStorageControl(storageControlName, storageUnit);
+  addStorageControl = async storageUnit => {
+    const result = await reqAddStorageControl(storageUnit);
     if (result.code === 0) {
 
       message.success(`存储单元页面存储控制器列表项新增成功！`);
     } else {
       message.error("存储单元页面存储控制器列表项新增失败！失败信息：" + result.message)
+    }
+  }
+  // SAN存储设备新增
+  @action.bound
+  saveSanStorage = async storage => {
+    const result = await reqSanStorage(storage);
+    if (result.code === 0) {
+
+      message.success(`SAN存储设备新增成功！`);
+    } else {
+      message.error("SAN存储设备新增失败！失败信息：" + result.message)
     }
   }
   // 存储单元页面存储控制器列表项编辑 

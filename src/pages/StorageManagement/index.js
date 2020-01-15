@@ -137,7 +137,7 @@ class StorageManagement extends Component {
         </Row>
         <Modal
           title={this.state.typeText}
-          width={1100}
+          width="80%"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}

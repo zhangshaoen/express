@@ -8,12 +8,14 @@ import BasicInfo from "../../components/BasicInfo";
 import ProgressInfo from "../../components/ProgressInfo";
 import state from '../../Store';
 import { getQueryVariable } from '../../utils/getQueryVariable';
+import { typeJudgment } from "../../utils/typeJudgment";
 
 @observer
 class Resource extends Component {
 
   state = {
     visible: false,
+    addValues: {}
   };
 
   // 编辑
@@ -36,24 +38,40 @@ class Resource extends Component {
 
   handleOk = e => {
     this.form.validateFields(async (err, values) => {
+      this.form.resetFields();
       if (!err) {
         this.setState({
           visible: false,
         }, () => {
-          state.addStorageUnit(values);
+          // 所属设备级别
+          let storageLevelId = this.state.addValues.id;
+          let addValues = { storageLevelId, ...values};
+          for(let key in addValues) {
+            if(["capacityMaxAllocationRatio", "mbpsMaxAllocationRatio", "iopsMaxAllocationRatio"].indexOf(key) > -1) {
+              addValues[key] = typeJudgment(addValues[key]) === "number" ? addValues[key]/100 : addValues[key];
+            }
+          }              
+          // 存储级别页面（特定存储资源池下特定级别）存储单元新增
+          state.addStorageUnit(addValues).then(() => {
+            // 根据 ID 获取存储级别页面存储单元列表查询
+            state.getStorageUnitListByStorageLevelId(this.state.addValues.id);
+          });
         });
       }
     })
   };
 
   handleCancel = e => {
-    this.form.resetFields()
+    this.form.resetFields();
     this.setState({ visible: false, });
   };
 
   updateUnit = record => {
     record.edit = false;
-    state.updateStorageUnit(record)
+    state.updateStorageUnit(record).then(() => {
+      // 根据 ID 获取存储级别页面存储单元列表查询
+      state.getStorageUnitListByStorageLevelId(this.state.addValues.id);
+    })
   }
 
   initColumns = path => {
@@ -162,12 +180,6 @@ class Resource extends Component {
         title: "关联网络单元",
         dataIndex: "关联网络单元"
       })
-    } else if (/nas/.test(path)) {
-      columns.splice(7, 0, {
-        title: "是否可做心跳盘",
-        dataIndex: "isHeart",
-        render: (text, record) => <span>{`${text === "Y" ? "是" : text === "N" ? "否" : ""}`}</span>,
-      })
     }
 
     return columns;
@@ -177,17 +189,25 @@ class Resource extends Component {
     const { pathname, id } = getQueryVariable(this, "id");
     if (id) {
       // 存储级别页面（特定存储资源池下特定级别）存储级别基本信息查询
-      state.getStorageLevelInfoById(id);
+      state.getStorageLevelInfoById(id).then(() => {
+        let {id} = state.resourceInfo;
+        this.setState({
+          addValues: {id}
+        });
+      });
       // 根据 ID 获取存储级别页面存储单元列表查询
       state.getStorageUnitListByStorageLevelId(id);
-
       // 获取所有管理机列表
       state.getManageServerList();
-      
-      // 存储级别页面所有未被单元添加且有效的NAS控制器名称列表
-      state.getNASStorageControlList();
-      // 获取网络单元列表
-      state.getNetWorkUnitList(id);
+      if(/nas/.test(pathname)) {
+        // 存储级别页面所有未被单元添加且有效的NAS控制器名称列表
+        state.getNASStorageControlList();
+      }else if(/san/.test(pathname)) {
+        // 获取未关联的SAN存储设备列表
+        state.getFreeSanStorageList();
+        // 获取所有网络单元
+        state.getAllNetWorkUnitList();
+      }
     } else {
       message.warning('当前页面没有获取正确参数，请点击左侧导航重新获取！');
     }
@@ -246,7 +266,11 @@ class Resource extends Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <AddUnit path={this.props.location.pathname} setForm={form => { this.form = form }} />
+          <div style={{height: "50vh", overflowY: "auto"}}>
+            <AddUnit 
+              path={this.props.location.pathname}
+              setForm={form => { this.form = form }} />
+          </div>
         </Modal>
       </Card>
     )

@@ -58,18 +58,28 @@ export const reqDeleteStorageUnit = storageUnit => ajax(`${BASE}/view/deleteStor
 export const reqManageServerList = () => ajax(`${BASE}/view/switch/getManageServerList`);
 // 存储级别页面所有未被单元添加且有效的NAS控制器名称列表
 export const reqNASStorageControlList = () => ajax(`${BASE}/view/getNASStorageControlList`);
+// 获取未关联的SAN存储设备列表
+export const reqFreeSanStorageList = () => ajax(`${BASE}/view/getFreeSanStorageList`);
+// 获取所有网络单元
+export const reqAllNetWorkUnitList = () => ajax(`${BASE}/view/switch/getAllNetWorkUnitList`);
 
 
 // 存储单元页面基本信息查询
 export const reqStorageUnitInfoById = storageUnitId => ajax(`${BASE}/view/getStorageUnitInfoById`, {storageUnitId});
 // 存储单元页面存储控制器列表查询
 export const reqStorageControlListByStorageUnit = storageUnitId => ajax(`${BASE}/view/getStorageControlListByStorageUnit`, {storageUnitId});
+// 获取SAN存储设备列表
+export const reqSanStorageList = storageUnitId => ajax(`${BASE}/view/getSanStorageList`, {storageUnitId});
 // 存储单元页面存储控制器列表项新增
-export const reqAddStorageControl = (storageControlName, storageUnit) => ajax(`${BASE}/view/addStorageControl?storageControlName=${storageControlName}`, storageUnit, "POST");
+export const reqAddStorageControl = storageUnit => ajax(`${BASE}/view/addStorageControl`, storageUnit, "POST");
+// SAN存储设备新增
+export const reqSanStorage = storage => ajax(`${BASE}/view/saveSanStorage`, storage, "POST");
 // 存储单元页面存储控制器列表项编辑
 export const reqUpdateStorageControl = storageControl => ajax(`${BASE}/view/updateStorageControl`, storageControl, "PUT");
+// 
 // 存储单元页面存储控制器列表项删除
 export const reqDeleteStorageControl = storageUnit => ajax(`${BASE}/view/deleteStorageControl`, storageUnit, "DELETE");
+// 
 
 
 // NAS 存储控制器页面基本信息查询

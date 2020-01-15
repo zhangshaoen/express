@@ -29,46 +29,46 @@ class SwitchZone extends Component {
         onChange: value => console.log(`所属zonesetselected ${value}`)
       },
       {
-        placeholder: "所属vf",
+        placeholder: "所属vsan",
         optionList: [{ code: "jsck", value: "Jack" }, { code: "lucy", value: "Lucy" }, { code: "tom", value: "Tom" },],
         code: "code",
         value: "value",
         onChange: value => console.log(`所属vfselected ${value}`)
       },
-      {
-        placeholder: "所属交换机名称",
-        optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`所属交换机名称selected ${value}`)
-      },
-      {
-        placeholder: "交换机端口",
-        optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`交换机端口selected ${value}`)
-      },
-      {
-        placeholder: "系统名称",
-        optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`系统名称selected ${value}`)
-      },
-      {
-        placeholder: "设备名称",
-        optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`设备名称selected ${value}`)
-      }
+      // {
+      //   placeholder: "所属交换机名称",
+      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
+      //   code: "code",
+      //   value: "value",
+      //   onChange: value => console.log(`所属交换机名称selected ${value}`)
+      // },
+      // {
+      //   placeholder: "交换机端口",
+      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
+      //   code: "code",
+      //   value: "value",
+      //   onChange: value => console.log(`交换机端口selected ${value}`)
+      // },
+      // {
+      //   placeholder: "系统名称",
+      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
+      //   code: "code",
+      //   value: "value",
+      //   onChange: value => console.log(`系统名称selected ${value}`)
+      // },
+      // {
+      //   placeholder: "设备名称",
+      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
+      //   code: "code",
+      //   value: "value",
+      //   onChange: value => console.log(`设备名称selected ${value}`)
+      // }
     ]
     return dataSource.map((item, index) => {
       return <Select
         key={index}
         showSearch
-        style={{ width: 120, marginLeft: "10px" }}
+        style={{ width: 140, marginLeft: "10px" }}
         placeholder={item.placeholder}
         optionFilterProp="children"
         onChange={item.onChange}
@@ -97,13 +97,13 @@ class SwitchZone extends Component {
         title: "zone类型",
         dataIndex: "type"
       },
-      {
-        title: "所属网络",
-        dataIndex: ""
-      },
+      // {
+      //   title: "所属网络",
+      //   dataIndex: ""
+      // },
       {
         title: "所属zoneset",
-        dataIndex: ""
+        dataIndex: "zoneSet"
       },
       {
         title: "所属vs",
@@ -113,14 +113,14 @@ class SwitchZone extends Component {
         title: "所属Fabric",
         dataIndex: "fabric"
       },
-      {
-        title: "交换机名称",
-        dataIndex: ""
-      },
-      {
-        title: "交换机端口",
-        dataIndex: ""
-      },
+      // {
+      //   title: "交换机名称",
+      //   dataIndex: ""
+      // },
+      // {
+      //   title: "交换机端口",
+      //   dataIndex: ""
+      // },
       {
         title: "端口 Target wwn",
         dataIndex: "wwn"
@@ -129,18 +129,18 @@ class SwitchZone extends Component {
         title: "fcid",
         dataIndex: "fcId"
       },
-      {
-        title: "系统名称",
-        dataIndex: ""
-      },
-      {
-        title: "设备名称",
-        dataIndex: ""
-      },
-      {
-        title: "端口名称",
-        dataIndex: ""
-      },
+      // {
+      //   title: "系统名称",
+      //   dataIndex: ""
+      // },
+      // {
+      //   title: "设备名称",
+      //   dataIndex: ""
+      // },
+      // {
+      //   title: "端口名称",
+      //   dataIndex: ""
+      // },
     ];
   }
 
@@ -174,7 +174,7 @@ class SwitchZone extends Component {
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
           <Table
             rowKey={record => record.storageUnitId}
-            scroll={{ y: "76vh", x: 1700 }} pagination={false} bordered size="middle"
+            scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={this.initColumns()}
             dataSource={state.zoneRefList.content} />
         </Card>

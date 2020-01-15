@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { Row, Col, Card, Button, Table, Modal, message, Popconfirm } from 'antd';
 import AddDevice from './AddDevice';
@@ -17,6 +18,8 @@ class Unit extends Component {
   state = {
     addVisible: false,
     updateVisible: false,
+    addValues: {},
+    updataData: {}
   };
 
   showModal = (type, item) => {
@@ -24,7 +27,7 @@ class Unit extends Component {
       updateVisible: true,
     }, () => {
       // 编辑
-
+      this.setState({updataData: item});
     }) : this.setState({
       addVisible: true,
     }, () => {
@@ -35,11 +38,26 @@ class Unit extends Component {
 
   handleAddOk = e => {
     this.form.validateFields(async (err, values) => {
+      this.form.resetFields();
       if (!err) {
         this.setState({
           addVisible: false,
         }, () => {
-          // state.addStorageControl("storageControlName" ,values);
+          let storageUnitId = this.state.addValues.id;
+          let addValues = { storageUnitId, ...values};
+          if(/nas/.test(this.state.addValues.pathname)) {
+            // 存储单元页面存储控制器列表项新增
+            state.addStorageControl(addValues).then(() => {
+              // 根据 ID 获取存储单元页面存储控制器列表查询
+              state.getStorageControlListByStorageUnit(this.state.addValues.id);
+            });
+          }else if(/san/.test(this.state.addValues.pathname)) {
+            // SAN存储设备新增
+            state.saveSanStorage(addValues).then(() => {
+              // 获取SAN存储设备列表
+              state.getSanStorageList(this.state.addValues.id);
+            })
+          }
         });
       }
     })
@@ -52,11 +70,24 @@ class Unit extends Component {
 
   handleUpdataOk = e => {
     this.form.validateFields(async (err, values) => {
+      this.form.resetFields();
       if (!err) {
         this.setState({
           updateVisible: false,
         }, () => {
-          state.updateStorageControl(values);
+          // let updateValues = { ..., ...values};
+          for(let key in values) {
+            this.state.updataData[key] = values[key];
+          }
+          let updateValues = toJS(this.state.updataData); 
+          if(/nas/.test(this.state.addValues.pathname)) {
+            state.updateStorageControl(updateValues).then(() => {
+              // 根据 ID 获取存储单元页面存储控制器列表查询
+              state.getStorageControlListByStorageUnit(this.state.addValues.id);
+            });
+          }else if(/san/.test(this.state.addValues.pathname)) {
+            
+          }
         });
       }
     })
@@ -67,12 +98,24 @@ class Unit extends Component {
     this.setState({ updateVisible: false, });
   };
 
+  deleteStoCon = (flag, record) => {
+    if(flag) {
+      // NAS 删除
+      state.deleteStorageControl(record)
+    }else {
+      // SAN 删除
+      
+    }
+  }
+
 
   initColumns = flag => {
+    let name = flag ? "name" : "storageName";
+
     let columns = [
       {
         title: "设备名称",
-        dataIndex: "name",
+        dataIndex: name,
         width: 200,
         fixed: 'left',
       },
@@ -100,7 +143,7 @@ class Unit extends Component {
             case "Y":
               return <span style={{ color: "#2FC25B" }}>正常服务</span>
             case "N":
-              return <span style={{ color: "rgba(252, 75, 108, 1)" }}>正常服务</span>
+              return <span style={{ color: "rgba(252, 75, 108, 1)" }}>维护服务</span>
             default:
           }
         }
@@ -112,8 +155,8 @@ class Unit extends Component {
         width: 150,
         render: (text, record, index) => (
           <span>
-            <Button onClick={(record) => this.showModal("update", record)} type='primary' size="small" style={{ marginRight: "10px" }}>编辑</Button>
-            <Popconfirm title="是否确认删除当前设备？" onConfirm={() => state.deleteStorageControl(record)}>
+            <Button onClick={() => this.showModal("update", record)} type='primary' size="small" style={{ marginRight: "10px" }}>编辑</Button>
+            <Popconfirm title="是否确认删除当前设备？" onConfirm={() => this.deleteStoCon(flag, record)}>
               <Button type='danger' size="small">删除</Button>
             </Popconfirm>
           </span>
@@ -133,12 +176,27 @@ class Unit extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    const { id } = getQueryVariable(this, "id");
+    const { pathname, id } = getQueryVariable(this, "id");
     if (id) {
       // 根据 ID 获取存储单元页面基本信息查询
-      state.getStorageUnitInfoById(id);
-      // 根据 ID 获取存储单元页面存储控制器列表查询
-      state.getStorageControlListByStorageUnit(id);
+      state.getStorageUnitInfoById(id).then(() => {
+        let {id} = state.unitBasicInfo;
+        this.setState({
+          addValues: {id, pathname}
+        });
+      });
+
+      if(/nas/.test(pathname)) {
+        // 根据 ID 获取存储单元页面存储控制器列表查询
+        state.getStorageControlListByStorageUnit(id);
+        // 存储级别页面所有未被单元添加且有效的NAS控制器名称列表
+        state.getNASStorageControlList();
+      }else if(/san/.test(pathname)) {
+        // 获取SAN存储设备列表
+        state.getSanStorageList(id);
+        // 获取未关联的SAN存储设备列表
+        state.getFreeSanStorageList();
+      }
     } else {
       message.warning('当前页面没有获取正确参数，请点击左侧导航重新获取！');
     }
@@ -193,7 +251,7 @@ class Unit extends Component {
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
           <Row type="flex" justify="end">
             <Col span={3} style={{ marginBottom: "24px" }}>
-              <Button onClick={this.showModal} type="primary">添加单元</Button>
+              <Button onClick={this.showModal} type="primary">添加控制器</Button>
             </Col>
             <Col span={24}>
               <Table
@@ -205,14 +263,14 @@ class Unit extends Component {
           </Row>
         </Card>
         <Modal
-          title="添加单元"
+          title="添加控制器"
           okText="确认"
           cancelText="取消"
           visible={this.state.addVisible}
           onOk={this.handleAddOk}
           onCancel={this.handleAddCancel}
         >
-          <AddDevice setForm={form => { this.form = form }} />
+          <AddDevice path={this.props.location.pathname} setForm={form => { this.form = form }} />
         </Modal>
         <Modal
           title="设备设置"
@@ -222,7 +280,10 @@ class Unit extends Component {
           onOk={this.handleUpdataOk}
           onCancel={this.handleUpdataCancel}
         >
-          <UpdateDevice setForm={form => { this.form = form }} />
+          <UpdateDevice
+            path={this.props.location.pathname}
+            dataSource={this.state.updataData}
+            setForm={form => { this.form = form }} />
         </Modal>
       </Card>
     )
