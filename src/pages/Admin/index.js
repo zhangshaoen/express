@@ -46,7 +46,7 @@ class Admin extends Component {
           <Route path={`${urlBase}/StorageManagement`} component={StorageManagement} />
           {/* 存储资源池 */}
           <Route path={`${urlBase}/home` } component={Pool} />
-          <Redirect to={`${urlBase}/404`} />
+          <Redirect to={`${urlBase}/home`} />
         </Switch>
       </Layout>
     );

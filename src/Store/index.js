@@ -2,6 +2,7 @@
 import { observable, action, toJS } from 'mobx';
 import headerMenuList from '../config/haderMenuConfig';
 import { message } from 'antd';
+import { filterSubValue } from '../utils/filterSubValues';
 import { getProperty } from '../utils/getProperty';
 import {
   reqLeftTree,
@@ -112,10 +113,6 @@ class State {
   /**********          左侧树          **********/
   // 左侧树
   @observable leftTree = [];
-  // 左侧树选中项
-  @observable defaultSelectedKeys = [];
-  // 初始展开的 SubMenu 菜单项
-  @observable defaultOpenKeys = [];
   // 页面展示标题
   @observable menuItem = {};
   // 获取左侧树
@@ -123,34 +120,19 @@ class State {
   getLeftTree = async (pathname, id) => {
     const result = await reqLeftTree();
     if (result.code === 0) {
-      /*** 待开发 ***/
-      // 左侧树选中项
-      this.defaultSelectedKeys = [id];
-      // 左侧导航默认展开
-      if (id && id !== "null") {
-        // let defaultOpenKeys = filterSubValue(getProperty([result.data].concat([]), "id"), "id", id);
-        // console.log(defaultOpenKeys);
-        
-        // defaultOpenKeys[0] = "home";
-        // this.defaultOpenKeys = defaultOpenKeys;
-      }
-
-
-
       this.leftTree = getProperty([result.data], "title");
       if (id && id !== "null") {
         // 页面展示标题
-        // this.menuItem = filterSubValue([result.data], "id", id);
-        // /** 点击刷新面包屑 **/
-        // let breadcrumbList = this.menuItem.parent
-        // if (breadcrumbList) {
-        //   this.breadcrumbList = ["存储资源池", ...breadcrumbList];
-        // }
+        this.menuItem = filterSubValue([result.data], "id", id);
+        /** 面包屑 **/
+        let breadcrumbList = this.menuItem.parent
+        if (breadcrumbList) {
+          this.breadcrumbList = ["存储资源池", ...breadcrumbList];
+        }
 
       } else if (id === "null") {
+        /** 面包屑 **/
         this.breadcrumbList = ["存储资源池", "建行数据中心"];
-        this.defaultSelectedKeys = ["home"];
-        this.defaultOpenKeys = ["home"];
       }
     } else {
       message.error("获取左侧树失败！失败信息：" + result.message)
@@ -166,20 +148,6 @@ class State {
     if (breadcrumbList) {
       this.breadcrumbList = ["存储资源池", ...breadcrumbList];
     }
-
-    // if(item.id && item.id !== "null") {
-    //     // 左侧树选中项
-    //     this.selectedKeys = [item.id];
-    //     // 左侧导航默认展开
-    //     let openKeys = getProperty(this.leftTree, "id", "id", item.id);
-    //     openKeys[0] = "home";
-    //     this.openKeys = openKeys;
-    // }else if (item.id === "null") {
-    //   this.breadcrumbList = ["存储资源池", "建行数据中心"];
-    //   this.selectedKeys = ["home"];
-    //   this.openKeys = ["home"];
-    // }
-
   };
   /**********          建行数据中心          **********/
   // 数据中心资源总数及占比
