@@ -35,34 +35,6 @@ class SwitchZone extends Component {
         value: "value",
         onChange: value => console.log(`所属vfselected ${value}`)
       },
-      // {
-      //   placeholder: "所属交换机名称",
-      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-      //   code: "code",
-      //   value: "value",
-      //   onChange: value => console.log(`所属交换机名称selected ${value}`)
-      // },
-      // {
-      //   placeholder: "交换机端口",
-      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-      //   code: "code",
-      //   value: "value",
-      //   onChange: value => console.log(`交换机端口selected ${value}`)
-      // },
-      // {
-      //   placeholder: "系统名称",
-      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-      //   code: "code",
-      //   value: "value",
-      //   onChange: value => console.log(`系统名称selected ${value}`)
-      // },
-      // {
-      //   placeholder: "设备名称",
-      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-      //   code: "code",
-      //   value: "value",
-      //   onChange: value => console.log(`设备名称selected ${value}`)
-      // }
     ]
     return dataSource.map((item, index) => {
       return <Select
@@ -97,10 +69,6 @@ class SwitchZone extends Component {
         title: "zone类型",
         dataIndex: "type"
       },
-      // {
-      //   title: "所属网络",
-      //   dataIndex: ""
-      // },
       {
         title: "所属zoneset",
         dataIndex: "zoneSet"
@@ -113,14 +81,6 @@ class SwitchZone extends Component {
         title: "所属Fabric",
         dataIndex: "fabric"
       },
-      // {
-      //   title: "交换机名称",
-      //   dataIndex: ""
-      // },
-      // {
-      //   title: "交换机端口",
-      //   dataIndex: ""
-      // },
       {
         title: "端口 Target wwn",
         dataIndex: "wwn"
@@ -129,24 +89,12 @@ class SwitchZone extends Component {
         title: "fcid",
         dataIndex: "fcId"
       },
-      // {
-      //   title: "系统名称",
-      //   dataIndex: ""
-      // },
-      // {
-      //   title: "设备名称",
-      //   dataIndex: ""
-      // },
-      // {
-      //   title: "端口名称",
-      //   dataIndex: ""
-      // },
     ];
   }
 
   UNSAFE_componentWillMount() {
     const { id } = getQueryVariable(this, "id");
-    let name = id.split("||")[1];
+    let name = id ? id.split("||")[1] : null;
     if (name) {
       state.getFabric(name);
 

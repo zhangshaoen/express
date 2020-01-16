@@ -60,7 +60,7 @@ class SwitchPhysics extends Component {
 
   UNSAFE_componentWillMount() {
     const { id } = getQueryVariable(this, "id");
-    let name = id.split("||")[1];
+    let name = id ? id.split("||")[1] : null;
     if (name) {
       state.getFabric(name);
       // 物理交换机列表
