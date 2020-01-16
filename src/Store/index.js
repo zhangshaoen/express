@@ -113,6 +113,10 @@ class State {
   /**********          左侧树          **********/
   // 左侧树
   @observable leftTree = [];
+  // 当前展开的 SubMenu 菜单项 key 数组
+  @observable openKeys = [];
+  // 当前选中的菜单项 key 数组
+  @observable selectedKeys = [];
   // 页面展示标题
   @observable menuItem = {};
   // 获取左侧树
@@ -121,6 +125,11 @@ class State {
     const result = await reqLeftTree();
     if (result.code === 0) {
       this.leftTree = getProperty([result.data], "title");
+
+      // 左侧导航默认展开
+      let openKeys = [];
+      let selectedKeys = [id];
+
       if (id && id !== "null") {
         // 页面展示标题
         this.menuItem = filterSubValue([result.data], "id", id);
@@ -129,14 +138,33 @@ class State {
         if (breadcrumbList) {
           this.breadcrumbList = ["存储资源池", ...breadcrumbList];
         }
-
+        // 左侧导航默认展开
+        openKeys = toJS(filterSubValue(getProperty(state.leftTree, "id"), "id", id).parent);
+        openKeys[0] = "home";
       } else if (id === "null") {
         /** 面包屑 **/
         this.breadcrumbList = ["存储资源池", "建行数据中心"];
+        // 左侧导航默认展开
+        openKeys = ["home"];
+        selectedKeys = ["home"];
       }
+      this.openKeys = openKeys;
+      this.selectedKeys = selectedKeys;
     } else {
       message.error("获取左侧树失败！失败信息：" + result.message)
     }
+  }
+  // SubMenu 展开/关闭的回调
+  @action.bound
+  subMenuOpenChange = openKeys => {
+    console.log(openKeys);
+    
+    // const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
+    // if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    //   this.openKeys = openKeys;
+    // } else {
+    //   this.openKeys = latestOpenKey ? [latestOpenKey] : [];
+    // }
   }
   // 左侧导航点击事件
   @action.bound
@@ -407,7 +435,7 @@ class State {
       message.error("获取存储级别页面（特定存储资源池下特定级别）存储级别基本信息数据失败！失败信息：" + result.message)
     }
   }
-  // 待开发   存储级别页面（特定存储资源池下特定级别）存储单元新增
+  // 存储级别页面（特定存储资源池下特定级别）存储单元新增
   @action.bound
   addStorageUnit = async storageUnit => {
     const result = await reqAddStorageUnit(storageUnit);
@@ -528,7 +556,7 @@ class State {
       message.error("获取SAN存储设备列表数据失败！失败信息：" + result.message)
     }
   }
-  // 待开发   存储单元页面存储控制器列表项新增
+  // 存储单元页面存储控制器列表项新增
   @action.bound
   addStorageControl = async storageUnit => {
     const result = await reqAddStorageControl(storageUnit);

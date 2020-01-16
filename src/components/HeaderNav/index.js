@@ -60,7 +60,7 @@ class HeaderNav extends Component {
           <Col span={4}>
             <img className="logo" src={logo} />
           </Col>
-          <Col span={8}>
+          <Col span={10}>
             <Menu selectedKeys={[path]} mode="horizontal" className="menu">
               {this.getMenuNodes(headerMenuList)}
             </Menu>

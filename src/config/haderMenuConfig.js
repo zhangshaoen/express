@@ -7,7 +7,7 @@ const headerMenuList = [
   },
   {
     key: urlBase + "/storageDevice",
-    icon: "setting",
+    icon: "apartment",
     title: "存储设备管理",
     childrens: [
       {
@@ -33,6 +33,11 @@ const headerMenuList = [
     icon: "dashboard",
     title: "定时数据采集"
   },
+  {
+    key: urlBase + "/set",
+    icon: "setting",
+    title: "设置"
+  }
 ]
 
 export default headerMenuList;
