@@ -1,3 +1,6 @@
+import React from "react";
+import { Button, Popconfirm } from 'antd';
+
 export const storagePool = [
   {
     title: "存储池名称",
@@ -111,6 +114,15 @@ export const portGrout = [
     title: "操作",
     dataIndex: "operation",
     fixed: 'right',
+    width: 150,
+    render: (text, record, index) => (
+      <span>
+        <Button onClick={() => this.showModal("update", record)} type='primary' size="small" style={{ marginRight: "10px" }}>编辑</Button>
+        <Popconfirm title="是否确认删除当前设备？" onConfirm={() => this.deleteStoCon(record)}>
+          <Button type='danger' size="small">删除</Button>
+        </Popconfirm>
+      </span>
+    )
   },
 ];
 

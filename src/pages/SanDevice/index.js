@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { Row, Col, Card, Button, Table, Modal, Select, message } from 'antd';
+import AddOrUpdate from './AddOrUpdate';
 import BasicInfo from "../../components/BasicInfo";
 import ProgressInfo from "../../components/ProgressInfo";
 import { BasicInfoList, CapacityList, MBPSList, IOPSList } from "./BasicInfoConfig";
@@ -14,26 +16,51 @@ import state from "../../Store";
 @observer
 class SanDevice extends Component {
 
-  state = { visible: false };
+  state = { 
+    visible: false,
+    type: "",
+    typeTitle: "",
+    updateData: {},
+  };
 
-  showModal = () => {
-    this.setState({
+  showModal = (type, record) => {
+    this.setState({ 
       visible: true,
+      type,
+      typeTitle: type === "add" ? "新增" : type === "update" ? "编辑" : "",
+    }, () => {
+      if(type === "update") {
+        this.setState({ updateData: record });
+      }else if(type === "add") {
+        this.setState({ updateData: {} });
+      }
     });
   };
 
   handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false,
+    this.form.validateFields(async (err, values) => {
+      this.form.resetFields();
+      if (!err) {
+        this.setState({ visible: false, }, () => {
+          console.log(values);
+          if(this.state.type === "add"){
+
+          }else if(this.state.type === "update") {
+            for(let key in values) {
+              this.state.updateData[key] = values[key];
+            }
+            let updateValues = toJS(this.state.updateData);
+            console.log(updateValues);
+            
+          }          
+        });
+      }
     });
   };
 
   handleCancel = e => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
+    this.form.resetFields();
+    this.setState({ visible: false, });
   };
 
   UNSAFE_componentWillMount() {
@@ -41,7 +68,10 @@ class SanDevice extends Component {
     if(id) {
       id = ChangeToUTF(id);
       // 根据 ID SAN 展示存储设备信息
-      state.getStorageByStorageName(id);
+      state.getStorageByStorageName(id).then(() => {
+        // let { id } = state.sanDeviceList;
+        // this.setState({  });
+      });
       // 展示存储设备下存储池列表
       state.getStoragePoolByStorageName(id);
       // 展示存储设备下LUN列表
@@ -142,7 +172,7 @@ class SanDevice extends Component {
           style={{ marginBottom: "24px" }} >
           <Row type="flex" justify="end">
             <Col span={2} style={{ marginBottom: "24px" }}>
-              <Button onClick={this.showModal} type="primary">增加</Button>
+              <Button onClick={() => { this.showModal("add") }} type="primary">增加</Button>
             </Col>
           </Row>
           <Table
@@ -168,14 +198,16 @@ class SanDevice extends Component {
             dataSource={state.sanDevicePortList} />
         </Card>
         <Modal
-          title="端口分组信息"
+          title={`端口分组信息${this.state.typeTitle}`}
           okText="确认"
           cancelText="取消"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-
+          <div style={{maxHeight: "50vh", overflowY: "auto"}}>
+            <AddOrUpdate dataSource={this.state.updateData} setForm={form => { this.form = form }} />
+          </div>
         </Modal>
       </Card>
     )

@@ -158,8 +158,9 @@ class State {
   @action.bound
   subMenuOpenChange = openKeys => {
     console.log(openKeys);
+    const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
+    console.log(latestOpenKey);
     
-    // const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
     // if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
     //   this.openKeys = openKeys;
     // } else {
