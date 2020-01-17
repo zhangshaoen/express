@@ -48,9 +48,12 @@ class LeftNav extends Component {
     const { pathname, id } = getQueryVariable(this, "id");
     // 获取左侧树
     state.getLeftTree(pathname, id);
-    // 获取 数据中心资源总数及占比  和  各个数据中心设备占比
-    state.getHomeCharts();
-
+    
+    console.log(pathname, id);  
+    if(!id || id === "null"){
+      // 获取 数据中心资源总数及占比  和  各个数据中心设备占比
+      state.getHomeCharts();
+    }
   }
 
   render() {
@@ -61,7 +64,6 @@ class LeftNav extends Component {
         inlineIndent={15}
         openKeys={state.openKeys}
         selectedKeys={state.selectedKeys}
-        onOpenChange={state.subMenuOpenChange}
         style={{ borderColor: "transparent" }}
       >
         {this.getMenuNodes(state.leftTree)}

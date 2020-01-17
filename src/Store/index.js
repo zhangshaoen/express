@@ -4,6 +4,7 @@ import headerMenuList from '../config/haderMenuConfig';
 import { message } from 'antd';
 import { filterSubValue } from '../utils/filterSubValues';
 import { getProperty } from '../utils/getProperty';
+import { ReChange } from '../utils/UTFTranslate';
 import {
   reqLeftTree,
   reqResourceAmount,
@@ -125,23 +126,26 @@ class State {
     const result = await reqLeftTree();
     if (result.code === 0) {
       this.leftTree = getProperty([result.data], "title");
-
+      getProperty(this.leftTree, "id");                
       // 左侧导航默认展开
       let openKeys = [];
       let selectedKeys = [id];
 
       if (id && id !== "null") {
         // 页面展示标题
-        this.menuItem = filterSubValue([result.data], "id", id);
+        console.log(ReChange(id), toJS(this.leftTree));
+        this.menuItem = filterSubValue(toJS(this.leftTree), "id", ReChange(id));
+        console.log(toJS(this.menuItem));
         /** 面包屑 **/
-        let breadcrumbList = this.menuItem.parent
-        if (breadcrumbList) {
-          this.breadcrumbList = ["存储资源池", ...breadcrumbList];
-        }
-        // 左侧导航默认展开
-        openKeys = toJS(filterSubValue(getProperty(state.leftTree, "id"), "id", id).parent);
-        openKeys[0] = "home";
-      } else if (id === "null") {
+        // let breadcrumbList = [];
+        // if (this.menuItem["parent-title"]) {
+        //   breadcrumbList = this.menuItem["parent-title"];
+        //   this.breadcrumbList = ["存储资源池", ...breadcrumbList];
+        // }
+        // // 左侧导航默认展开
+        // openKeys = this.menuItem["parent-id"];        
+        // openKeys[0] = "home";
+      } else if (id === "null" || !id) {
         /** 面包屑 **/
         this.breadcrumbList = ["存储资源池", "建行数据中心"];
         // 左侧导航默认展开
@@ -154,29 +158,21 @@ class State {
       message.error("获取左侧树失败！失败信息：" + result.message)
     }
   }
-  // SubMenu 展开/关闭的回调
-  @action.bound
-  subMenuOpenChange = openKeys => {
-    console.log(openKeys);
-    const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
-    console.log(latestOpenKey);
-    
-    // if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-    //   this.openKeys = openKeys;
-    // } else {
-    //   this.openKeys = latestOpenKey ? [latestOpenKey] : [];
-    // }
-  }
-  // 左侧导航点击事件
+  // 左侧导航点击事件  // SubMenu 展开/关闭的回调
   @action.bound
   linkClick = item => {
+    item.id = item.id ? item.id : "home";
     this.menuItem = item;
-    this.defaultSelectedKeys = [item.key];
+    this.defaultSelectedKeys = [item.id];
     /** 点击刷新面包屑 **/
-    let breadcrumbList = item.parent;
+    let breadcrumbList = item["parent-title"];
     if (breadcrumbList) {
       this.breadcrumbList = ["存储资源池", ...breadcrumbList];
     }
+    // 左侧导航默认展开
+    let openKeys = item["parent-id"] || [];
+    openKeys[0] = "home";
+    this.openKeys = openKeys;
   };
   /**********          建行数据中心          **********/
   // 数据中心资源总数及占比

@@ -115,19 +115,11 @@ class NasDevice extends Component {
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
           style={{ marginBottom: "24px" }} >
           <Table
+            rowKey={record => record.name}
             scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
             columns={this.initColumns()}
             dataSource={state.nasDeviceList} />
         </Card>
-        {/* <Card
-          title="控制器信息"
-          className="card"
-          headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}>
-          <Table
-            scroll={{ y: "76vh", x: 1500 }} bordered size="middle"
-            columns={controller}
-            dataSource={[]} />
-        </Card> */}
       </Card>
     )
   }

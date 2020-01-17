@@ -84,11 +84,11 @@ class SwitchUnit extends Component {
             <BasicInfo infos={BasicInfoList} dataSource={state.switchUnitInfo}/>
         </Card>
         <Card
-          title={state.menuItem.title}
+          title={state.menuItem?.title}
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
             <Table
-                rowKey={record => record.storageUnitId}
+                rowKey={record => record.vsanName}
                 scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
                 columns={this.initColumns()}
                 dataSource={state.switchUnitList} />

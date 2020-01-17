@@ -29,7 +29,7 @@ class Home extends Component {
         className="home"
         title="建行数据中心"
         headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
-        bodyStyle={{ height: "auto", paddingRight: "0", paddingBottom: "0" }}
+        bodyStyle={{ height: "auto", minHeight: "77.5vh", paddingRight: "0", paddingBottom: "0" }}
       >
         <Row>
           <Col span={12}>

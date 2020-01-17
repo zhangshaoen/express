@@ -134,6 +134,7 @@ class SanDevice extends Component {
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
           style={{ marginBottom: "24px" }} >
           <Table
+            rowKey={record => record.name}
             scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={storagePool}
             dataSource={state.sanDevicePoolList} />
@@ -161,6 +162,7 @@ class SanDevice extends Component {
             </Col>
           </Row>
           <Table
+            rowKey={record => record.sanStoragePoolName}
             scroll={{ y: "76vh" }} bordered size="middle"
             columns={lun}
             dataSource={state.sanDeviceLunList} />
@@ -176,6 +178,7 @@ class SanDevice extends Component {
             </Col>
           </Row>
           <Table
+            rowKey={record => record.sanStoragePoolName}
             scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={portGrout}
             dataSource={[]} />
@@ -193,6 +196,7 @@ class SanDevice extends Component {
             </Col>
           </Row>
           <Table
+            rowKey={record => record.name}
             scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={port}
             dataSource={state.sanDevicePortList} />

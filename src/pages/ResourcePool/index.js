@@ -66,7 +66,7 @@ class ResourcePool extends Component {
             <Medal name="name" dataSource={state.resourcePoolInfo}/>
         </Card>
         <Card
-          title={state.menuItem.title}
+          title={state.menuItem?.title}
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}>
           <Table

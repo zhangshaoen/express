@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactEcharts from 'echarts-for-react';
-// import { toJS } from 'mobx';
 
 
 export default class Link extends Component {
@@ -34,6 +33,10 @@ export default class Link extends Component {
       })
     })
     return data
+  }
+
+  onChartLegendselectchanged = (param, echarts) => {
+    console.log(param)
   }
 
   getOption = props => {
@@ -85,9 +88,14 @@ export default class Link extends Component {
   }
 
   render() {
+    let onEvents = {
+      'legendselectchanged': this.onChartLegendselectchanged
+    }
+
     return (
       <ReactEcharts
         option={this.getOption(this.props)}
+        onEvents={onEvents}
         style={{ height: '100%' }}
       />
     )

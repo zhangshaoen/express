@@ -4,5 +4,5 @@ export const   ChangeToUTF = pValue => {
 }
 
 export const ReChange = pValue => {
-  return unescape(pValue.replace(/&#x/g, '%u').replace(/\\u/g, '%u').replace(/;/g, ''));
+  return decodeURIComponent(pValue);
 }
