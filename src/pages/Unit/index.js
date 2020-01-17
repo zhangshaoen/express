@@ -264,7 +264,7 @@ class Unit extends Component {
             }} />
         </Card>
         <Card
-          title={state.menuItem.title}
+          title={state.menuItem?.title}
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
           <Row type="flex" justify="end">
@@ -288,7 +288,11 @@ class Unit extends Component {
           onOk={this.handleAddOk}
           onCancel={this.handleAddCancel}
         >
-          <AddDevice path={this.props.location.pathname} setForm={form => { this.form = form }} />
+          <div style={{maxHeight: "50vh", overflowY: "auto"}}>
+            <AddDevice 
+              path={this.props.location.pathname} 
+              setForm={form => { this.form = form }} />
+          </div>
         </Modal>
         <Modal
           title="设备设置"
@@ -298,10 +302,12 @@ class Unit extends Component {
           onOk={this.handleUpdataOk}
           onCancel={this.handleUpdataCancel}
         >
-          <UpdateDevice
-            path={this.props.location.pathname}
-            dataSource={this.state.updateData}
-            setForm={form => { this.form = form }} />
+          <div style={{maxHeight: "50vh", overflowY: "auto"}}>
+            <UpdateDevice
+              path={this.props.location.pathname}
+              dataSource={this.state.updateData}
+              setForm={form => { this.form = form }} />
+          </div>
         </Modal>
       </Card>
     )

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
-import { Form, Select, Radio} from 'antd';
+import { Form, Select, Radio, Input, InputNumber, Row, Col } from 'antd';
 import state from '../../Store';
 
 const { Item } = Form;
@@ -9,36 +9,82 @@ const { Option } = Select;
 
 class AddDevice extends Component {
 
-  isHeart = (path, getFieldDecorator) => {
-    if(/nas/.test(path)) {
+  isNasFormItem = (path, getFieldDecorator) => {
+    if (/nas/.test(path)) {
       return (
-        <Item label='是否可做心跳盘:'>
-        {getFieldDecorator('isHeart', {
-            initialValue: "Y",
-          })(
-          <Radio.Group buttonStyle="solid">
-            <Radio.Button value="Y">是</Radio.Button>
-            <Radio.Button value="N">否</Radio.Button>
-          </Radio.Group>
-        )}
-      </Item>
+        <Row>
+          <Col span={24}>
+            <Item label='控制器类别:'>
+              {getFieldDecorator('type', {})
+                (<Input />)}
+            </Item>
+          </Col>
+          <Col span={24}>
+            <Item label='控制器型号:'>
+              {getFieldDecorator('model', {})
+                (<Input />)}
+            </Item>
+          </Col>
+          <Col span={24}>
+            <Item label='位置:'>
+              {getFieldDecorator('position', {})
+                (<Input />)}
+            </Item>
+          </Col>
+          <Col span={12}>
+            <Item label='是否可做心跳盘:' labelCol={{span: 12}} wrapperCol={{span: 12}}>
+              {getFieldDecorator('isHeart', {
+                initialValue: "Y",
+              })(
+                <Radio.Group buttonStyle="solid">
+                  <Radio.Button value="Y">是</Radio.Button>
+                  <Radio.Button value="N">否</Radio.Button>
+                </Radio.Group>
+              )}
+            </Item>
+          </Col>
+          <Col span={12}>
+            <Item label='初始INODE:' labelCol={{span: 12}} wrapperCol={{span: 12}}>
+              {getFieldDecorator('initialInode', {})
+                (<InputNumber min={0} step={0.1} />)}
+            </Item>
+          </Col>
+          <Col span={12}>
+            <Item label='初始容量:' labelCol={{span: 12}} wrapperCol={{span: 12}}>
+              {getFieldDecorator('initialCapacity', {})
+                (<InputNumber min={0} step={0.1} />)}
+            </Item>
+          </Col>
+          <Col span={12}>
+            <Item label='初始MBPS:' labelCol={{span: 12}} wrapperCol={{span: 12}}>
+              {getFieldDecorator('initialMbps', {})
+                (<InputNumber min={0} step={0.1} />)}
+            </Item>
+          </Col>
+          <Col span={12}>
+            <Item label='初始IOPS:' labelCol={{span: 12}} wrapperCol={{span: 12}}>
+              {getFieldDecorator('initialIops', {})
+                (<InputNumber min={0} step={0.1} />)}
+            </Item>
+          </Col>
+        </Row>
       )
-    }else {
+    } else {
       return null
     }
   }
 
   multipleOptions = path => {
     let options = [];
-    if(/nas/.test(path)) {
+    if (/nas/.test(path)) {
       state.nassTorageControlList?.forEach((item, index) => {
         options.push(<Option value={item.name} key={index}>{item.name}</Option>);
-      });    
-    }else if(/san/.test(path)) {
+      });
+    } else if (/san/.test(path)) {
       state.freeSanStorageList?.forEach((item, index) => {
         options.push(<Option value={item.storageName} key={index}>{item.storageName}</Option>);
-      });  
-    }    
+      });
+    }
     return options;
   }
 
@@ -85,7 +131,7 @@ class AddDevice extends Component {
             )
           }
         </Item>
-        { this.isHeart(path, getFieldDecorator) }
+        {this.isNasFormItem(path, getFieldDecorator)}
       </Form>
     )
   }

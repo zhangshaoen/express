@@ -22,18 +22,15 @@ export const filterSubValues = (list, reg, regText, label, value) => {
   return values
 }
 
-export const filterSubValue = (list, key, value, result={}) => {  
+export const filterSubValue = (list, key, value, result) => { 
   if (list?.find(o => o[key] === value)) {
-    console.log(list?.find(o => o[key] === value), value);
+    console.log(list?.find(o => o[key] === value));
     result = list.find(o => o[key] === value);
-    return result
   }
   for(let i = 0; i < list.length; i++) {
     if (list[i].hasOwnProperty('childrens') && list[i].childrens) {
-      filterSubValue(list[i].childrens, key, value, result);
+      filterSubValue(list[i].childrens, key, value, list.find(o => o[key] === value));
     }
   }
-  if(result) {
-    return result
-  }
+  return result
 }
