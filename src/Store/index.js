@@ -266,10 +266,13 @@ class State {
   getStoragePoolListByDataCenter = async dataCenterId => {
     let result = await reqStoragePoolListByDataCenter(dataCenterId);
     if(result.code === 0) {
-      this.resourcePoolValue = result.data[0].id;
+      let resourcePoolValue = result.data.length ? result.data[0].id : null;
+      this.resourcePoolValue = resourcePoolValue;
       this.resourcePoolOptions = result.data;
-      state.getDevNumOrDevCapByPool(result.data[0].id);
-      state.getDistributionRatioTrendByPool(result.data[0].id, this.linkDate);
+      if(resourcePoolValue) {
+        state.getDevNumOrDevCapByPool(resourcePoolValue);
+        state.getDistributionRatioTrendByPool(resourcePoolValue, this.linkDate);
+      }
     }else {
       message.error("获取数据中心下资源池列表");
     }
