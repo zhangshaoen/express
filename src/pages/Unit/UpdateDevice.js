@@ -33,18 +33,6 @@ class UpdateDevice extends Component {
             </Item>
           </Col>
           <Col span={12}>
-            <Item label='是否可做心跳盘:' labelCol={{ span: 12 }} wrapperCol={{ span: 12 }}>
-              {getFieldDecorator('isHeart', {
-                initialValue: isHeart,
-              })(
-                <Radio.Group buttonStyle="solid">
-                  <Radio.Button value="Y">是</Radio.Button>
-                  <Radio.Button value="N">否</Radio.Button>
-                </Radio.Group>
-              )}
-            </Item>
-          </Col>
-          <Col span={12}>
             <Item label='初始INODE:' labelCol={{ span: 12 }} wrapperCol={{ span: 12 }}>
               {getFieldDecorator('initialInode', {
                 initialValue: initialInode,
@@ -70,6 +58,18 @@ class UpdateDevice extends Component {
               {getFieldDecorator('initialIops', {
                 initialValue: initialIops,
               })(<InputNumber min={0} step={0.1} />)}
+            </Item>
+          </Col>
+          <Col span={12}>
+            <Item label='是否可做心跳盘:' labelCol={{ span: 12 }} wrapperCol={{ span: 12 }}>
+              {getFieldDecorator('isHeart', {
+                initialValue: isHeart,
+              })(
+                <Radio.Group buttonStyle="solid">
+                  <Radio.Button value="Y">是</Radio.Button>
+                  <Radio.Button value="N">否</Radio.Button>
+                </Radio.Group>
+              )}
             </Item>
           </Col>
         </Row>

@@ -10,7 +10,6 @@ import { BasicInfoList, CapacityList, MBPSList, IOPSList } from "./BasicInfoConf
 import { storagePool, lun, portGrout, port } from "./columns";
 import "../../assets/less/index.less";
 import {getQueryVariable} from '../../utils/getQueryVariable';
-// import { ChangeToUTF } from '../../utils/UTFTranslate';
 import state from "../../Store";
 
 @observer
@@ -66,13 +65,12 @@ class SanDevice extends Component {
   UNSAFE_componentWillMount() {
     let {id} = getQueryVariable(this, "id");
     if(id) {
-      // id = ChangeToUTF(id);
-      // console.log(id);
       // 根据 ID SAN 展示存储设备信息
-      state.getStorageByStorageName(id).then(() => {
+      state.getStorageByStorageName(id);
+      // .then(() => {
         // let { id } = state.sanDeviceList;
         // this.setState({  });
-      });
+      // });
       // 展示存储设备下存储池列表
       state.getStoragePoolByStorageName(id);
       // 展示存储设备下LUN列表

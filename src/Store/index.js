@@ -4,7 +4,6 @@ import headerMenuList from '../config/haderMenuConfig';
 import { message } from 'antd';
 import { filterSubJson } from '../utils/filterSubValues';
 import { getProperty } from '../utils/getProperty';
-import { ReChange } from '../utils/UTFTranslate';
 import {
   reqLeftTree,
   reqResourceAmount,
@@ -123,16 +122,17 @@ class State {
   // 获取左侧树
   @action.bound
   getLeftTree = async id => {
+    id = decodeURIComponent(id);
     const result = await reqLeftTree();
     if (result.code === 0) {
       this.leftTree = getProperty([result.data], "title");
       getProperty(this.leftTree, "id");                
       // 左侧导航默认展开
       let openKeys = [];
-      let selectedKeys = [ReChange(id)];
+      let selectedKeys = [id];
       if (id && id !== "null" && id !== "home") {
         // 页面展示标题
-        this.menuItem = filterSubJson(toJS(this.leftTree), "id", ReChange(id));
+        this.menuItem = filterSubJson(toJS(this.leftTree), "id", id);
         /** 面包屑 **/
         let breadcrumbList = [];
         if (this.menuItem["parent-title"]) {
