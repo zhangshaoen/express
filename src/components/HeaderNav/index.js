@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import state from "../../Store";
 import { Layout, Row, Col, Menu, Icon } from 'antd';
 import headerMenuList from '../../config/haderMenuConfig';
+import { getQueryVariable } from '../../utils/getQueryVariable';
 import "./index.less"
 import logo from "../../assets/images/logo.png"
 
@@ -44,8 +45,8 @@ class HeaderNav extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    const path = this.props.location.pathname;    
-    state.breadcrumbByUrl(path);
+    const { pathname, id } = getQueryVariable(this, "id");
+    state.breadcrumbByUrl(pathname, id);
   }
 
 

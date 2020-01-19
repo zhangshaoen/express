@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import state from "../../Store";
 import { Card, Row, Col, TimePicker, Checkbox, Button } from "antd";
 import moment from 'moment';
+import { getQueryVariable } from '../../utils/getQueryVariable';
 import "./index.less";
 
 
@@ -16,8 +17,8 @@ class Acquisition extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    const path = this.props.location.pathname;
-    state.breadcrumbByUrl(path);
+    const { pathname, id } = getQueryVariable(this, "id");
+    state.breadcrumbByUrl(pathname, id);
   }
 
   render() {

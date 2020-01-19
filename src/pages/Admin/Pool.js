@@ -19,7 +19,7 @@ import SwitchUnit from '../SwitchUnit';
 import SwitchFabric from '../SwitchFabric';
 import SwitchZone from '../SwitchZone';
 import SwitchPhysics from '../SwitchPhysics';
-
+import { getQueryVariable } from '../../utils/getQueryVariable';
 import "../../assets/less/index.less";
 
 const { Sider, Content } = Layout;
@@ -28,8 +28,9 @@ const { Sider, Content } = Layout;
 class Pool extends Component {
 
   UNSAFE_componentWillMount() {
-    const path = this.props.location.pathname;
-    state.breadcrumbByUrl(path);
+    const { pathname, id } = getQueryVariable(this, "id");
+
+    state.breadcrumbByUrl(pathname, id );
   }
 
   render() {

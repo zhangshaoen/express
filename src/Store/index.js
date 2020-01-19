@@ -67,10 +67,13 @@ class State {
   @observable breadcrumbList = [];
   // 面包屑随URL变化
   @action.bound
-  breadcrumbByUrl = path => {
+  breadcrumbByUrl = (path, id) => {
     let breadcrumbList = [];
     if (path.indexOf("/home") === 0) {
       breadcrumbList.push("存储资源池");
+      if(!id) {
+        breadcrumbList.push("建行数据中心");
+      }
       this.breadcrumbList = breadcrumbList;
       this.defaultSelectedKeys = [path];
     } else if (path === "/404") {
