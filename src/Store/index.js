@@ -122,7 +122,7 @@ class State {
   @observable menuItem = {};
   // 获取左侧树
   @action.bound
-  getLeftTree = async (pathname, id) => {
+  getLeftTree = async id => {
     const result = await reqLeftTree();
     if (result.code === 0) {
       this.leftTree = getProperty([result.data], "title");
@@ -130,8 +130,7 @@ class State {
       // 左侧导航默认展开
       let openKeys = [];
       let selectedKeys = [ReChange(id)];
-
-      if (id && id !== "null") {
+      if (id && id !== "null" && id !== "home") {
         // 页面展示标题
         this.menuItem = filterSubJson(toJS(this.leftTree), "id", ReChange(id));
         /** 面包屑 **/
@@ -143,7 +142,7 @@ class State {
         // 左侧导航默认展开
         openKeys = this.menuItem["parent-id"];        
         openKeys[0] = "home";
-      } else if (id === "null" || !id) {
+      } else if (id === "null" || !id || id === "home") {
         /** 面包屑 **/
         this.breadcrumbList = ["存储资源池", "建行数据中心"];
         // 左侧导航默认展开

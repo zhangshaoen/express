@@ -12,7 +12,7 @@ export const  getQueryVariable = (that, variable) => {
       }
     }
   }
-  return(false);
+  return { pathname }
 }
 
 // 简洁获取 URL 参数

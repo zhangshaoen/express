@@ -36,7 +36,7 @@ export default class Link extends Component {
   }
 
   onChartLegendselectchanged = (param, echarts) => {
-    console.log(param)
+    // console.log(param.selected)
   }
 
   getOption = props => {
