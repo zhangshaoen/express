@@ -30,7 +30,7 @@ class Pool extends Component {
   UNSAFE_componentWillMount() {
     const { pathname, id } = getQueryVariable(this, "id");
 
-    state.breadcrumbByUrl(pathname, id );
+    state.breadcrumbByUrl(pathname, id);
   }
 
   render() {
