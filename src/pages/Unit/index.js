@@ -215,8 +215,10 @@ class Unit extends Component {
     }
   }
 
-  componentWillUnmount() {
-    
+  componentWillUnmount(){
+    this.setState = (state, callback) => {
+      return;
+    }
   }
 
   render() {

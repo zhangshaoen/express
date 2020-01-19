@@ -32,3 +32,7 @@ yarn add @babel/plugin-proposal-optional-chaining --dev
 
 - [echarts-for-react](https://github.com/hustcc/echarts-for-react)
 - [echarts-for-react events](https://git.hust.cc/echarts-for-react/#/echarts/events?_k=hb6rba)
+
+
+### React项目报警告 Can't perform a React state update on an unmounted component
+[React项目报警告 Can't perform a React state update on an unmounted component](https://blog.csdn.net/xiaocuizao/article/details/102906594)
