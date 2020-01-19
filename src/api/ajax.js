@@ -1,7 +1,21 @@
 import axios from 'axios';
 import { message } from 'antd';
+import TopProgress from '../components/TopProgress';
 
 export default function ajax(url, data = {}, method = 'GET') {
+  axios.interceptors.request.use(config=>{ // 请求之前加loading
+    TopProgress.start();
+    return config
+  },error=>{
+    return Promise.reject(error)
+  })
+  axios.interceptors.response.use(config=>{ // 响应成功关闭loading
+    TopProgress.done();
+    return config
+  },error=>{
+    return Promise.reject(error)
+  })
+  
   return new Promise((resolve, reject) => {
     let promise
     // 1. 执行异步ajax请求
