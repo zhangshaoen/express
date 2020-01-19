@@ -27,9 +27,11 @@ export const filterSubValue = (list, key, value, result) => {
     console.log(list?.find(o => o[key] === value));
     result = list.find(o => o[key] === value);
   }
+  console.log(result);
+  // result ? result : 
   for(let i = 0; i < list.length; i++) {
     if (list[i].hasOwnProperty('childrens') && list[i].childrens) {
-      filterSubValue(list[i].childrens, key, value, list.find(o => o[key] === value));
+      filterSubValue(list[i].childrens, key, value, result); 
     }
   }
   return result

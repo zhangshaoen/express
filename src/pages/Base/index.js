@@ -43,7 +43,7 @@ class Base extends Component {
     return (
       <Card
         className="base"
-        title={state.menuItem.title}
+        title={state.menuItem?.title}
         headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}
         bodyStyle={{ paddingRight: 0, paddingBottom: 0, height: "auto" }}
       >

@@ -75,7 +75,7 @@ class SwitchUnit extends Component {
 
   render() {
     return (
-      <Card>
+      <Card bodyStyle={{minHeight: "86vh"}}>
         <Card
           title="基本信息"
           className="card"

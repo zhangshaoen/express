@@ -178,7 +178,7 @@ class SwitchPage extends Component {
             <BasicInfo infos={BasicInfoList} dataSource={state.switchPageInfo}/>
         </Card>
         <Card
-          title={state.menuItem.title}
+          title={state.menuItem?.title}
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
           <Row type="flex" justify="end">

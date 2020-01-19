@@ -50,7 +50,7 @@ class Storage extends Component {
 
   render() {
     return (
-      <Card title={state.menuItem.title} headStyle={{backgroundColor: "rgba(244, 247, 253, 1)"}} bodyStyle={{minHeight: "77.5vh"}}>
+      <Card title={state.menuItem?.title} headStyle={{backgroundColor: "rgba(244, 247, 253, 1)"}} bodyStyle={{minHeight: "77.5vh"}}>
         <Table
           rowKey={record => record.id}
           scroll={{ y: "75vh", }} pagination={false} bordered size="middle"

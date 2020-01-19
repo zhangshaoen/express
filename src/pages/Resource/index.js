@@ -242,7 +242,7 @@ class Resource extends Component {
             dataSource={{ totalInitialIOPS: state.resourceInfo.totalInitialIOPS, currentAllocatedIOPS: state.resourceInfo.currentAllocatedIOPS }} />
         </Card>
         <Card
-          title={state.menuItem.title}
+          title={state.menuItem?.title}
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
           <Row type="flex" justify="end">
