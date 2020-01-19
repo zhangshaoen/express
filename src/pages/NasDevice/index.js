@@ -18,7 +18,7 @@ class NasDevice extends Component {
     return [
       {
         title: "存储卷",
-        dataIndex: "存储卷",
+        dataIndex: "name",
         fixed: 'left',
         width: 150
       },
@@ -56,7 +56,7 @@ class NasDevice extends Component {
   UNSAFE_componentWillMount() {
     let {id} = getQueryVariable(this, "id");
     if(id) { 
-      id = ChangeToUTF(id);
+      id = ChangeToUTF(id);           
       // 根据 ID 存储控制器页面基本信息查询
       state.getStorageControlInfoByName(id);
       // 根据 ID 存储控制器页面NAS卷列表查询

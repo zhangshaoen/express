@@ -157,10 +157,12 @@ class State {
   }
   // 左侧导航点击事件  // SubMenu 展开/关闭的回调
   @action.bound
-  linkClick = item => {
+  linkClick = item => {    
     item.id = item.id ? item.id : "home";
+    console.log(item.id);
+    
     this.menuItem = item;
-    this.defaultSelectedKeys = [item.id];
+    this.selectedKeys = [item.id];
     /** 点击刷新面包屑 **/
     let breadcrumbList = item["parent-title"];
     if (breadcrumbList) {
@@ -462,7 +464,6 @@ class State {
   deleteStorageUnit = async storageUnit => {
     const result = await reqDeleteStorageUnit(storageUnit);
     if (result.code === 0) {
-
       message.success(`存储级别页面（特定存储资源池下特定级别）存储单元删除成功！`);
     } else {
       message.error(`存储级别页面（特定存储资源池下特定级别）存储单元删除失败！失败信息：` + result.message);

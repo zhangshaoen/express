@@ -74,6 +74,12 @@ class Resource extends Component {
     })
   }
 
+  deleteUnit = record => {
+    state.deleteStorageUnit(record).then(() => {
+      state.getStorageUnitListByStorageLevelId(this.state.addValues.id);
+    })
+  }
+
   initColumns = path => {
     let columns = [
       {
@@ -162,7 +168,7 @@ class Resource extends Component {
                 onClick={() => this.updateUnit(record)}>
                 保存
               </Button>
-              <Popconfirm title="是否确认删除当前单元？" onConfirm={(record) => state.deleteStorageUnit(record)}>
+              <Popconfirm title="是否确认删除当前单元？" onConfirm={() => this.deleteUnit(record)}>
                 <Button type="danger" size="small">删除</Button>
               </Popconfirm>
             </span>
