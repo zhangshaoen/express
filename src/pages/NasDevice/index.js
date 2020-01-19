@@ -8,7 +8,7 @@ import { BasicInfoList, CapacityList, MBPSList, IOPSList } from "./BasicInfoConf
 import "../../assets/less/index.less";
 import state from '../../Store';
 import {getQueryVariable} from '../../utils/getQueryVariable';
-import { ChangeToUTF } from '../../utils/UTFTranslate';
+// import { ChangeToUTF } from '../../utils/UTFTranslate';
 
 
 @observer
@@ -55,8 +55,10 @@ class NasDevice extends Component {
 
   UNSAFE_componentWillMount() {
     let {id} = getQueryVariable(this, "id");
+    console.log(id);
     if(id) { 
-      id = ChangeToUTF(id);           
+      // id = ChangeToUTF(id);
+      // console.log(id);
       // 根据 ID 存储控制器页面基本信息查询
       state.getStorageControlInfoByName(id);
       // 根据 ID 存储控制器页面NAS卷列表查询
@@ -66,7 +68,7 @@ class NasDevice extends Component {
     }
   }
 
-  render() {
+  render() {    
     return (
       <Card>
         <Card

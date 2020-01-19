@@ -158,9 +158,7 @@ class State {
   // 左侧导航点击事件  // SubMenu 展开/关闭的回调
   @action.bound
   linkClick = item => {    
-    item.id = item.id ? item.id : "home";
-    console.log(item.id);
-    
+    item.id = item.id ? item.id : "home";    
     this.menuItem = item;
     this.selectedKeys = [item.id];
     /** 点击刷新面包屑 **/

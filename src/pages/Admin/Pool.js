@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import state from "../../Store";
 import urlBase from '../../config/urlBase';
+import { ChangeToUTF } from '../../utils/UTFTranslate';
 import { Layout } from 'antd';
 import LeftNav from '../../components/LeftNav';
 import ScrollToTop from "../../components/ScrollToTop"
@@ -33,7 +34,7 @@ class Pool extends Component {
   }
 
   render() {
-    let key = this.props.location.search;
+    let key = ChangeToUTF(this.props.location.search);
     return (
       <Layout className="inner-layout">
         <Sider theme="light" className="sider" width={280}>
