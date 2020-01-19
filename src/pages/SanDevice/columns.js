@@ -80,7 +80,7 @@ export const portGrout = [
     title: "分组名称",
     dataIndex: "name",
     fixed: 'left',
-    width: 50,
+    width: 150,
   },
   {
     title: "存储名称",

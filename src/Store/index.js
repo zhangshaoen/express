@@ -2,7 +2,7 @@
 import { observable, action, toJS } from 'mobx';
 import headerMenuList from '../config/haderMenuConfig';
 import { message } from 'antd';
-import { filterSubValue } from '../utils/filterSubValues';
+import { filterSubJson } from '../utils/filterSubValues';
 import { getProperty } from '../utils/getProperty';
 import { ReChange } from '../utils/UTFTranslate';
 import {
@@ -129,22 +129,20 @@ class State {
       getProperty(this.leftTree, "id");                
       // 左侧导航默认展开
       let openKeys = [];
-      let selectedKeys = [id];
+      let selectedKeys = [ReChange(id)];
 
       if (id && id !== "null") {
         // 页面展示标题
-        console.log(ReChange(id), toJS(this.leftTree));
-        this.menuItem = filterSubValue(toJS(this.leftTree), "id", ReChange(id));
-        console.log(toJS(this.menuItem));
+        this.menuItem = filterSubJson(toJS(this.leftTree), "id", ReChange(id));
         /** 面包屑 **/
-        // let breadcrumbList = [];
-        // if (this.menuItem["parent-title"]) {
-        //   breadcrumbList = this.menuItem["parent-title"];
-        //   this.breadcrumbList = ["存储资源池", ...breadcrumbList];
-        // }
-        // // 左侧导航默认展开
-        // openKeys = this.menuItem["parent-id"];        
-        // openKeys[0] = "home";
+        let breadcrumbList = [];
+        if (this.menuItem["parent-title"]) {
+          breadcrumbList = this.menuItem["parent-title"];
+          this.breadcrumbList = ["存储资源池", ...breadcrumbList];
+        }
+        // 左侧导航默认展开
+        openKeys = this.menuItem["parent-id"];        
+        openKeys[0] = "home";
       } else if (id === "null" || !id) {
         /** 面包屑 **/
         this.breadcrumbList = ["存储资源池", "建行数据中心"];
@@ -152,7 +150,7 @@ class State {
         openKeys = ["home"];
         selectedKeys = ["home"];
       }
-      this.openKeys = openKeys;
+      this.openKeys = openKeys;      
       this.selectedKeys = selectedKeys;
     } else {
       message.error("获取左侧树失败！失败信息：" + result.message)

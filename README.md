@@ -1,3 +1,6 @@
+"proxy": "http://192.168.43.98:8080"
+"proxy": "http://192.168.8.114:8080"
+
 ### Optional Chaining
 
 - [来源](https://juejin.im/post/5dd4a4015188252a18737535)
