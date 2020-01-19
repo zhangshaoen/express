@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
-import { Form, Select, Radio, InputNumber } from 'antd';
+import { Form, Select, Radio, Input, InputNumber } from 'antd';
 // import state from '../../Store';
 
 const { Item } = Form;
@@ -38,25 +38,45 @@ class AddOrUpdate extends Component {
 
     return (
       <Form {...formItemLayout} >
-        <Item label='序号:'>
+        <Item label='分组名称:'>
           {getFieldDecorator('name', {
             initialValue: null,
             rules: [{ required: true, message: '请输入序号!' }],
-          })(<InputNumber min={0} />)}
+          })(<Input  />)}
         </Item>
-        <Item label='Fabric1-Port:'>
-          {getFieldDecorator('storageEquipmentNames', {
+        <Item label='存储名称:'>
+          {getFieldDecorator('storageName', {
             initialValue: [],
             rules: [{ required: true, message: '请选择Fabric1-Port!' }]
           })(<Select mode="multiple">
             {this.initOptions()}
           </Select>)}
         </Item>
-        <Item label='是否可用:'>
+        <Item label='VSAN名称:'>
+          {getFieldDecorator('vsanName', {
+            initialValue: [],
+            rules: [{ required: true, message: '请选择Fabric1-Port!' }]
+          })(<Select mode="multiple">
+            {this.initOptions()}
+          </Select>)}
+        </Item>
+        <Item label='初始MBPS:'>
+          {getFieldDecorator('initialMbps', {
+            initialValue: [],
+            rules: [{ required: true, message: '请选择Fabric1-Port!' }]
+          })(<InputNumber min={0} step={0.1} />)}
+        </Item>
+        <Item label='初始IOPS:'>
+          {getFieldDecorator('initialIops', {
+            initialValue: [],
+            rules: [{ required: true, message: '请选择Fabric1-Port!' }]
+          })(<InputNumber min={0} step={0.1} />)}
+        </Item>
+        <Item label='状态:'>
           {
-            getFieldDecorator('status', {
+            getFieldDecorator('isUse', {
               initialValue: "Y",
-              rules: [{ required: true, message: '请选择是否可用!' }]
+              rules: [{ required: true, message: '请选择状态!' }]
             })(
               <Radio.Group buttonStyle="solid">
                 <Radio.Button value="Y">是</Radio.Button>

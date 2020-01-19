@@ -77,38 +77,38 @@ export const lun = [
 
 export const portGrout = [
   {
-    title: "序号",
-    dataIndex: "序号",
+    title: "分组名称",
+    dataIndex: "name",
     fixed: 'left',
     width: 50,
   },
   {
-    title: "Fabric1-Port",
-    dataIndex: "Fabric1-Port",
+    title: "存储名称",
+    dataIndex: "storageName",
   },
   {
-    title: "Fabric2-Port",
-    dataIndex: "Fabric2-Port",
+    title: "VSAN名称",
+    dataIndex: "vsanName",
   },
   {
-    title: "已用MBPS",
-    dataIndex: "已用MBPS",
+    title: "初始MBPS",
+    dataIndex: "initialMbps",
   },
   {
-    title: "预分配MBPS",
-    dataIndex: "预分配MBPS",
+    title: "剩余MBPS",
+    dataIndex: "surplusMbps",
   },
   {
-    title: "已用IOPS",
-    dataIndex: "已用IOPS",
+    title: "初始IOPS",
+    dataIndex: "initialIops",
   },
   {
-    title: "预分配IOPS",
-    dataIndex: "预分配IOPS",
+    title: "剩余IOPS",
+    dataIndex: "surplusIops",
   },
   {
-    title: "是否可用",
-    dataIndex: "是否可用",
+    title: "状态",
+    dataIndex: "isUse",
   },
   {
     title: "操作",

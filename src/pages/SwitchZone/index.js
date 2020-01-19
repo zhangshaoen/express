@@ -107,7 +107,7 @@ class SwitchZone extends Component {
 
   render() {
     return (
-      <Card>
+      <Card bodyStyle={{minHeight: "86vh"}}>
         <Card
           title="基本信息"
           className="card"
@@ -121,7 +121,7 @@ class SwitchZone extends Component {
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
           <Table
-            rowKey={record => record.storageUnitId}
+            rowKey={record => record.name}
             scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={this.initColumns()}
             dataSource={state.zoneRefList.content} />

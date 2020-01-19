@@ -86,7 +86,7 @@ class SwitchPhysics extends Component {
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
           <Table
-            rowKey={record => record.storageUnitId}
+            rowKey={record => record.domainid}
             scroll={{ y: "76vh", x: 1700 }} bordered size="middle"
             columns={this.initColumns()}
             dataSource={state.deviceSwitchList.content} />
