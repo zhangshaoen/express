@@ -135,12 +135,12 @@ class State {
         this.menuItem = filterSubJson(toJS(this.leftTree), "id", id);
         /** 面包屑 **/
         let breadcrumbList = [];
-        if (this.menuItem["parent-title"]) {
+        if (this.menuItem && this.menuItem["parent-title"]) {
           breadcrumbList = this.menuItem["parent-title"];
           this.breadcrumbList = ["存储资源池", ...breadcrumbList];
         }
         // 左侧导航默认展开
-        openKeys = this.menuItem["parent-id"];        
+        openKeys =  this.menuItem ? this.menuItem["parent-id"] : [];        
         openKeys[0] = "home";
       } else if (id === "null" || !id || id === "home") {
         /** 面包屑 **/

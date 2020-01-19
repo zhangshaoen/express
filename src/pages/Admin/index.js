@@ -13,7 +13,6 @@ import Acquisition from '../Acquisition';
 import NasStorageDevice from '../NasStorageDevice';
 import FiberSwitchManagement from "../FiberSwitchManagement";
 import StorageManagement from "../StorageManagement";
-
 import "../../assets/less/index.less";
 
 

@@ -47,7 +47,7 @@ class LeftNav extends Component {
   UNSAFE_componentWillMount() {
     let { pathname, id } = getQueryVariable(this, "id");
     // 获取左侧树
-    state.getLeftTree(id);    
+    state.getLeftTree(id); 
     if(pathname === "/home" && (!id || id === "null" || id === "home")){
       // 获取 数据中心资源总数及占比  和  各个数据中心设备占比
       state.getHomeCharts();

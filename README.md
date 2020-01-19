@@ -36,3 +36,7 @@ yarn add @babel/plugin-proposal-optional-chaining --dev
 
 ### React项目报警告 Can't perform a React state update on an unmounted component
 [React项目报警告 Can't perform a React state update on an unmounted component](https://blog.csdn.net/xiaocuizao/article/details/102906594)
+
+
+### react封装简单的浏览器顶部加载进度条全局组件
+[react封装简单的浏览器顶部加载进度条全局组件](https://www.cnblogs.com/leiting/p/10531548.html)
