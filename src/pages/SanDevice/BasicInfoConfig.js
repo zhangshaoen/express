@@ -17,10 +17,10 @@ export const BasicInfoList =  [
   },
   {
     label: "存储类型",
-    key: "storageNo",
+    key: "storageType",
   },{
     label: "设备型号",
-    key: "model",
+    key: "storageNo",
   },
   {
     label: "数据中心",

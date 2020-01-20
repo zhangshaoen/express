@@ -276,7 +276,7 @@ class Unit extends Component {
             <Col span={24}>
               <Table
                 rowKey={record => record.name || record.storageName }
-                scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
+                scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
                 columns={this.initColumns(/nas/.test(this.props.location.pathname))}
                 dataSource={ dataSource } />
             </Col>

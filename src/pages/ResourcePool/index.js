@@ -19,7 +19,8 @@ class ResourcePool extends Component {
       },
       {
         title: "单元数",
-        dataIndex: "resourceTotal"
+        dataIndex: "resourceTotal",
+        width: "7%"
       },
       {
         title: "数据中心",
@@ -28,16 +29,19 @@ class ResourcePool extends Component {
       {
         title: "当前容量分配比例",
         dataIndex: "currentAllocatedCapacityRatio",
+        width: "13%",
         render: (text, record) => <span>{<span>{typeJudgment(text) === "number" ? `${(text * 100)}%` : 0}</span>}</span>
       },
       {
         title: "当前MBPS分配比例",
         dataIndex: "currentAllocatedMBPSRatio",
+        width: "14%",
         render: (text, record) => <span>{<span>{typeJudgment(text) === "number" ? `${(text * 100)}%` : 0}</span>}</span>
       },
       {
         title: "当前IOPS分配比例",
         dataIndex: "currentAllocatedIOPSRatio",
+        width: "14%",
         render: (text, record) => <span>{<span>{typeJudgment(text) === "number" ? `${(text * 100)}%` : 0}</span>}</span>
       }
     ];

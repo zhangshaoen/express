@@ -45,7 +45,7 @@ class AddOrUpdate extends Component {
 
     const { getFieldDecorator } = this.props.form;
     let { dataSource } = this.props;
-    let { name, manufacturer, fabricList, manageServiceName } =dataSource;
+    let { name, manufacturer, fabricNameList, manageServiceName } =dataSource;
     return (
       <Form {...formItemLayout}>
         <Item label='单元名称:'>
@@ -68,8 +68,8 @@ class AddOrUpdate extends Component {
           }
         </Item>
         <Item label='选择设备:'>
-          {getFieldDecorator('fabricList', {
-            initialValue: fabricList,
+          {getFieldDecorator('fabricNameList', {
+            initialValue: fabricNameList,
           })(<Select mode="multiple">
             {this.initOptions(state.idleFabricList, "fabric")}
           </Select>)}

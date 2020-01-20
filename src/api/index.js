@@ -115,11 +115,11 @@ export const reqNetWorkUnitList = deviceCategoryId => ajax(`${BASE}/view/switch/
 // 获取所有未分配的FABRIC
 export const reqIdleFabricList = () => ajax(`${BASE}/view/switch/getIdleFabricList`);
 // 删除网络单元
-export const reqDeleteNetWorkUnit = netWorkUnitId => ajax(`${BASE}/view/switch/deleteNetWorkUnit`, {netWorkUnitId}, "DELETE");
+export const reqDeleteNetWorkUnit = netWorkUnitId => ajax(`${BASE}/view/switch/deleteNetWorkUnit?netWorkUnitId=${netWorkUnitId}`, {}, "DELETE");
 // 修改网络单元
-export const reqUpdateNetWorkUnit = netWorkUnit => ajax(`${BASE}/view/switch/updateNetWorkUnit`, {netWorkUnit}, "PUT");
+export const reqUpdateNetWorkUnit = netWorkUnit => ajax(`${BASE}/view/switch/updateNetWorkUnit`, netWorkUnit, "PUT");
 // 添加网络单元
-export const reqAddNetWorkUnit = netWorkUnit => ajax(`${BASE}/view/switch/addNetWorkUnit`, {netWorkUnit}, "POST");
+export const reqAddNetWorkUnit = netWorkUnit => ajax(`${BASE}/view/switch/addNetWorkUnit`, netWorkUnit, "POST");
 
 
 // 获取网络单元信息

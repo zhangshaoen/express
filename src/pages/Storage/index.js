@@ -23,16 +23,19 @@ class Storage extends Component {
       {
         title: "当前容量分配比例",
         dataIndex: "currentAllocatedCapacityRatio",
+        // width: "12%",
         render: (text, record) => <span>{typeJudgment(text) === "number" ? `${(text * 100)}%` : 0}</span>,
       },
       {
         title: "当前MBPS分配比例",
         dataIndex: "currentAllocatedMBPSRatio",
+        // width: "13%",
         render: (text, record) => <span>{typeJudgment(text) === "number" ? `${(text * 100)}%` : 0}</span>,
       },
       {
         title: "当前IOPS分配比例",
         dataIndex: "currentAllocatedIOPSRatio",
+        // width: "13%",
         render: (text, record) => <span>{typeJudgment(text) === "number" ? `${(text * 100)}%` : 0}</span>,
       }
     ];

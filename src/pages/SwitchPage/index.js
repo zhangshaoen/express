@@ -61,13 +61,13 @@ class SwitchPage extends Component {
         this.setState({
           visible: false,
         }, () => {
-          let dataCenterId = this.state.dataCenterId;
+          let deviceCategoryId = this.state.dataCenterId;
           if(this.state.type === "add") {
-            let addValues = { dataCenterId, ...values };
+            let addValues = { deviceCategoryId, ...values };
             // 添加网络单元
             state.addNetWorkUnit(addValues).then(() => {
               // 获取网络单元列表
-              state.getNetWorkUnitList(dataCenterId);
+              state.getNetWorkUnitList(deviceCategoryId);
               // 获取所有管理机列表
               state.getManageServerList();
               // 获取所有未分配的FABRIC
@@ -80,7 +80,7 @@ class SwitchPage extends Component {
             let updateValues = toJS(this.state.updateData); 
             state.updateNetWorkUnit(updateValues).then(() => {
               // 获取网络单元列表
-              state.getNetWorkUnitList(dataCenterId);
+              state.getNetWorkUnitList(deviceCategoryId);
               // 获取所有管理机列表
               state.getManageServerList();
               // 获取所有未分配的FABRIC
@@ -137,10 +137,10 @@ class SwitchPage extends Component {
         width: 150,
         render: (text, record) => {
           return <span>
-            <Button type="primary" size="small" onClick={record => this.showModal("update", record)} style={{marginRight: "10px"}}>
+            <Button type="primary" size="small" onClick={() => this.showModal("update", record)} style={{marginRight: "10px"}}>
               编辑
             </Button>
-            <Popconfirm title="是否确认删除当前单元？" onConfirm={record => this.deleteNetWorkUnit(record.id)}>
+            <Popconfirm title="是否确认删除当前单元？" onConfirm={() => this.deleteNetWorkUnit(record.id)}>
               <Button type="danger" size="small">删除</Button>
             </Popconfirm>
           </span>
