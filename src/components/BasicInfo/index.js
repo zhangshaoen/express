@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, } from 'antd';
+import { Row, Col, Tooltip } from 'antd';
 import "./index.less";
 
 export default class BasicInfo extends Component {
@@ -16,7 +16,10 @@ export default class BasicInfo extends Component {
                   {
                     info.render ? 
                       info.render(dataSource[info.key])
-                    : dataSource[info.key]
+                    : dataSource[info.key]?.length < 25 ? dataSource[info.key] :
+                    <Tooltip title={dataSource[info.key]} className="tool-tip">
+                      <span>{ dataSource[info.key] }</span>
+                    </Tooltip>
                   }
                 </span> : null}
               </Col>
