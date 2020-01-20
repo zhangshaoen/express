@@ -60,16 +60,6 @@ export const lun = [
     title: "所属view",
     dataIndex: "viewName",
   },
-  {
-    title: "状态",
-    dataIndex: "isUse",
-  },
-  {
-    title: "关联主机名称",
-    dataIndex: "关联主机名称",
-    fixed: 'right',
-    width: 150,
-  },
 ];
 
 export const port = [
@@ -90,13 +80,5 @@ export const port = [
   {
     title: "所属Vsan",
     dataIndex: "vsanName",
-  },
-  {
-    title: "连接交换机名称",
-    dataIndex: "连接交换机名称",
-  },
-  {
-    title: "交换机端口号",
-    dataIndex: "交换机端口号",
   },
 ]

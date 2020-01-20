@@ -21,33 +21,38 @@ class NasDevice extends Component {
         width: 150
       },
       {
+        title: "INODE",
+        dataIndex: "inode"
+      },
+      {
+        title: "MBPS",
+        dataIndex: "mbps"
+      },
+      {
+        title: "IOPS",
+        dataIndex: "iops"
+      },
+      {
         title: "总可用容量",
         dataIndex: "capacity"
+      },
+      {
+        title: "预分配容量",
+        dataIndex: "beforeAllocatedCapacity"
       },
       {
         title: "已分配容量",
         dataIndex: "usedCapacity"
       },
       {
-        title: "预分配容量",
-        dataIndex: "预分配容量"
-      },
-      {
-        title: "分配比例",
-        dataIndex: "分配比例"
-      },
-      {
-        title: "剩余容量",
-        dataIndex: "剩余容量"
+        title: "控制器名称",
+        dataIndex: "controlName"
       },
       {
         title: "是否可用",
-        dataIndex: "是否可用"
+        dataIndex: "state",
+        render: text => text === "Y" ? "是" : text === "N" ? "否" : null 
       },
-      {
-        title: "备注",
-        dataIndex: "备注"
-      }
     ]
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { toJS } from 'mobx';
@@ -12,16 +13,30 @@ import "../../assets/less/index.less";
 import {getQueryVariable} from '../../utils/getQueryVariable';
 import state from "../../Store";
 
+const { Option } = Select;
+
 @observer
 class SanDevice extends Component {
 
   state = { 
     storageName: null,
+    poolName: "",
+    viewName: "",
     visible: false,
     type: "",
     typeTitle: "",
     updateData: {},
   };
+
+  initOptons = type => {
+    let options = [];
+    if (type === "fabric") {
+      state.fabricList?.forEach((item, index) => {
+        options.push(<Option value={item.fabricName} key={index}>{item.fabricName}</Option>);
+      });
+    }
+    return options;
+  }
 
   portGrout = () => {
     return [
@@ -126,6 +141,18 @@ class SanDevice extends Component {
     })
   }
 
+  fabricChange = value => {
+    // 展示存储设备下端口列表
+    state.getStoragePortByStorageName(this.state.storageName, value);
+  }
+
+  lunFilterChange = (poolName, viewName) => {
+    this.setState({ poolName, viewName }, () => {
+      // 展示存储设备下LUN列表
+      state.getStorageLunByStorageName(this.state.storageName, poolName, viewName);
+    });
+  }
+
   UNSAFE_componentWillMount() {
     let {id} = getQueryVariable(this, "id");
     if(id) {
@@ -138,6 +165,8 @@ class SanDevice extends Component {
       state.getStoragePoolByStorageName(id);
       // 展示存储设备下LUN列表
       state.getStorageLunByStorageName(id);
+      // 获取所有FABRIC
+      state.getFabricList();
       // 展示存储设备下端口列表
       state.getStoragePortByStorageName(id);
       // 获取端口分组列表
@@ -212,19 +241,10 @@ class SanDevice extends Component {
           style={{ marginBottom: "24px" }} >
           <Row type="flex" justify="end">
             <Col span={4} style={{ marginBottom: "24px" }}>
-              <Select placeholder="存储池名称" className="lun-sel"></Select>
+              <Select onChange={ value => this.lunFilterChange(value, this.state.viewName) } allowClear={true} placeholder="存储池名称" className="lun-sel"></Select>
             </Col>
             <Col span={4} style={{ marginBottom: "24px" }}>
-              <Select placeholder="LUN大小" className="lun-sel"></Select>
-            </Col>
-            <Col span={4} style={{ marginBottom: "24px" }}>
-              <Select placeholder="所属VIEW" className="lun-sel"></Select>
-            </Col>
-            <Col span={4} style={{ marginBottom: "24px" }}>
-              <Select placeholder="是否已分配" className="lun-sel"></Select>
-            </Col>
-            <Col span={4} style={{ marginBottom: "24px" }}>
-              <Select placeholder="关联主机名称" className="lun-sel"></Select>
+              <Select onChange={ value => this.lunFilterChange(this.state.poolName, value) } allowClear={true} placeholder="所属VIEW" className="lun-sel"></Select>
             </Col>
           </Row>
           <Table
@@ -255,10 +275,9 @@ class SanDevice extends Component {
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }}>
           <Row type="flex" justify="end">
             <Col span={4} style={{ marginBottom: "24px" }}>
-              <Select placeholder="所在Fabric" className="lun-sel"></Select>
-            </Col>
-            <Col span={4} style={{ marginBottom: "24px" }}>
-              <Select placeholder="连接交换机名称" className="lun-sel"></Select>
+              <Select onChange={this.fabricChange} allowClear={true} placeholder="所在Fabric" className="lun-sel">
+                { this.initOptons("fabric") }
+              </Select>
             </Col>
           </Row>
           <Table

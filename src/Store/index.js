@@ -40,6 +40,7 @@ import {
   reqStorageByStorageName,
   reqStoragePoolByStorageName,
   reqStorageLunByStorageName,
+  reqFabricList,
   reqStoragePortByStorageName,
   reqPortGroupList,
   reqUpdatePortGroup,
@@ -677,10 +678,21 @@ class State {
   // 展示存储设备下LUN列表
   @observable sanDeviceLunList = [];
   @action.bound
-  getStorageLunByStorageName = async storageName => {
-    let result = await reqStorageLunByStorageName(storageName);
+  getStorageLunByStorageName = async (storageName, sanStoragePoolName="", viewName="") => {
+    let result = await reqStorageLunByStorageName(storageName, sanStoragePoolName, viewName);
     if (result.code === 0) {        
       this.sanDeviceLunList = result.data;
+    } else {
+      message.error("获取SAN存储设备下LUN列表失败！失败信息：" + result.message)
+    }
+  }
+  // 获取所有FABRIC
+  @observable fabricList = [];
+  @action.bound
+  getFabricList = async () => {
+    let result = await reqFabricList();
+    if (result.code === 0) {        
+      this.fabricList = result.data;
     } else {
       message.error("获取SAN存储设备下LUN列表失败！失败信息：" + result.message)
     }
@@ -688,8 +700,8 @@ class State {
   // 展示存储设备下端口列表
   @observable sanDevicePortList = [];
   @action.bound
-  getStoragePortByStorageName = async storageName => {
-    let result = await reqStoragePortByStorageName(storageName);
+  getStoragePortByStorageName = async (storageName, fabricName="") => {
+    let result = await reqStoragePortByStorageName(storageName, fabricName);
     if (result.code === 0) {      
       this.sanDevicePortList = result.data;
     } else {
