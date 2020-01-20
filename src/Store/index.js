@@ -40,6 +40,7 @@ import {
   reqStorageByStorageName,
   reqStoragePoolByStorageName,
   reqStorageLunByStorageName,
+  reqViewList,
   reqFabricList,
   reqStoragePortByStorageName,
   reqPortGroupList,
@@ -677,13 +678,28 @@ class State {
   }
   // 展示存储设备下LUN列表
   @observable sanDeviceLunList = [];
+  @observable lunPool = [];
   @action.bound
   getStorageLunByStorageName = async (storageName, sanStoragePoolName="", viewName="") => {
     let result = await reqStorageLunByStorageName(storageName, sanStoragePoolName, viewName);
     if (result.code === 0) {        
       this.sanDeviceLunList = result.data;
+      if(sanStoragePoolName === "" && viewName === "") {
+        this.lunPool = result.data;
+      }
     } else {
       message.error("获取SAN存储设备下LUN列表失败！失败信息：" + result.message)
+    }
+  }
+  // 获取所有view列表
+  @observable lunViews = [];
+  @action.bound
+  getViewList = async () => {
+    let result = await reqViewList();
+    if (result.code === 0) {        
+      this.lunViews = result.data;
+    } else {
+      message.error("获取所有view列表失败！失败信息：" + result.message)
     }
   }
   // 获取所有FABRIC

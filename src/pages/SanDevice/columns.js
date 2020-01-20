@@ -49,7 +49,7 @@ export const lun = [
     width: 150
   },
   {
-    title: "LUN ID",
+    title: "LUNID",
     dataIndex: "lunId",
   },
   {

@@ -34,6 +34,14 @@ class SanDevice extends Component {
       state.fabricList?.forEach((item, index) => {
         options.push(<Option value={item.fabricName} key={index}>{item.fabricName}</Option>);
       });
+    }else if(type === "pool") {
+      state.lunPool?.forEach((item, index) => {
+        options.push(<Option value={item.sanStoragePoolName} key={index}>{item.sanStoragePoolName}</Option>);
+      });
+    }else if(type === "view") {
+      state.lunViews?.forEach((item, index) => {
+        options.push(<Option value={item.name} key={index}>{item.name}</Option>);
+      });
     }
     return options;
   }
@@ -165,6 +173,8 @@ class SanDevice extends Component {
       state.getStoragePoolByStorageName(id);
       // 展示存储设备下LUN列表
       state.getStorageLunByStorageName(id);
+      // 获取所有view列表
+      state.getViewList();
       // 获取所有FABRIC
       state.getFabricList();
       // 展示存储设备下端口列表
@@ -241,10 +251,14 @@ class SanDevice extends Component {
           style={{ marginBottom: "24px" }} >
           <Row type="flex" justify="end">
             <Col span={4} style={{ marginBottom: "24px" }}>
-              <Select onChange={ value => this.lunFilterChange(value, this.state.viewName) } allowClear={true} placeholder="存储池名称" className="lun-sel"></Select>
+              <Select onChange={ value => this.lunFilterChange(value, this.state.viewName) } allowClear={true} placeholder="存储池名称" className="lun-sel">
+                { this.initOptons("pool") }
+              </Select>
             </Col>
             <Col span={4} style={{ marginBottom: "24px" }}>
-              <Select onChange={ value => this.lunFilterChange(this.state.poolName, value) } allowClear={true} placeholder="所属VIEW" className="lun-sel"></Select>
+              <Select onChange={ value => this.lunFilterChange(this.state.poolName, value) } allowClear={true} placeholder="所属VIEW" className="lun-sel">
+                { this.initOptons("view") }
+              </Select>
             </Col>
           </Row>
           <Table

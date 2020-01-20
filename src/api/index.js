@@ -95,10 +95,12 @@ export const reqStorageByStorageName = storageName => ajax(`${BASE}/view/getStor
 export const reqStoragePoolByStorageName = storageName => ajax(`${BASE}/view/getStoragePoolByStorageName`, {storageName});
 // 展示存储设备下LUN列表
 export const reqStorageLunByStorageName = (storageName, sanStoragePoolName, viewName) => ajax(`${BASE}/view/getStorageLunByStorageName`, {storageName, sanStoragePoolName, viewName});
+// 获取所有view列表
+export const reqViewList = () => ajax(`${BASE}/view/getViewList`);
 // 展示存储设备下端口列表
 export const reqStoragePortByStorageName = (storageName, fabricName) => ajax(`${BASE}/view/getStoragePortByStorageName`, {storageName, fabricName});
 // 获取所有FABRIC
-export const reqFabricList = storageName => ajax(`${BASE}/view/switch/getFabricList`);
+export const reqFabricList = () => ajax(`${BASE}/view/switch/getFabricList`);
 // 获取端口分组列表
 export const reqPortGroupList = storageName => ajax(`${BASE}/view/getPortGroupList`, {storageName});
 // 编辑端口分组

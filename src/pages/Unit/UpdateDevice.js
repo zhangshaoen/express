@@ -8,9 +8,15 @@ class UpdateDevice extends Component {
 
   isNasFormItem = (path, getFieldDecorator, dataSource) => {
     if (/nas/.test(path)) {
-      let { type, model, position, isHeart, initialInode, initialCapacity, initialMbps, initialIops  } = dataSource;
+      let { type, manufacturer, model, position, isHeart, initialInode, initialCapacity, initialMbps, initialIops } = dataSource;
       return (
         <Row>
+          <Col span={24}>
+            <Item label='厂商:'>
+              {getFieldDecorator('manufacturer', {initialValue: manufacturer,})
+                (<Input />)}
+            </Item>
+          </Col>
           <Col span={24}>
             <Item label='控制器类别:'>
               {getFieldDecorator('type', {
@@ -101,10 +107,10 @@ class UpdateDevice extends Component {
     let deviceName = /nas/.test(path) ? "name" : /san/.test(path) ? "storageName" : "";
     return (
       <Form {...formItemLayout}>
-        <Item label='设备名称:'>
+        <Item label='控制器名称:'>
           {getFieldDecorator(deviceName, {
             initialValue: deviceName === "name" ? name : deviceName === "storageName" ? storageName : "",
-            rules: [{ message: '请输入设备名称!' }],
+            rules: [{ message: '请输入控制器名称!' }],
           })(<Input disabled />)}
         </Item>
         <Item label='服务状态:'>

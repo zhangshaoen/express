@@ -19,7 +19,8 @@ class Unit extends Component {
     addVisible: false,
     updateVisible: false,
     addValues: {},
-    updateData: {}
+    updateData: {},
+    pathname: ""
   };
 
   showModal = (type, item) => {
@@ -124,10 +125,10 @@ class Unit extends Component {
 
   initColumns = flag => {
     let name = flag ? "name" : "storageName";
-
+    let title = flag ? "控制器名称" : "设备名称";
     let columns = [
       {
-        title: "设备名称",
+        title: title,
         dataIndex: name,
         width: 200,
         fixed: 'left',
@@ -195,16 +196,18 @@ class Unit extends Component {
       state.getStorageUnitInfoById(id).then(() => {
         let {id} = state.unitBasicInfo;
         this.setState({
-          addValues: {id, pathname}
+          addValues: {id, pathname},
         });
       });
 
       if(/nas/.test(pathname)) {
+        this.setState({name : "控制器"});
         // 根据 ID 获取存储单元页面存储控制器列表查询
         state.getStorageControlListByStorageUnit(id);
         // 存储级别页面所有未被单元添加且有效的NAS控制器名称列表
         state.getNASStorageControlList();
       }else if(/san/.test(pathname)) {
+        this.setState({name : "设备"});
         // 获取SAN存储设备列表
         state.getSanStorageList(id);
         // 获取未关联的SAN存储设备列表
@@ -271,7 +274,7 @@ class Unit extends Component {
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
           <Row type="flex" justify="end">
             <Col span={3} style={{ marginBottom: "24px" }}>
-              <Button onClick={this.showModal} type="primary">添加控制器</Button>
+          <Button onClick={this.showModal} type="primary">添加{this.state.name}</Button>
             </Col>
             <Col span={24}>
               <Table
@@ -283,7 +286,7 @@ class Unit extends Component {
           </Row>
         </Card>
         <Modal
-          title="添加控制器"
+          title={`添加${this.state.name}`}
           okText="确认"
           cancelText="取消"
           visible={this.state.addVisible}
@@ -297,7 +300,7 @@ class Unit extends Component {
           </div>
         </Modal>
         <Modal
-          title="设备设置"
+          title={`编辑${this.state.name}`}
           okText="确认"
           cancelText="取消"
           visible={this.state.updateVisible}

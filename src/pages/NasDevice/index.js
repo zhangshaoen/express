@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { Card,  Table, message } from 'antd';
+import { Card,  Table, message, Popover } from 'antd';
 import BasicInfo from "../../components/BasicInfo";
 import ProgressInfo from "../../components/ProgressInfo";
 import { BasicInfoList, CapacityList, MBPSList, IOPSList } from "./BasicInfoConfig";
@@ -19,6 +19,21 @@ class NasDevice extends Component {
         dataIndex: "name",
         fixed: 'left',
         width: 150
+      },
+      {
+        title: "导出策略规则",
+        dataIndex: "beforExportPolicyRule",
+        render: (text, record) => {
+          let content = (
+            <div style={{width : "500px", height: "300px", overflowY: "auto"}}>
+              <p style={{wordWrap: "break-word", wordBreak: "break-all"}}>{ text }</p>
+            </div>
+          );
+          return text.length < 25 ? text : 
+          <Popover content={ content } title={`存储卷 ${record.name} 导出策略规则`} trigger="hover" >
+            <span className="text-ellipsis">{ text }</span>
+          </Popover> 
+        }
       },
       {
         title: "INODE",
@@ -39,14 +54,6 @@ class NasDevice extends Component {
       {
         title: "预分配容量",
         dataIndex: "beforeAllocatedCapacity"
-      },
-      {
-        title: "已分配容量",
-        dataIndex: "usedCapacity"
-      },
-      {
-        title: "控制器名称",
-        dataIndex: "controlName"
       },
       {
         title: "是否可用",
@@ -118,7 +125,7 @@ class NasDevice extends Component {
           style={{ marginBottom: "24px" }} >
           <Table
             rowKey={record => record.name}
-            scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
+            scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={this.initColumns()}
             dataSource={state.nasDeviceList} />
         </Card>

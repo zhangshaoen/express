@@ -88,14 +88,9 @@ class Resource extends Component {
         width: 200,
         fixed: 'left',
       },
-      // { title: "设备名称", dataIndex: "storageEquipmentNames" },
       {
         title: "所属数据中心",
         dataIndex: "dataCenter"
-      },
-      {
-        title: "部署楼宇",
-        dataIndex: "deploymentLocation"
       },
       {
         title: "容量分配比例最大值",

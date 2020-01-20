@@ -14,6 +14,12 @@ class AddDevice extends Component {
       return (
         <Row>
           <Col span={24}>
+            <Item label='厂商:'>
+              {getFieldDecorator('manufacturer', {})
+                (<Input />)}
+            </Item>
+          </Col>
+          <Col span={24}>
             <Item label='控制器类别:'>
               {getFieldDecorator('type', {})
                 (<Input />)}
@@ -108,12 +114,13 @@ class AddDevice extends Component {
     const { getFieldDecorator } = this.props.form;
     const { path } = this.props;
     let name = /nas/.test(path) ? "name" : /san/.test(path) ? "storageName" : "";
+    let nameTit = /nas/.test(path) ? "控制器" : /san/.test(path) ? "设备" : "";;
     return (
       <Form {...formItemLayout}>
-        <Item label='设备名称:'>
+        <Item label={`${nameTit}名称:`}>
           {getFieldDecorator(name, {
             initialValue: null,
-            rules: [{ required: true, message: '请输入设备名称!' }],
+            rules: [{ required: true, message: '请输入控制器名称!' }],
           })(<Select>
             {this.multipleOptions(path)}
           </Select>)}
