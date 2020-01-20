@@ -13,14 +13,14 @@ export default class ProgressInfo extends Component {
           <span>{progress[0].label}</span>
           <span className="label">{progress[0].label ? ":" : null}</span>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <span>{ progress[0].key && dataSource && dataSource[progress[0].key] }</span>
         </Col>
-        <Col span={4} className="col-label">
+        <Col span={5} className="col-label">
           <span>{progress[1].label}</span>
           <span className="label">{progress[1].label ? ":" : null}</span>
         </Col>
-        <Col span={14}>
+        <Col span={12}>
           <span>{ progress[1].key && dataSource && dataSource[progress[1].key] }</span>
         </Col>
       </Row>

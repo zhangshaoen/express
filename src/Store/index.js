@@ -41,6 +41,11 @@ import {
   reqStoragePoolByStorageName,
   reqStorageLunByStorageName,
   reqStoragePortByStorageName,
+  reqPortGroupList,
+  reqUpdatePortGroup,
+  reqDeletePortGroup,
+  reqVsanListByStorageName,
+  reqAddPortGroup,
   reqManageServerList,
   reqNASStorageControlList,
   reqFreeSanStorageList,
@@ -691,7 +696,59 @@ class State {
       message.error("获取SAN存储设备下端口列表失败！失败信息：" + result.message)
     }
   }
-
+  // 获取端口分组列表
+  @observable portGroupList = [];
+  @action.bound
+  getPortGroupList = async storageName => {
+    let result = await reqPortGroupList(storageName);
+    if (result.code === 0) {      
+      this.portGroupList = result.data;
+    } else {
+      message.error("获取SAN存储设备下端口分组列表失败！失败信息：" + result.message)
+    }
+  }
+  // 编辑端口分组
+  @action.bound
+  updatePortGroup = async portCustomGroup => {
+    let result = await reqUpdatePortGroup(portCustomGroup);
+    if (result.code === 0) {      
+      message.success(`编辑端口分组成功！`);
+    } else {
+      message.error("编辑端口分组失败！失败信息：" + result.message)
+    }
+  }
+  // 删除端口分组
+  @action.bound
+  deletePortGroup = async portCustomGroupName => {
+    const result = await reqDeletePortGroup(portCustomGroupName);
+    if (result.code === 0) {
+      message.success(`删除端口分组项删除成功！`);
+    } else {
+      message.error("删除端口分组项删除失败！失败信息：" + result.message)
+    }
+  }
+  // 添加端口分组
+  @action.bound
+  addPortGroup = async portCustomGroup => {
+    const result = await reqAddPortGroup(portCustomGroup);
+    if (result.code === 0) {
+      message.success(`添加端口分组项删除成功！`);
+    } else {
+      message.error("添加端口分组项删除失败！失败信息：" + result.message)
+    }
+  }
+  // 端口分组根据存储设备名称获取对应VSAN列表
+  @observable vsanList = [];
+  @action.bound
+  getVsanListByStorageName = async storageName => {
+    let result = await reqVsanListByStorageName(storageName);
+    if (result.code === 0) {      
+      this.vsanList = result.data;
+    } else {
+      message.error("获取端口分组根据存储设备名称获取对应VSAN列表失败！失败信息：" + result.message)
+    }
+  }
+  
   /**********          交换机         **********/
   // 获取设备类型信息
   @observable switchPageInfo = {}

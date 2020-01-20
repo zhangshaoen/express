@@ -1,6 +1,3 @@
-import React from "react";
-import { Button, Popconfirm } from 'antd';
-
 export const storagePool = [
   {
     title: "存储池名称",
@@ -72,57 +69,6 @@ export const lun = [
     dataIndex: "关联主机名称",
     fixed: 'right',
     width: 150,
-  },
-];
-
-export const portGrout = [
-  {
-    title: "分组名称",
-    dataIndex: "name",
-    fixed: 'left',
-    width: 150,
-  },
-  {
-    title: "存储名称",
-    dataIndex: "storageName",
-  },
-  {
-    title: "VSAN名称",
-    dataIndex: "vsanName",
-  },
-  {
-    title: "初始MBPS",
-    dataIndex: "initialMbps",
-  },
-  {
-    title: "剩余MBPS",
-    dataIndex: "surplusMbps",
-  },
-  {
-    title: "初始IOPS",
-    dataIndex: "initialIops",
-  },
-  {
-    title: "剩余IOPS",
-    dataIndex: "surplusIops",
-  },
-  {
-    title: "状态",
-    dataIndex: "isUse",
-  },
-  {
-    title: "操作",
-    dataIndex: "operation",
-    fixed: 'right',
-    width: 150,
-    render: (text, record, index) => (
-      <span>
-        <Button onClick={() => this.showModal("update", record)} type='primary' size="small" style={{ marginRight: "10px" }}>编辑</Button>
-        <Popconfirm title="是否确认删除当前设备？" onConfirm={() => this.deleteStoCon(record)}>
-          <Button type='danger' size="small">删除</Button>
-        </Popconfirm>
-      </span>
-    )
   },
 ];
 

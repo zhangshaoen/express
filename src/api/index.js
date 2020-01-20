@@ -97,7 +97,16 @@ export const reqStoragePoolByStorageName = storageName => ajax(`${BASE}/view/get
 export const reqStorageLunByStorageName = storageName => ajax(`${BASE}/view/getStorageLunByStorageName`, {storageName});
 // 展示存储设备下端口列表
 export const reqStoragePortByStorageName = storageName => ajax(`${BASE}/view/getStoragePortByStorageName`, {storageName});
-
+// 获取端口分组列表
+export const reqPortGroupList = storageName => ajax(`${BASE}/view/getPortGroupList`, {storageName});
+// 编辑端口分组
+export const reqUpdatePortGroup = portCustomGroup => ajax(`${BASE}/view/updatePortGroup`, portCustomGroup, "PUT");
+// 删除端口分组
+export const reqDeletePortGroup = portCustomGroupName => ajax(`${BASE}/view/deletePortGroup?portCustomGroupName=${portCustomGroupName}`, {}, "DELETE");
+// 端口分组根据存储设备名称获取对应VSAN列表
+export const reqVsanListByStorageName = storageName => ajax(`${BASE}/view/getVsanListByStorageName`, {storageName});
+// 添加端口分组
+export const reqAddPortGroup = portCustomGroup => ajax(`${BASE}/view/addPortGroup`, portCustomGroup, "POST");
 
 // 获取设备类型信息
 export const reqDeviceCategory = deviceCategoryId => ajax(`${BASE}/view/switch/getDeviceCategory`, {deviceCategoryId});

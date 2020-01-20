@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { Form, Select, Radio, Input, InputNumber, Row, Col } from 'antd';
-// import state from '../../Store';
+import state from '../../Store';
 
 const { Item } = Form;
 const { Option } = Select;
@@ -10,13 +10,13 @@ class AddOrUpdate extends Component {
 
   initOptions = type => {
     let options = [];
-    if (type === "storageName") {
-      [{ name: "aa" }]?.forEach((item, index) => {
+    if (type === "storagePorts") {
+      state.sanDevicePortList?.forEach((item, index) => {
         options.push(<Option value={item.name} key={index}>{item.name}</Option>);
       });
     } else if (type === "vsanName") {
-      [{ name: "aa" }]?.forEach((item, index) => {
-        options.push(<Option value={item.name} key={index}>{item.name}</Option>);
+      state.vsanList?.forEach((item, index) => {
+        options.push(<Option value={item.vsanName} key={index}>{item.vsanName}</Option>);
       });
     }
 
@@ -41,7 +41,7 @@ class AddOrUpdate extends Component {
     const { getFieldDecorator } = this.props.form;
 
     let { dataSource } = this.props;
-    let { name, storageName, vsanName, initialMbps, initialIops, isUse } = dataSource;
+    let { name, vsanName, storagePorts, initialMbps, initialIops, status } = dataSource;
 
     return (
       <Form {...formItemLayout} >
@@ -51,20 +51,20 @@ class AddOrUpdate extends Component {
             rules: [{ required: true, message: '请输入分组名称!' }],
           })(<Input />)}
         </Item>
-        <Item label='存储名称:'>
-          {getFieldDecorator('storageName', {
-            initialValue: storageName,
-            rules: [{ required: true, message: '请选择存储名称!' }]
-          })(<Select mode="multiple">
-            {this.initOptions('storageName')}
-          </Select>)}
-        </Item>
         <Item label='VSAN名称:'>
           {getFieldDecorator('vsanName', {
             initialValue: vsanName,
             rules: [{ required: true, message: '请选择VSAN名称!' }]
-          })(<Select mode="multiple">
+          })(<Select>
             {this.initOptions('vsanName')}
+          </Select>)}
+        </Item>
+        <Item label='所属端口名称:'>
+          {getFieldDecorator('storagePortNames', {
+            initialValue: storagePorts,
+            rules: [{ required: true, message: '请选择VSAN名称!' }]
+          })(<Select mode="multiple">
+            {this.initOptions('storagePorts')}
           </Select>)}
         </Item>
         <Row>
@@ -87,8 +87,8 @@ class AddOrUpdate extends Component {
           <Col span={12}>
             <Item  labelCol={{span: 12}} wrapperCol={{span: 12}}label='状态:'>
               {
-                getFieldDecorator('isUse', {
-                  initialValue: isUse || "Y",
+                getFieldDecorator('status', {
+                  initialValue: status || "Y",
                   rules: [{ required: true, message: '请选择状态!' }]
                 })(
                   <Radio.Group buttonStyle="solid">

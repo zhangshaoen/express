@@ -13,6 +13,7 @@ export default function ajax(url, data = {}, method = 'GET') {
     TopProgress.done();
     return config
   },error=>{
+    TopProgress.done();
     return Promise.reject(error)
   })
   
