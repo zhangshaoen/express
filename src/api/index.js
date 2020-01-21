@@ -135,12 +135,19 @@ export const reqVsanList = netWorkUnitId => ajax(`${BASE}/view/switch/getVsanLis
 // 获取FABRIC
 export const reqFabric = fabricName => ajax(`${BASE}/view/switch/getFabric`, {fabricName});
 // 获取端口关联列表
-export const reqPortRefList = (fabricName, pageNumber, pageSize) => ajax(`${BASE}/view/switch/getPortRefList?fabricName=${fabricName}&pageNumber=${pageNumber}&pageSize=${pageSize}`, {}, "POST");
-
-
+export const reqPortRefList = (fabricName, switchName, vsanName, pageNumber, pageSize) => ajax(`${BASE}/view/switch/getPortRefList?fabricName=${fabricName}&switchName=${switchName}&vsanName=${vsanName}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+// 物理交换机列表根据FabricName
+export const reqSwitchListByFabricName = fabricName => ajax(`${BASE}/view/switch/getSwitchListByFabricName`, {fabricName});
+// 获取vsan列表根据FabricName
+export const reqVsanListByFabricName = fabricName => ajax(`${BASE}/view/switch/getVsanListByFabricName`, {fabricName});
 
 
 // 物理交换机列表
-export const reqSwitchList = (fabricName, pageNumber, pageSize) => ajax(`${BASE}/view/switch/getSwitchList?fabricName=${fabricName}&pageNumber=${pageNumber}&pageSize=${pageSize}`, {}, "POST");
+export const reqSwitchList = (fabricName, pageNumber, pageSize) => ajax(`${BASE}/view/switch/getSwitchList?fabricName=${fabricName}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 // 获取zone列表
-export const reqZoneRefList = (fabricName, pageNumber, pageSize) => ajax(`${BASE}/view/switch/getZoneRefList?fabricName=${fabricName}&pageNumber=${pageNumber}&pageSize=${pageSize}`, {}, "POST");
+export const reqZoneRefList = (fabricName, zoneName, zoneSetName, vsanName, pageNumber, pageSize) => ajax(`${BASE}/view/switch/getZoneRefList?fabricName=${fabricName}&zoneName=${zoneName}&zoneSetName=${zoneSetName}&vsanName=${vsanName}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+// 获取zone列表根据FabricName
+export const reqZoneRefListByFabricName = fabricName => ajax(`${BASE}/view/switch/getZoneRefListByFabricName`, {fabricName});
+// 获取zoneSet列表根据FabricName
+export const reqZoneSetListByFabricName = fabricName => ajax(`${BASE}/view/switch/getZoneSetListByFabricName`, {fabricName});
+

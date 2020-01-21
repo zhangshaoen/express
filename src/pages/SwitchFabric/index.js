@@ -12,40 +12,45 @@ const { Option } = Select;
 @observer
 class SwitchFabric extends Component {
 
+  state = {
+    filters: {
+      id: null,
+      switchName: "",
+      vsanName: ""
+    }
+  }
+
+  formChange = (switchName, vsanName) => {
+    Object.assign(this.state.filters,{switchName, vsanName})
+    this.setState({
+      filters: this.state.filters
+    }, () => {
+      // 获取端口关联列表
+      state.getPortRefList(this.state.filters.id,switchName, vsanName);
+    })
+  }
+
   initExtra = () => {
     let dataSource = [
       {
         placeholder: "设备名称",
-        optionList: [{ code: "jsck", value: "Jack" }, { code: "lucy", value: "Lucy" }, { code: "tom", value: "Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`设备名称selected ${value}`)
+        optionList: state.switchListByFabricName,
+        code: "switchName",
+        value: "switchName",
+        onChange: value => this.formChange(value, this.state.filters.vsanName)
       },
       {
-        placeholder: "VF名称",
-        optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`VF名称selected ${value}`)
+        placeholder: "所属VSAN",
+        optionList: state.vsanListByFabricName,
+        code: "vsanName",
+        value: "vsanName",
+        onChange: value => this.formChange(this.state.filters.switchName, value)
       },
-      {
-        placeholder: "端口类型",
-        optionList: [{ code: "jsck", value: "Jack" }, { code: "lucy", value: "Lucy" }, { code: "tom", value: "Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`端口类型selected ${value}`)
-      },
-      // {
-      //   placeholder: "关联设备名称",
-      //   optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-      //   code: "code",
-      //   value: "value",
-      //   onChange: value => console.log(`关联设备名称selected ${value}`)
-      // }
     ]
     return dataSource.map((item, index) => {
       return <Select
         key={index}
+        allowClear={true}
         showSearch
         style={{ width: 150, marginLeft: "10px" }}
         placeholder={item.placeholder}
@@ -68,49 +73,33 @@ class SwitchFabric extends Component {
     return [
       {
         title: "设备名称",
-        dataIndex: "",
+        dataIndex: "name",
         width: 150,
         fixed: 'left',
       },
       {
         title: "端口Index",
-        dataIndex: "manufacturer"
+        dataIndex: "portIndex"
       },
       {
-        title: "端口号",
-        dataIndex: "dataCenter"
-      },
-      {
-        title: "所属vsan/vf",
-        dataIndex: "deploymentLocation"
+        title: "所属VSAN",
+        dataIndex: "vsanName"
       },
       {
         title: "端口类型",
-        dataIndex: ""
+        dataIndex: "type"
       },
       {
         title: "端口速率",
-        dataIndex: ""
+        dataIndex: "rate"
       },
       {
-        title: "端口分配率",
-        dataIndex: ""
+        title: "接入设备WWN",
+        dataIndex: "deviceWwn"
       },
       {
-        title: "连接的wwn",
-        dataIndex: ""
-      },
-      {
-        title: "fcid",
-        dataIndex: ""
-      },
-      {
-        title: "关联设备名称",
-        dataIndex: ""
-      },
-      {
-        title: "关联设备端口",
-        dataIndex: ""
+        title: "FCID",
+        dataIndex: "fcId"
       },
     ];
   }
@@ -119,9 +108,18 @@ class SwitchFabric extends Component {
     const { id } = getQueryVariable(this, "id");
     if (id) {
       // 获取FABRIC
-      state.getFabric(id);
+      state.getFabric(id).then(() => {
+        Object.assign(this.state.filters,{id})
+        this.setState({
+          filters: this.state.filters
+        })
+      });
       // 获取端口关联列表
       state.getPortRefList(id);
+      // 物理交换机列表根据FabricName
+      state.getSwitchListByFabricName(id);
+      // 获取vsan列表根据FabricName
+      state.getVsanListByFabricName(id);
     } else {
       message.warning('当前页面没有获取正确参数，请点击左侧导航重新获取！');
     }
@@ -129,7 +127,7 @@ class SwitchFabric extends Component {
 
   render() {
     return (
-      <Card>
+      <Card bodyStyle={{height: "85.5vh", overflowY: "auto"}}>
         <Card
           title="基本信息"
           className="card"
@@ -138,13 +136,13 @@ class SwitchFabric extends Component {
           <BasicInfo infos={BasicInfoList} dataSource={state.fabricInfo} />
         </Card>
         <Card
-          title={state.menuItem?.title}
+          title="设备关联信息"
           extra={this.initExtra()}
           className="card"
           headStyle={{ backgroundColor: "rgba(244, 247, 253, 1)" }} >
           <Table
             rowKey={record => record.storageUnitId}
-            scroll={{ y: "76vh", x: 1500 }} pagination={false} bordered size="middle"
+            scroll={{ y: "76vh" }} pagination={false} bordered size="middle"
             columns={this.initColumns()}
             dataSource={state.portRefList} />
         </Card>

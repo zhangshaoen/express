@@ -63,10 +63,12 @@ import {
 
   reqFabric,
   reqPortRefList,
-
-
+  reqSwitchListByFabricName,
+  reqVsanListByFabricName,
   reqSwitchList,
-  reqZoneRefList
+  reqZoneRefList,
+  reqZoneRefListByFabricName,
+  reqZoneSetListByFabricName,
 } from "../api";
 
 class State {
@@ -882,12 +884,34 @@ class State {
   // 获取端口关联列表
   @observable portRefList = [];
   @action.bound
-  getPortRefList = async (fabricName, pageNumber = 1, pageSize = 100) => {
-    let result = await reqPortRefList(fabricName, pageNumber, pageSize);
+  getPortRefList = async (fabricName, switchName="", vsanName="", pageNumber = 1, pageSize = 100) => {
+    let result = await reqPortRefList(fabricName, switchName, vsanName, pageNumber, pageSize);
     if (result.code === 0) {
-      // this.portRefList = result.data;
+      this.portRefList = result.data.content;
     } else {
       message.error("获取端口关联列表失败！失败信息：" + result.message)
+    }
+  }
+  // 物理交换机列表根据FabricName
+  @observable switchListByFabricName = [];
+  @action.bound
+  getSwitchListByFabricName = async fabricName => {
+    let result = await reqSwitchListByFabricName(fabricName);
+    if (result.code === 0) {
+      this.switchListByFabricName = result.data;
+    } else {
+      message.error("根据FabricName获取物理交换机列表失败！失败信息：" + result.message)
+    }
+  }
+  // 获取vsan列表根据FabricName
+  @observable vsanListByFabricName = [];
+  @action.bound
+  getVsanListByFabricName = async fabricName => {
+    let result = await reqVsanListByFabricName(fabricName);
+    if (result.code === 0) {
+      this.vsanListByFabricName = result.data;
+    } else {
+      message.error("根据FabricName获取vsan列表失败！失败信息：" + result.message)
     }
   }
 
@@ -909,12 +933,34 @@ class State {
   // 获取zone列表
   @observable zoneRefList = [];
   @action.bound
-  getZoneRefList = async (fabricName, pageNumber = 1, pageSize = 100) => {
-    let result = await reqZoneRefList(fabricName, pageNumber, pageSize);
+  getZoneRefList = async (fabricName, zoneName="", zoneSetName="", vsanName="", pageNumber = 1, pageSize = 100) => {
+    let result = await reqZoneRefList(fabricName, zoneName, zoneSetName, vsanName,  pageNumber, pageSize);
     if (result.code === 0) {
       this.zoneRefList = result.data;
     } else {
       message.error("获取端口关联列表失败！失败信息：" + result.message)
+    }
+  }
+  // 获取zone列表根据FabricName
+  @observable zoneRefListByFabricName = [];
+  @action.bound
+  getZoneRefListByFabricName = async fabricName => {
+    let result = await reqZoneRefListByFabricName(fabricName);
+    if (result.code === 0) {
+      this.zoneRefListByFabricName = result.data;
+    } else {
+      message.error("根据FabricName获取zone列表失败！失败信息：" + result.message)
+    }
+  }
+  // 获取zoneSet列表根据FabricName
+  @observable zoneSetListByFabricName = [];
+  @action.bound
+  getZoneSetListByFabricName = async fabricName => {
+    let result = await reqZoneSetListByFabricName(fabricName);
+    if (result.code === 0) {
+      this.zoneSetListByFabricName = result.data;
+    } else {
+      message.error("根据FabricName获取zoneSet列表失败！失败信息：" + result.message)
     }
   }
   

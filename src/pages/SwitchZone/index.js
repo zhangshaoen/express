@@ -12,33 +12,53 @@ const { Option } = Select;
 @observer
 class SwitchZone extends Component {
 
+  state = {
+    filters: {
+      name: null,
+      zoneName: "",
+      zoneSetName: "",
+      vsanName: ""
+    }
+  }
+
+  formChange = (zoneName, zoneSetName, vsanName) => {
+    Object.assign(this.state.filters,{zoneName, zoneSetName, vsanName})
+    this.setState({
+      filters: this.state.filters
+    }, () => {
+      // 获取zone列表
+      state.getZoneRefList(this.state.filters.name, zoneName, zoneSetName, vsanName);
+    })
+  }
+
   initExtra = () => {
     let dataSource = [
       {
         placeholder: "zone名称",
-        optionList: [{ code: "jsck", value: "Jack" }, { code: "lucy", value: "Lucy" }, { code: "tom", value: "Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`zone名称selected ${value}`)
+        optionList: state.zoneRefListByFabricName,
+        code: "name",
+        value: "name",
+        onChange: value => this.formChange(value, this.state.filters.zoneSetName, this.state.filters.vsanName)
       },
       {
         placeholder: "所属zoneset",
-        optionList: [{ code: "vfjsck", value: "VF-Jack" }, { code: "vflucy", value: "VF-Lucy" }, { code: "vftom", value: "VF-Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`所属zonesetselected ${value}`)
+        optionList: state.zoneSetListByFabricName,
+        code: "zoneSetName",
+        value: "zoneSetName",
+        onChange: value => this.formChange(this.state.filters.zoneName, value, this.state.filters.vsanName)
       },
       {
-        placeholder: "所属vsan",
-        optionList: [{ code: "jsck", value: "Jack" }, { code: "lucy", value: "Lucy" }, { code: "tom", value: "Tom" },],
-        code: "code",
-        value: "value",
-        onChange: value => console.log(`所属vfselected ${value}`)
+        placeholder: "所属VSAN",
+        optionList: state.vsanListByFabricName,
+        code: "vsanName",
+        value: "vsanName",
+        onChange: value => this.formChange(this.state.filters.zoneName, this.state.filters.zoneSetName, value)
       },
     ]
     return dataSource.map((item, index) => {
       return <Select
         key={index}
+        allowClear={true}
         showSearch
         style={{ width: 140, marginLeft: "10px" }}
         placeholder={item.placeholder}
@@ -74,7 +94,7 @@ class SwitchZone extends Component {
         dataIndex: "zoneSet"
       },
       {
-        title: "所属vs",
+        title: "所属VSAN",
         dataIndex: "vsan"
       },
       {
@@ -96,9 +116,21 @@ class SwitchZone extends Component {
     const { id } = getQueryVariable(this, "id");
     let name = id ? id.split("||")[1] : null;
     if (name) {
-      state.getFabric(name);
-
+      // 获取FABRIC
+      state.getFabric(name).then(() => {
+        Object.assign(this.state.filters,{name})
+        this.setState({
+          filters: this.state.filters
+        })
+      });
+      // 获取zone列表
       state.getZoneRefList(name);
+      // 获取zone列表根据FabricName
+      state.getZoneRefListByFabricName(name);
+      // 获取zoneSet列表根据FabricName
+      state.getZoneSetListByFabricName(name);
+      // 获取vsan列表根据FabricName
+      state.getVsanListByFabricName(name);
 
     } else {
       message.warning('当前页面没有获取正确参数，请点击左侧导航重新获取！');
