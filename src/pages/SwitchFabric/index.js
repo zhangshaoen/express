@@ -72,10 +72,14 @@ class SwitchFabric extends Component {
   initColumns = () => {
     return [
       {
-        title: "设备名称",
-        dataIndex: "name",
+        title: "交换机名称",
+        dataIndex: "switchName",
         width: 150,
         fixed: 'left',
+      },
+      {
+        title: "端口名称",
+        dataIndex: "name",
       },
       {
         title: "端口Index",
