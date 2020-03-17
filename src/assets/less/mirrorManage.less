@@ -1,0 +1,93 @@
+.mirrorManage{
+    .mirrorSearch{
+        margin-bottom:10px;
+        input{
+            width:50%;
+            margin-right:10px;
+        }
+        .newMirror{
+            float:right;
+        }
+    }
+}
+// 制作历史记录
+.mirrorHistory{
+    .mirrorBaseInfo{
+        display:flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom:10px;
+        .mirrorHalf{
+            width:50%;
+            span{
+                width:85px;
+                display:inline-block;
+                text-align: right;
+            }
+        }
+        .mirrorAll{
+            width: 100%;
+            display: flex;
+            span{
+                width:85px;
+                display:inline-block;
+                text-align: right;
+            }
+            .mirrorDescribe{
+                width:85%;
+                height:80px;
+                resize: none;
+            }
+        }
+    }
+}
+// 修改镜像
+.changeMirror{
+    .mirrorBaseInfo{
+        display:flex;
+        flex-wrap: wrap;
+        div{
+            width:100%;
+            display:flex;
+            flex-wrap: nowrap;
+            p{
+                width: 100px;
+                text-align: right;
+                font-weight: 400;
+                margin-right:10px;
+                i{
+                    color:#F32E2E;
+                    margin-right:5px;
+                }
+            }
+            .radio,.select{
+                width:80%;
+            }
+            .result{
+                width:80%;
+                height:300px;
+                resize: none;
+            }
+        }
+    }
+}
+// 分页器公共格式
+.pagination{
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    .total{
+        margin-right:15px;
+        line-height:32px;
+    }
+}
+// 弹框(含内容)的下面button的位置
+.ant-modal-footer{
+    text-align: center;
+}
+// 弹框(不含内容)的下面button的位置
+.ant-modal-confirm .ant-modal-confirm-btns{
+    float:none;
+    text-align: center;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { HashRouter, Switch } from 'react-router-dom'
-import Admin from './pages/Admin';
+import { HashRouter, Switch, Route } from 'react-router-dom'
+import MirrorManage from './pages/mirrorMange/mirrorManage';
+import MirrorProve from "./components/mirrorProve/MirrorProve.js"
 
 class App extends Component {
 
@@ -8,7 +9,8 @@ class App extends Component {
     return (
       <HashRouter>
         <Switch>
-          <Admin />
+          <Route path="/mirrorManage" component={MirrorManage}/>
+          <Route path="/mirrorProve" component={MirrorProve}/>
         </Switch>
       </HashRouter>
     );
